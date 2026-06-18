@@ -53,8 +53,10 @@ function LoginContent() {
       console.error('Email Login Error:', err.message);
       if (err.message === 'not_registered' || err.message?.includes('not_registered')) {
         setError('Belə bir hesab yoxdur. Zəhmət olmasa əvvəlcə qeydiyyatdan keçin.');
+      } else if (err.message === 'Invalid login credentials') {
+        setError('Belə bir hesab yoxdur və ya şifrə yanlışdır. Zəhmət olmasa əvvəlcə qeydiyyatdan keçin.');
       } else {
-        setError('E-poçt və ya şifrə yanlışdır.');
+        setError('Giriş edərkən xəta baş verdi. Zəhmət olmasa yenidən cəhd edin.');
       }
       setLoading(false);
     }
