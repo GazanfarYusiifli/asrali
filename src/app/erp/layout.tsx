@@ -6,6 +6,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useAuth, Role } from '../context/AuthContext';
 import { useI18n } from '../context/I18nContext';
 import LanguageSwitcher from '../components/LanguageSwitcher';
+import VoiceAssistant from '@/components/VoiceAssistant';
 
 import { getAppStorage, setAppStorage, removeAppStorage } from '@/utils/storage';
 import { 
@@ -449,6 +450,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           {children}
         </div>
       </main>
+
+      {/* Voice Assistant component */}
+      <VoiceAssistant />
     </div>
   );
 }

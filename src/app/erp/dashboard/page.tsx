@@ -107,13 +107,17 @@ export default function DashboardPage() {
 
   }, []);
   
-  // Format current date based on active language
-  const today = new Date();
-  const dateOptions: Intl.DateTimeFormatOptions = { 
-    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
-  };
-  const locale = language === 'az' ? 'az-AZ' : language === 'tr' ? 'tr-TR' : language === 'ru' ? 'ru-RU' : 'en-US';
-  const formattedDate = today.toLocaleDateString(locale, dateOptions);
+  const [formattedDate, setFormattedDate] = useState<string>('');
+
+  useEffect(() => {
+    // Format current date based on active language
+    const today = new Date();
+    const dateOptions: Intl.DateTimeFormatOptions = { 
+      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
+    };
+    const locale = language === 'az' ? 'az-AZ' : language === 'tr' ? 'tr-TR' : language === 'ru' ? 'ru-RU' : 'en-US';
+    setFormattedDate(today.toLocaleDateString(locale, dateOptions));
+  }, [language]);
 
   return (
     <div style={{ padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', maxWidth: '1400px', margin: '0 auto' }}>

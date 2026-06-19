@@ -16,13 +16,15 @@ export default function RegisterPage() {
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [regMethod, setRegMethod] = useState<'google' | 'password'>('google');
+  const [otpToken, setOtpToken] = useState('');
   
   // New form fields
-  const [orgName, setOrgName] = useState('');
   const [contactName, setContactName] = useState('');
+  const [orgName, setOrgName] = useState('');
   const [phone, setPhone] = useState('');
-  const [subdomain, setSubdomain] = useState('');
-  const [notes, setNotes] = useState('');
+  const [country, setCountry] = useState('');
+  const [city, setCity] = useState('');
+  const [username, setUsername] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const orgTypes = [
@@ -81,7 +83,7 @@ export default function RegisterPage() {
               <div style={{ position: 'absolute', left: '15px', top: '20px', bottom: '20px', width: '2px', backgroundColor: 'rgba(255,255,255,0.1)' }}></div>
               
               <div style={{ display: 'flex', gap: '1.5rem', position: 'relative', zIndex: 1 }}>
-                <div style={{ width: '32px', height: '32px', borderRadius: '50%', backgroundColor: '#10b981', color: '#020617', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', flexShrink: 0 }}>1</div>
+                <div style={{ width: '32px', height: '32px', borderRadius: '50%', backgroundColor: step > 1 ? '#10b981' : '#1e293b', border: step > 1 ? 'none' : '2px solid #334155', color: step > 1 ? '#020617' : 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', flexShrink: 0 }}>1</div>
                 <div>
                   <h4 style={{ fontWeight: 700, fontSize: '1.1rem', marginBottom: '0.25rem' }}>Təşkilat məlumatları</h4>
                   <p style={{ color: '#94a3b8', fontSize: '0.9rem', lineHeight: 1.5 }}>Ad, əlaqəli şəxs, telefon və email qeyd olunur.</p>
@@ -89,10 +91,10 @@ export default function RegisterPage() {
               </div>
 
               <div style={{ display: 'flex', gap: '1.5rem', position: 'relative', zIndex: 1 }}>
-                <div style={{ width: '32px', height: '32px', borderRadius: '50%', backgroundColor: '#1e293b', border: '2px solid #334155', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', flexShrink: 0 }}>2</div>
+                <div style={{ width: '32px', height: '32px', borderRadius: '50%', backgroundColor: step > 2 ? '#10b981' : '#1e293b', border: step > 2 ? 'none' : '2px solid #334155', color: step > 2 ? '#020617' : 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', flexShrink: 0 }}>2</div>
                 <div>
-                  <h4 style={{ fontWeight: 700, fontSize: '1.1rem', marginBottom: '0.25rem' }}>Subdomain seçimi</h4>
-                  <p style={{ color: '#94a3b8', fontSize: '0.9rem', lineHeight: 1.5 }}>Məsələn: magaza.ashrali.az formatında fərdi giriş ünvanı.</p>
+                  <h4 style={{ fontWeight: 700, fontSize: '1.1rem', marginBottom: '0.25rem' }}>E-poçt təsdiqi</h4>
+                  <p style={{ color: '#94a3b8', fontSize: '0.9rem', lineHeight: 1.5 }}>Təhlükəsizlik üçün e-poçt ünvanınız kod vasitəsilə təsdiqlənir.</p>
                 </div>
               </div>
 
@@ -134,14 +136,16 @@ export default function RegisterPage() {
         <div style={{ maxWidth: '600px', margin: '0 auto', width: '100%', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingBottom: '4rem' }}>
           
           <div style={{ marginBottom: '2rem' }}>
-            <div style={{ fontSize: '0.875rem', fontWeight: 700, color: '#10b981', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.5rem' }}>{step === 1 ? t('reg_step1') : t('reg_step2')}</div>
+            <div style={{ fontSize: '0.875rem', fontWeight: 700, color: '#10b981', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.5rem' }}>{step === 1 ? t('reg_step1') : step === 2 ? t('reg_step2') : 'Addım 3'}</div>
             <h2 style={{ fontSize: '2rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.5rem' }}>
-              {step === 1 ? t('reg_choose_type') : t('reg_org_details')}
+              {step === 1 ? t('reg_choose_type') : step === 2 ? t('reg_org_details') : 'E-poçt Təsdiqi'}
             </h2>
             <p style={{ color: '#64748b' }}>
               {step === 1 
                 ? 'Seçiminizə əsasən qeydiyyat forması uyğunlaşdırılacaq.' 
-                : 'Zəhmət olmasa məlumatları düzgün və tam formada daxil edin.'}
+                : step === 2
+                  ? 'Zəhmət olmasa məlumatları düzgün və tam formada daxil edin.'
+                  : 'E-poçt ünvanınıza göndərilən 6 rəqəmli kodu daxil edin.'}
             </p>
           </div>
 
@@ -195,11 +199,11 @@ export default function RegisterPage() {
                 Davam et →
               </button>
             </div>
-          ) : (
+          ) : step === 2 ? (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
               
               {/* Selected Type Display */}
-              <div style={{ padding: '1rem', backgroundColor: '#f1f5f9', borderRadius: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div style={{ padding: '1rem', backgroundColor: '#f1f5f9', borderRadius: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
                 <div>
                   <div style={{ fontSize: '0.8rem', color: '#64748b', fontWeight: 600, marginBottom: '0.25rem' }}>Seçdiyiniz təşkilat tipi</div>
                   <div style={{ fontWeight: 700, color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
@@ -208,44 +212,6 @@ export default function RegisterPage() {
                   </div>
                 </div>
                 <button onClick={() => setStep(1)} style={{ background: 'none', border: 'none', color: '#0ea5e9', fontWeight: 600, cursor: 'pointer', fontSize: '0.9rem' }}>Dəyiş</button>
-              </div>
-
-              {/* Registration Method Selection */}
-              <div style={{ display: 'flex', gap: '1rem', marginBottom: '0.5rem' }}>
-                <button 
-                  type="button" 
-                  onClick={() => setRegMethod('google')}
-                  style={{
-                    flex: 1,
-                    padding: '0.85rem',
-                    borderRadius: '10px',
-                    border: `2px solid ${regMethod === 'google' ? '#0ea5e9' : '#cbd5e1'}`,
-                    backgroundColor: regMethod === 'google' ? '#f0f9ff' : 'white',
-                    color: regMethod === 'google' ? '#0ea5e9' : '#475569',
-                    fontWeight: 700,
-                    cursor: 'pointer',
-                    transition: 'all 0.2s'
-                  }}
-                >
-                  🚀 Google (Gmail) ilə
-                </button>
-                <button 
-                  type="button" 
-                  onClick={() => setRegMethod('password')}
-                  style={{
-                    flex: 1,
-                    padding: '0.85rem',
-                    borderRadius: '10px',
-                    border: `2px solid ${regMethod === 'password' ? '#0ea5e9' : '#cbd5e1'}`,
-                    backgroundColor: regMethod === 'password' ? '#f0f9ff' : 'white',
-                    color: regMethod === 'password' ? '#0ea5e9' : '#475569',
-                    fontWeight: 700,
-                    cursor: 'pointer',
-                    transition: 'all 0.2s'
-                  }}
-                >
-                  🔑 E-poçt və Şifrə ilə
-                </button>
               </div>
 
 
@@ -277,128 +243,142 @@ export default function RegisterPage() {
                 <div style={{ fontSize: '0.8rem', color: '#64748b', marginTop: '0.5rem' }}>Giriş məlumatları bu ünvana göndəriləcək.</div>
               </div>
 
-              {regMethod === 'password' && (
-                <>
-                  <div className="form-group">
-                    <label style={{ display: 'block', fontWeight: 600, color: '#334155', marginBottom: '0.5rem' }}>Şifrə (*)</label>
-                    <input 
-                      type="password" 
-                      placeholder="Ən az 6 simvol" 
-                      value={password}
-                      onChange={(e) => { setPassword(e.target.value); setPasswordError(''); }}
-                      style={{ width: '100%', padding: '1rem', borderRadius: '12px', border: `1px solid ${passwordError ? '#ef4444' : '#cbd5e1'}`, fontSize: '1rem', outline: 'none' }} 
-                      required
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label style={{ display: 'block', fontWeight: 600, color: '#334155', marginBottom: '0.5rem' }}>Şifrənin təsdiqi (*)</label>
-                    <input 
-                      type="password" 
-                      placeholder="Şifrəni təkrar daxil edin" 
-                      value={passwordConfirm}
-                      onChange={(e) => { setPasswordConfirm(e.target.value); setPasswordError(''); }}
-                      onBlur={() => {
-                        if (passwordConfirm && password !== passwordConfirm) {
-                          setPasswordError('Şifrələr uyğun gəlmir');
-                        }
-                      }}
-                      style={{ width: '100%', padding: '1rem', borderRadius: '12px', border: `1px solid ${passwordError ? '#ef4444' : '#cbd5e1'}`, fontSize: '1rem', outline: 'none' }} 
-                      required
-                    />
-                    {passwordError && (
-                      <div style={{ color: '#ef4444', fontSize: '0.85rem', marginTop: '0.4rem', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
-                        ⚠️ {passwordError}
-                      </div>
-                    )}
-                  </div>
-                </>
-              )}
-
-
               <div className="form-group">
-                <label style={{ display: 'block', fontWeight: 600, color: '#334155', marginBottom: '0.5rem' }}>{t('reg_subdomain')}</label>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <input type="text" value={subdomain} onChange={(e) => setSubdomain(e.target.value)} placeholder="magaza1" style={{ flex: 1, padding: '1rem', borderRadius: '12px 0 0 12px', border: '1px solid #cbd5e1', borderRight: 'none', fontSize: '1rem', outline: 'none' }} />
-                  <div style={{ padding: '1rem', backgroundColor: '#f1f5f9', border: '1px solid #cbd5e1', borderRadius: '0 12px 12px 0', color: '#64748b', fontWeight: 600 }}>.ashrali.az</div>
+                <label style={{ display: 'block', fontWeight: 600, color: '#334155', marginBottom: '0.5rem' }}>Şifrə (*)</label>
+                <input 
+                  type="password" 
+                  placeholder="Ən az 6 simvol" 
+                  value={password}
+                  onChange={(e) => { setPassword(e.target.value); setPasswordError(''); }}
+                  style={{ width: '100%', padding: '1rem', borderRadius: '12px', border: `1px solid ${passwordError ? '#ef4444' : '#cbd5e1'}`, fontSize: '1rem', outline: 'none' }} 
+                  required
+                />
+              </div>
+              
+              <div className="form-group">
+                <label style={{ display: 'block', fontWeight: 600, color: '#334155', marginBottom: '0.5rem' }}>Şifrənin təsdiqi (*)</label>
+                <input 
+                  type="password" 
+                  placeholder="Şifrəni təkrar daxil edin" 
+                  value={passwordConfirm}
+                  onChange={(e) => { setPasswordConfirm(e.target.value); setPasswordError(''); }}
+                  onBlur={() => {
+                    if (passwordConfirm && password !== passwordConfirm) {
+                      setPasswordError('Şifrələr uyğun gəlmir');
+                    }
+                  }}
+                  style={{ width: '100%', padding: '1rem', borderRadius: '12px', border: `1px solid ${passwordError ? '#ef4444' : '#cbd5e1'}`, fontSize: '1rem', outline: 'none' }} 
+                  required
+                />
+                {passwordError && (
+                  <div style={{ color: '#ef4444', fontSize: '0.85rem', marginTop: '0.4rem', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                    ⚠️ {passwordError}
+                  </div>
+                )}
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+                <div className="form-group">
+                  <label style={{ display: 'block', fontWeight: 600, color: '#334155', marginBottom: '0.5rem' }}>Ölkə (*)</label>
+                  <input type="text" value={country} onChange={(e) => setCountry(e.target.value)} placeholder="Azərbaycan" style={{ width: '100%', padding: '1rem', borderRadius: '12px', border: '1px solid #cbd5e1', fontSize: '1rem', outline: 'none' }} />
+                </div>
+                <div className="form-group">
+                  <label style={{ display: 'block', fontWeight: 600, color: '#334155', marginBottom: '0.5rem' }}>Şəhər (*)</label>
+                  <input type="text" value={city} onChange={(e) => setCity(e.target.value)} placeholder="Bakı" style={{ width: '100%', padding: '1rem', borderRadius: '12px', border: '1px solid #cbd5e1', fontSize: '1rem', outline: 'none' }} />
                 </div>
               </div>
 
               <div className="form-group">
-                <label style={{ display: 'block', fontWeight: 600, color: '#334155', marginBottom: '0.5rem' }}>{t('reg_notes')}</label>
-                <textarea rows={3} value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Xüsusi istəkləriniz və ya suallarınız..." style={{ width: '100%', padding: '1rem', borderRadius: '12px', border: '1px solid #cbd5e1', fontSize: '1rem', outline: 'none', resize: 'vertical' }}></textarea>
+                <label style={{ display: 'block', fontWeight: 600, color: '#334155', marginBottom: '0.5rem' }}>İstifadəçi adı (Opsional)</label>
+                <input 
+                  type="text" 
+                  value={username} 
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    if (!val.includes('@')) {
+                      setUsername(val);
+                    }
+                  }} 
+                  placeholder="istifadeci_adi ( @ simvolsuz )" 
+                  style={{ width: '100%', padding: '1rem', borderRadius: '12px', border: '1px solid #cbd5e1', fontSize: '1rem', outline: 'none' }} 
+                />
+                <div style={{ fontSize: '0.8rem', color: '#64748b', marginTop: '0.5rem' }}>E-poçt əvəzinə bu adla da giriş edə bilərsiniz.</div>
               </div>
 
               <button 
                 disabled={isLoading}
                 onClick={async () => {
-                  if (!orgName || !contactName || !phone || !email || !subdomain) {
+                  if (!orgName || !contactName || !phone || !country || !city || !email) {
                     alert('Zəhmət olmasa bütün mütləq (*) xanaları doldurun');
                     return;
                   }
-                  if (regMethod === 'password') {
-                    if (!password || password.length < 6) {
-                      alert('Zəhmət olmasa ən azı 6 simvoldan ibarət şifrə daxil edin');
-                      return;
-                    }
-                    if (password !== passwordConfirm) {
-                      setPasswordError('Şifrələr uyğun gəlmir');
-                      alert('Şifrələr uyğun gəlmir. Zəhmət olmasa yenidən yoxlayın.');
-                      return;
-                    }
+                  if (!password || password.length < 6) {
+                    alert('Zəhmət olmasa ən azı 6 simvoldan ibarət şifrə daxil edin');
+                    return;
+                  }
+                  if (password !== passwordConfirm) {
+                    setPasswordError('Şifrələr uyğun gəlmir');
+                    alert('Şifrələr uyğun gəlmir. Zəhmət olmasa yenidən yoxlayın.');
+                    return;
                   }
                   
                   setIsLoading(true);
                   try {
+                    const supabase = createClient();
+                    
+                    // Email registration logic follows...
                     await fetch('/api/register-email', {
                       method: 'POST',
                       headers: { 'Content-Type': 'application/json' },
                       body: JSON.stringify({
                         orgType: orgTypes.find(t => t.id === orgType)?.title,
                         orgName,
-                        contactName,
                         phone,
+                        country,
+                        city,
                         email,
-                        subdomain,
-                        notes
+                        username
                       }),
                     });
-
-                    const supabase = createClient();
-                    
-                    if (regMethod === 'google') {
-                      // Start Google OAuth flow directly after sending registration email
-                      const { error: oauthError } = await supabase.auth.signInWithOAuth({
-                        provider: 'google',
-                        options: {
-                          redirectTo: `${window.location.origin}/api/auth/callback?type=register`,
-                          queryParams: {
-                            prompt: 'select_account',
-                          },
-                        },
-                      });
-                      if (oauthError) {
-                        throw oauthError;
-                      }
-                    } else {
                       // Register with email and password
-                      const { error: signUpError } = await supabase.auth.signUp({
+                      const { data, error: signUpError } = await supabase.auth.signUp({
                         email,
-                        password,
-                        options: {
-                          data: {
-                            registered: true
-                          }
-                        }
+                        password
                       });
                       if (signUpError) {
                         throw signUpError;
                       }
-                      alert('Qeydiyyat uğurla tamamlandı!');
-                      window.location.href = '/erp/dashboard';
-                    }
+                      
+                      // If email confirmation is disabled in Supabase, we get a session immediately.
+                      if (data.session) {
+                        const { error: updateError } = await supabase.auth.updateUser({
+                          data: { registered: true }
+                        });
+                        if (updateError) throw updateError;
+                        
+                        // Create tenant and subscription via RPC
+                        const { error: rpcError } = await supabase.rpc('complete_user_registration', {
+                          p_full_name: contactName,
+                          p_company_name: orgName,
+                          p_phone: phone,
+                          p_country: country,
+                          p_city: city,
+                          p_username: username,
+                          p_email: email
+                        });
+                        if (rpcError) throw rpcError;
+
+                        alert('Qeydiyyat uğurla tamamlandı! 14 günlük sınaq müddətiniz başladı.');
+                        window.location.href = '/erp/dashboard';
+                      } else {
+                        // Session is null meaning Supabase still requires email confirmation.
+                        alert('Xəta: Supabase panelində "Confirm Email" (E-poçt təsdiqi) aktivdir. Zəhmət olmasa Authentication > Providers > Email bölməsindən "Confirm email" seçimini deaktiv edin və yenidən cəhd edin.');
+                        setIsLoading(false);
+                      }
                   } catch (error: any) {
                     console.error('Registration error:', error);
-                    alert(error.message || 'Müraciət göndərilərkən xəta baş verdi.');
+                    const errMsg = error.message || (typeof error === 'object' ? JSON.stringify(error) : String(error));
+                    alert(errMsg || 'Müraciət göndərilərkən xəta baş verdi.');
                     setIsLoading(false);
                   }
                 }}
@@ -419,14 +399,147 @@ export default function RegisterPage() {
                   width: '100%'
                 }}
               >
-                {isLoading ? '...' : t('reg_btn_start')}
+                {isLoading ? 'Gözləyin...' : 'E-poçt ilə Qeydiyyatı Tamamla'}
+              </button>
+
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', margin: '0.5rem 0', color: '#64748b' }}>
+                <div style={{ flex: 1, height: '1px', backgroundColor: '#e2e8f0' }}></div>
+                <span style={{ fontSize: '0.85rem', textTransform: 'uppercase', fontWeight: 600 }}>və ya</span>
+                <div style={{ flex: 1, height: '1px', backgroundColor: '#e2e8f0' }}></div>
+              </div>
+
+              <button 
+                type="button" 
+                onClick={async () => {
+                  const supabase = createClient();
+                  await supabase.auth.signInWithOAuth({
+                    provider: 'google',
+                    options: {
+                      redirectTo: `${window.location.origin}/api/auth/callback?type=register`,
+                      queryParams: {
+                        prompt: 'select_account',
+                      },
+                    },
+                  });
+                }}
+                style={{
+                  width: '100%',
+                  padding: '1.2rem',
+                  backgroundColor: 'white',
+                  color: '#0f172a',
+                  border: '1px solid #cbd5e1',
+                  borderRadius: '12px',
+                  fontWeight: 700,
+                  fontSize: '1.1rem',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '0.75rem',
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.02)'
+                }}
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                  <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                  <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                  <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                </svg>
+                Google ilə qeydiyyatdan keç 🚀
               </button>
               
-              <div style={{ textAlign: 'center', fontSize: '0.85rem', color: '#64748b', marginTop: '0.5rem' }}>
-                <span style={{ color: '#10b981' }}>🔒</span> Müraciət məlumatlarınız təhlükəsiz şəkildə emal olunur.
+            <div style={{ textAlign: 'center', fontSize: '0.85rem', color: '#64748b', marginTop: '0.5rem' }}>
+              <span style={{ color: '#10b981' }}>🔒</span> Müraciət məlumatlarınız təhlükəsiz şəkildə emal olunur.
+            </div>
+          </div>
+          ) : step === 3 ? (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', backgroundColor: 'white', padding: '2rem', borderRadius: '16px', border: '1px solid #cbd5e1' }}>
+              <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
+                <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>✉️</div>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.5rem' }}>Kodu daxil edin</h3>
+                <p style={{ color: '#64748b', fontSize: '0.95rem' }}>
+                  <b>{email}</b> ünvanına 6 rəqəmli təsdiq kodu göndərdik.
+                </p>
+              </div>
+
+              <div className="form-group">
+                <input 
+                  type="text" 
+                  maxLength={6}
+                  value={otpToken} 
+                  onChange={(e) => setOtpToken(e.target.value.replace(/\D/g, ''))} 
+                  placeholder="------" 
+                  style={{ width: '100%', padding: '1rem', borderRadius: '12px', border: '1px solid #cbd5e1', fontSize: '2rem', letterSpacing: '0.5rem', textAlign: 'center', outline: 'none', fontWeight: 700 }} 
+                />
+              </div>
+
+              <button 
+                disabled={isLoading || otpToken.length !== 6}
+                onClick={async () => {
+                  setIsLoading(true);
+                  try {
+                    const supabase = createClient();
+                    const { data, error } = await supabase.auth.verifyOtp({
+                      email,
+                      token: otpToken,
+                      type: 'signup'
+                    });
+
+                    if (error) throw error;
+
+                    if (data.session) {
+                      const { error: updateError } = await supabase.auth.updateUser({
+                        data: { registered: true }
+                      });
+                      if (updateError) throw updateError;
+                      
+                      // Create tenant and subscription via RPC
+                      const { error: rpcError } = await supabase.rpc('complete_user_registration', {
+                        p_full_name: contactName,
+                        p_company_name: orgName,
+                        p_phone: phone,
+                        p_country: country,
+                        p_city: city,
+                        p_username: username,
+                        p_email: email
+                      });
+                      if (rpcError) throw rpcError;
+
+                      alert('Qeydiyyat uğurla tamamlandı! 14 günlük sınaq müddətiniz başladı.');
+                      window.location.href = '/erp/dashboard';
+                    }
+                  } catch (error: any) {
+                    console.error('OTP Error:', error);
+                    alert(error.message || 'Kod yanlışdır və ya müddəti bitib.');
+                  } finally {
+                    setIsLoading(false);
+                  }
+                }}
+                style={{ 
+                  marginTop: '0.5rem',
+                  padding: '1.2rem', 
+                  backgroundColor: otpToken.length === 6 ? '#10b981' : '#cbd5e1', 
+                  color: 'white', 
+                  border: 'none', 
+                  borderRadius: '12px', 
+                  fontWeight: 700, 
+                  fontSize: '1.1rem',
+                  cursor: otpToken.length === 6 ? 'pointer' : 'not-allowed',
+                  transition: 'background 0.3s',
+                  width: '100%'
+                }}
+              >
+                {isLoading ? 'Yoxlanılır...' : 'Təsdiqlə və Daxil ol'}
+              </button>
+
+              <div style={{ textAlign: 'center', marginTop: '1rem' }}>
+                <button onClick={() => setStep(2)} style={{ background: 'none', border: 'none', color: '#64748b', cursor: 'pointer', fontSize: '0.9rem', textDecoration: 'underline' }}>
+                  Geri qayıt və e-poçtu dəyiş
+                </button>
               </div>
             </div>
-          )}
+          ) : null}
 
         </div>
       </div>

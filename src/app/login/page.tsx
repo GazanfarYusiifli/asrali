@@ -13,13 +13,19 @@ function LoginContent() {
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [email, setEmail] = useState('');
+  const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
 
   const supabase = createClient();
 
   useEffect(() => {
     const errorParam = searchParams.get('error');
+    const forceLogout = searchParams.get('force_logout');
+    
+    if (forceLogout === 'true') {
+      supabase.auth.signOut();
+    }
+    
     if (errorParam === 'not_registered') {
       setError('Belə bir hesab yoxdur. Zəhmət olmasa əvvəlcə qeydiyyatdan keçin.');
     }
@@ -27,15 +33,34 @@ function LoginContent() {
 
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !password) {
+    if (!login || !password) {
       setError('Zəhmət olmasa bütün xanaları doldurun.');
       return;
     }
     setLoading(true);
     setError(null);
     try {
+      let authEmail = login;
+
+      // If it doesn't contain '@', treat it as a username and resolve the email
+      if (!login.includes('@')) {
+        const { data, error: rpcError } = await supabase.rpc('resolve_username_to_email', {
+          p_username: login
+        });
+        
+        if (rpcError) {
+          throw new Error('rpc_error');
+        }
+        
+        if (!data) {
+          throw new Error('not_registered');
+        }
+        
+        authEmail = data;
+      }
+
       const { data, error } = await supabase.auth.signInWithPassword({
-        email,
+        email: authEmail,
         password,
       });
 
@@ -142,12 +167,12 @@ function LoginContent() {
 
         <form onSubmit={handleEmailLogin} style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem', marginBottom: '1.5rem', textAlign: 'left' }}>
           <div>
-            <label style={{ display: 'block', color: '#cbd5e1', fontSize: '0.9rem', marginBottom: '0.5rem', fontWeight: 500 }}>E-poçt ünvanı</label>
+            <label style={{ display: 'block', color: '#cbd5e1', fontSize: '0.9rem', marginBottom: '0.5rem', fontWeight: 500 }}>İstifadəçi adı və ya E-poçt</label>
             <input 
-              type="email" 
-              placeholder="nümunə@email.com" 
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              type="text" 
+              placeholder="istifadeci_adi və ya email@example.com" 
+              value={login}
+              onChange={(e) => setLogin(e.target.value)}
               className="login-input"
               required
             />
@@ -163,6 +188,13 @@ function LoginContent() {
               required
             />
           </div>
+          
+          <div style={{ textAlign: 'right', marginTop: '-0.5rem', marginBottom: '0.5rem' }}>
+            <Link href="/forgot-password" style={{ color: '#0ea5e9', fontSize: '0.85rem', textDecoration: 'none', fontWeight: 500 }}>
+              Şifrəni unutmusunuz?
+            </Link>
+          </div>
+
           <button 
             type="submit" 
             disabled={loading}

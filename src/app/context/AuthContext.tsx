@@ -42,14 +42,39 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (session.user.user_metadata?.registered === true) {
           setUser(session.user);
           localStorage.setItem('app_current_user_id', session.user.id);
-          loadUserData(session.user.id);
+          await loadUserData(session.user.id);
         } else {
-          await supabase.auth.signOut();
-          setUser(null);
-          if (typeof window !== 'undefined') {
-            window.location.href = '/login?error=not_registered';
+          // Auto-register the user silently
+          const fullName = session.user.user_metadata?.full_name || session.user.user_metadata?.name || 'İstifadəçi';
+          const email = session.user.email;
+          const defaultCompany = email ? email.split('@')[0] + ' MMC' : 'Şirkət';
+          
+          try {
+            await supabase.rpc('complete_user_registration', {
+              p_full_name: fullName,
+              p_company_name: defaultCompany,
+              p_phone: '',
+              p_country: 'Azərbaycan',
+              p_city: 'Bakı',
+              p_username: null,
+              p_email: email
+            });
+            
+            await supabase.auth.updateUser({
+              data: { registered: true }
+            });
+          } catch (rpcErr) {
+            console.error('Silently failed to auto-register:', rpcErr);
           }
-          return;
+          
+          setUser(session.user);
+          localStorage.setItem('app_current_user_id', session.user.id);
+          await loadUserData(session.user.id);
+          
+          if (typeof window !== 'undefined' && window.location.pathname === '/onboarding') {
+            window.location.href = '/erp/dashboard';
+            return;
+          }
         }
       } else {
         setUser(null);
@@ -62,13 +87,37 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             if (session.user.user_metadata?.registered === true) {
               setUser(session.user);
               localStorage.setItem('app_current_user_id', session.user.id);
-              loadUserData(session.user.id);
+              await loadUserData(session.user.id);
             } else {
-              await supabase.auth.signOut();
-              setUser(null);
-              localStorage.removeItem('app_current_user_id');
-              if (typeof window !== 'undefined') {
-                window.location.href = '/login?error=not_registered';
+              // Same auto-registration logic for state change
+              const fullName = session.user.user_metadata?.full_name || session.user.user_metadata?.name || 'İstifadəçi';
+              const email = session.user.email;
+              const defaultCompany = email ? email.split('@')[0] + ' MMC' : 'Şirkət';
+              
+              try {
+                await supabase.rpc('complete_user_registration', {
+                  p_full_name: fullName,
+                  p_company_name: defaultCompany,
+                  p_phone: '',
+                  p_country: 'Azərbaycan',
+                  p_city: 'Bakı',
+                  p_username: null,
+                  p_email: email
+                });
+                
+                await supabase.auth.updateUser({
+                  data: { registered: true }
+                });
+              } catch (rpcErr) {
+                console.error('Silently failed to auto-register on auth change:', rpcErr);
+              }
+              
+              setUser(session.user);
+              localStorage.setItem('app_current_user_id', session.user.id);
+              await loadUserData(session.user.id);
+              
+              if (typeof window !== 'undefined' && window.location.pathname === '/onboarding') {
+                window.location.href = '/erp/dashboard';
               }
             }
           } else if (_event === 'SIGNED_OUT') {
@@ -86,7 +135,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     initAuth();
   }, []);
 
-  const loadUserData = (userId: string) => {
+  const loadUserData = async (userId: string) => {
     // Role logic
     const savedRole = localStorage.getItem(`app_role_${userId}`) as Role;
     if (savedRole) {
@@ -95,34 +144,41 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setRoleState('SUPERADMIN');
     }
 
-    // Subscription logic
-    let savedSub = localStorage.getItem(`app_subscription_${userId}`);
-    let sub: Subscription;
-    
-    if (savedSub) {
-      sub = JSON.parse(savedSub);
-    } else {
-      sub = {
-        status: 'TRIAL',
-        trialStartDate: new Date().toISOString()
-      };
-      localStorage.setItem(`app_subscription_${userId}`, JSON.stringify(sub));
-    }
+    // Fetch subscription from database
+    const { data: subData, error } = await supabase
+      .from('subscriptions')
+      .select('*')
+      .eq('user_id', userId)
+      .single();
 
-    // Calculate trial days left if status is TRIAL
+    let sub: Subscription;
     let daysLeft = 0;
-    if (sub.status === 'TRIAL' && sub.trialStartDate) {
-      const start = new Date(sub.trialStartDate);
-      const now = new Date();
-      const diffTime = now.getTime() - start.getTime();
-      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+    if (subData) {
+      const isExpired = subData.status === 'expired' || subData.status === 'cancelled';
+      const statusStr = isExpired ? 'EXPIRED' : (subData.plan === 'trial' ? 'TRIAL' : 'PRO');
       
-      daysLeft = Math.max(0, 14 - diffDays);
-      
-      if (daysLeft === 0) {
-        sub.status = 'EXPIRED';
-        localStorage.setItem(`app_subscription_${userId}`, JSON.stringify(sub));
+      sub = {
+        status: statusStr as SubStatus,
+        trialStartDate: subData.trial_start
+      };
+
+      if (subData.plan === 'trial' && subData.trial_start) {
+        const start = new Date(subData.trial_start);
+        const now = new Date();
+        const diffTime = now.getTime() - start.getTime();
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        
+        daysLeft = Math.max(0, 14 - diffDays);
+        
+        if (daysLeft === 0 && subData.status !== 'expired') {
+          sub.status = 'EXPIRED';
+        }
       }
+    } else {
+      // Fallback
+      sub = { status: 'TRIAL', trialStartDate: new Date().toISOString() };
+      daysLeft = 14;
     }
 
     setSubscriptionState(sub);

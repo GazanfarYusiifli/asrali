@@ -515,7 +515,7 @@ export default function ProductsPage() {
             {/* Modal Footer */}
             <div style={{ padding: '1.5rem 2rem', borderTop: '1px solid #e2e8f0', display: 'flex', justifyContent: 'flex-end', gap: '1rem', backgroundColor: '#f8fafc', borderBottomLeftRadius: '24px', borderBottomRightRadius: '24px' }}>
               <button onClick={() => setIsModalOpen(false)} style={{ padding: '0.8rem 1.5rem', backgroundColor: 'white', color: '#64748b', border: '1px solid #cbd5e1', borderRadius: '12px', fontWeight: 700, fontSize: '0.95rem', cursor: 'pointer' }}>İmtina</button>
-              <button onClick={handleSave} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.8rem 2rem', backgroundColor: '#10b981', color: 'white', border: 'none', borderRadius: '12px', fontWeight: 700, fontSize: '0.95rem', cursor: 'pointer', boxShadow: '0 4px 14px -2px rgba(16, 185, 129, 0.4)' }}>
+              <button onClick={handleSaveProduct} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.8rem 2rem', backgroundColor: '#10b981', color: 'white', border: 'none', borderRadius: '12px', fontWeight: 700, fontSize: '0.95rem', cursor: 'pointer', boxShadow: '0 4px 14px -2px rgba(16, 185, 129, 0.4)' }}>
                 <Save size={18}/> Yadda Saxla
               </button>
             </div>
