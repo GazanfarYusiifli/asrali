@@ -11,6 +11,7 @@ export default function ProductsPage() {
   const [isTagsDropdownOpen, setIsTagsDropdownOpen] = useState(false);
   const [selectedDepo, setSelectedDepo] = useState('');
   const [warehouses, setWarehouses] = useState<string[]>(['Mərkəz Şöbə', 'Baku Branch', 'Gəncə Filialı']);
+  const [isMounted, setIsMounted] = useState(false);
   
   const [activeTab, setActiveTab] = useState('tanim'); // tanim, fiyat, kodlar
   const [openDropdownId, setOpenDropdownId] = useState<number | null>(null);
@@ -43,17 +44,26 @@ export default function ProductsPage() {
   const [products, setProducts] = useState(defaultProducts);
 
   React.useEffect(() => {
-    const stored = getAppStorage('erp_products');
-    if (stored) {
-      setProducts(JSON.parse(stored));
-    } else {
-      setAppStorage('erp_products', JSON.stringify(defaultProducts));
-    }
-    const storedWarehouses = getAppStorage('erp_warehouses');
-    if (storedWarehouses) {
-      setWarehouses(JSON.parse(storedWarehouses));
-    }
+    setIsMounted(true);
+    let stored = null;
+    try {
+      stored = getAppStorage('erp_products');
+      if (stored) {
+        setProducts(JSON.parse(stored));
+      } else {
+        setAppStorage('erp_products', JSON.stringify(defaultProducts));
+      }
+    } catch(e) {}
+    
+    try {
+      const storedWarehouses = getAppStorage('erp_warehouses');
+      if (storedWarehouses) {
+        setWarehouses(JSON.parse(storedWarehouses));
+      }
+    } catch(e) {}
   }, []);
+
+  if (!isMounted) return null;
 
   const updateProducts = (newProducts: any) => {
     setProducts(newProducts);
