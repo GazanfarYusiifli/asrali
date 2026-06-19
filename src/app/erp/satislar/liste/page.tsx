@@ -295,75 +295,77 @@ export default function SatisListesiPage() {
                 <th style={{ padding: '1rem 1.5rem', width: '50px' }}></th>
               </tr>
             </thead>
-            {isLoading ? (
-              <tr>
-                <td colSpan={8} style={{ padding: '3rem', textAlign: 'center', color: '#64748b' }}>
-                  <div style={{ display: 'inline-block', width: '24px', height: '24px', border: '3px solid #e2e8f0', borderTopColor: '#3b82f6', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></div>
-                  <div style={{ marginTop: '0.5rem' }}>Məlumatlar Buluddan (Supabase) Yüklənir...</div>
-                </td>
-              </tr>
-            ) : (
             <tbody>
-              {filteredData.map((row) => (
-                <tr key={row.id} style={{ borderBottom: '1px solid #e2e8f0', transition: 'background-color 0.15s' }} className="hover-row">
-                  <td style={{ padding: '1rem 1.5rem', fontSize: '0.9rem', color: '#334155', fontWeight: 500 }}>{row.tarih}</td>
-                  <td style={{ padding: '1rem 1.5rem', fontSize: '0.9rem', color: '#10b981', fontWeight: 700 }}>{row.evrakNo}</td>
-                  <td style={{ padding: '1rem 1.5rem', fontSize: '0.9rem', color: '#64748b' }}>{row.faturaNo}</td>
-                  <td style={{ padding: '1rem 1.5rem', fontSize: '0.9rem', color: '#1e293b', fontWeight: 600 }}>{row.hesapAdi}</td>
-                  <td style={{ padding: '1rem 1.5rem', fontSize: '0.9rem', color: '#64748b' }}>{row.aciklama}</td>
-                  <td style={{ padding: '1rem 1.5rem' }}>{getStatusBadge(row.teslimDurumu)}</td>
-                  <td style={{ padding: '1rem 1.5rem', fontSize: '1rem', color: '#0f172a', fontWeight: 700, textAlign: 'right' }}>
-                    {Number(row.miktar || 0).toLocaleString('az-AZ', { style: 'currency', currency: 'AZN' })}
-                  </td>
-                  <td style={{ padding: '1rem 1.5rem', position: 'relative' }}>
-                    <button 
-                      onClick={(e) => { e.stopPropagation(); setActiveDropdown(activeDropdown === row.id ? null : row.id); }}
-                      style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', padding: '0.2rem' }}
-                    >
-                      <MoreHorizontal size={20}/>
-                    </button>
-                    
-                    {/* Action Dropdown Menu */}
-                    {activeDropdown === row.id && (
-                      <div ref={dropdownRef} style={{ position: 'absolute', right: '40px', top: '20px', backgroundColor: 'white', borderRadius: '8px', border: '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)', width: '220px', zIndex: 50, overflow: 'hidden' }}>
-                        
-                        <div style={{ padding: '0.5rem 0', borderBottom: '1px solid #e2e8f0' }}>
-                          <DropdownItem icon={<Edit size={16} />} label="Düzəliş Et" onClick={() => { setActiveDropdown(null); router.push(`/erp/satislar/yeni?id=${row.id}`); }} />
-                          <DropdownItem icon={row.teslimDurumu === 'Təslim Edildi' ? <Clock size={16}/> : <CheckCircle2 size={16}/>} label={row.teslimDurumu === 'Təslim Edildi' ? "Təslim Edilməyib Et" : "Təslim Edildi Et"} onClick={() => handleToggleStatus(row.id)} />
-                          <DropdownItem icon={<Copy size={16} />} label="Kopyala" onClick={() => handleCopy(row)} />
-                          <DropdownItem icon={<FileOutput size={16} />} label="Böl" onClick={() => handleAlert('Sənəd bölmə funksiyası aktivləşdirilir...')} />
-                          <DropdownItem icon={<Layers size={16} />} label="Birləşdir" onClick={() => handleAlert('Birdən çox sənədi birləşdirmək üçün siyahıdan seçin.')} />
-                        </div>
-                        
-                        <div style={{ padding: '0.5rem 0', borderBottom: '1px solid #e2e8f0' }}>
-                          <DropdownItem icon={<FileText size={16} />} label="Faktura Çapı" onClick={() => { setActiveDropdown(null); window.print(); }} />
-                          <DropdownItem icon={<FileText size={16} />} label="Təhvil Qaiməsi" onClick={() => handleAlert('Təhvil qaiməsi PDF formatında formalaşdırılır...')} />
-                          <DropdownItem icon={<FileText size={16} />} label="Satış Müqaviləsi" onClick={() => handleAlert('Satış müqaviləsi PDF formatında formalaşdırılır...')} />
-                          <DropdownItem icon={<Download size={16} />} label="Excel Yüklə" onClick={() => handleAlert('Bu sənədin məlumatları Excel (XLSX) olaraq yüklənir...')} />
-                        </div>
-                        
-                        <div style={{ padding: '0.5rem 0', borderBottom: '1px solid #e2e8f0' }}>
-                          <DropdownItem icon={<Plus size={16} />} label="Satışı Təkrarla" onClick={() => { setActiveDropdown(null); router.push('/erp/satislar/yeni'); }} />
-                          <DropdownItem icon={<FileImage size={16} />} label="Şəkil Yüklə" onClick={() => handleAlert('Sənədə aid şəkil və ya fayl yükləmək modulu açılır...')} />
-                          <DropdownItem icon={<History size={16} />} label="Dəyişiklik Tarixçəsi" onClick={() => handleAlert('Bu sənəd üzərindəki bütün dəyişikliklərin tarixçəsi...')} />
-                        </div>
-
-                        <div style={{ padding: '0.5rem 0' }}>
-                          <DropdownItem icon={<Trash2 size={16} color="#ef4444" />} label="Sil" textColor="#ef4444" onClick={() => handleDelete(row.id)} />
-                        </div>
-
-                      </div>
-                    )}
-                  </td>
-                </tr>
-              ))}
-              {filteredData.length === 0 && (
+              {isLoading ? (
                 <tr>
-                  <td colSpan={8} style={{ padding: '3rem', textAlign: 'center', color: '#94a3b8' }}>Heç bir satış tapılmadı.</td>
+                  <td colSpan={8} style={{ padding: '3rem', textAlign: 'center', color: '#64748b' }}>
+                    <div style={{ display: 'inline-block', width: '24px', height: '24px', border: '3px solid #e2e8f0', borderTopColor: '#3b82f6', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></div>
+                    <div style={{ marginTop: '0.5rem' }}>Məlumatlar Buluddan (Supabase) Yüklənir...</div>
+                  </td>
                 </tr>
+              ) : (
+                <>
+                  {filteredData.map((row) => (
+                    <tr key={row.id} style={{ borderBottom: '1px solid #e2e8f0', transition: 'background-color 0.15s' }} className="hover-row">
+                      <td style={{ padding: '1rem 1.5rem', fontSize: '0.9rem', color: '#334155', fontWeight: 500 }}>{row.tarih}</td>
+                      <td style={{ padding: '1rem 1.5rem', fontSize: '0.9rem', color: '#10b981', fontWeight: 700 }}>{row.evrakNo}</td>
+                      <td style={{ padding: '1rem 1.5rem', fontSize: '0.9rem', color: '#64748b' }}>{row.faturaNo}</td>
+                      <td style={{ padding: '1rem 1.5rem', fontSize: '0.9rem', color: '#1e293b', fontWeight: 600 }}>{row.hesapAdi}</td>
+                      <td style={{ padding: '1rem 1.5rem', fontSize: '0.9rem', color: '#64748b' }}>{row.aciklama}</td>
+                      <td style={{ padding: '1rem 1.5rem' }}>{getStatusBadge(row.teslimDurumu)}</td>
+                      <td style={{ padding: '1rem 1.5rem', fontSize: '1rem', color: '#0f172a', fontWeight: 700, textAlign: 'right' }}>
+                        {Number(row.miktar || 0).toLocaleString('az-AZ', { style: 'currency', currency: 'AZN' })}
+                      </td>
+                      <td style={{ padding: '1rem 1.5rem', position: 'relative' }}>
+                        <button 
+                          onClick={(e) => { e.stopPropagation(); setActiveDropdown(activeDropdown === row.id ? null : row.id); }}
+                          style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', padding: '0.2rem' }}
+                        >
+                          <MoreHorizontal size={20}/>
+                        </button>
+                        
+                        {/* Action Dropdown Menu */}
+                        {activeDropdown === row.id && (
+                          <div ref={dropdownRef} style={{ position: 'absolute', right: '40px', top: '20px', backgroundColor: 'white', borderRadius: '8px', border: '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)', width: '220px', zIndex: 50, overflow: 'hidden' }}>
+                            
+                            <div style={{ padding: '0.5rem 0', borderBottom: '1px solid #e2e8f0' }}>
+                              <DropdownItem icon={<Edit size={16} />} label="Düzəliş Et" onClick={() => { setActiveDropdown(null); router.push(`/erp/satislar/yeni?id=${row.id}`); }} />
+                              <DropdownItem icon={row.teslimDurumu === 'Təslim Edildi' ? <Clock size={16}/> : <CheckCircle2 size={16}/>} label={row.teslimDurumu === 'Təslim Edildi' ? "Təslim Edilməyib Et" : "Təslim Edildi Et"} onClick={() => handleToggleStatus(row.id)} />
+                              <DropdownItem icon={<Copy size={16} />} label="Kopyala" onClick={() => handleCopy(row)} />
+                              <DropdownItem icon={<FileOutput size={16} />} label="Böl" onClick={() => handleAlert('Sənəd bölmə funksiyası aktivləşdirilir...')} />
+                              <DropdownItem icon={<Layers size={16} />} label="Birləşdir" onClick={() => handleAlert('Birdən çox sənədi birləşdirmək üçün siyahıdan seçin.')} />
+                            </div>
+                            
+                            <div style={{ padding: '0.5rem 0', borderBottom: '1px solid #e2e8f0' }}>
+                              <DropdownItem icon={<FileText size={16} />} label="Faktura Çapı" onClick={() => { setActiveDropdown(null); window.print(); }} />
+                              <DropdownItem icon={<FileText size={16} />} label="Təhvil Qaiməsi" onClick={() => handleAlert('Təhvil qaiməsi PDF formatında formalaşdırılır...')} />
+                              <DropdownItem icon={<FileText size={16} />} label="Satış Müqaviləsi" onClick={() => handleAlert('Satış müqaviləsi PDF formatında formalaşdırılır...')} />
+                              <DropdownItem icon={<Download size={16} />} label="Excel Yüklə" onClick={() => handleAlert('Bu sənədin məlumatları Excel (XLSX) olaraq yüklənir...')} />
+                            </div>
+                            
+                            <div style={{ padding: '0.5rem 0', borderBottom: '1px solid #e2e8f0' }}>
+                              <DropdownItem icon={<Plus size={16} />} label="Satışı Təkrarla" onClick={() => { setActiveDropdown(null); router.push('/erp/satislar/yeni'); }} />
+                              <DropdownItem icon={<FileImage size={16} />} label="Şəkil Yüklə" onClick={() => handleAlert('Sənədə aid şəkil və ya fayl yükləmək modulu açılır...')} />
+                              <DropdownItem icon={<History size={16} />} label="Dəyişiklik Tarixçəsi" onClick={() => handleAlert('Bu sənəd üzərindəki bütün dəyişikliklərin tarixçəsi...')} />
+                            </div>
+    
+                            <div style={{ padding: '0.5rem 0' }}>
+                              <DropdownItem icon={<Trash2 size={16} color="#ef4444" />} label="Sil" textColor="#ef4444" onClick={() => handleDelete(row.id)} />
+                            </div>
+    
+                          </div>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                  {filteredData.length === 0 && (
+                    <tr>
+                      <td colSpan={8} style={{ padding: '3rem', textAlign: 'center', color: '#94a3b8' }}>Heç bir satış tapılmadı.</td>
+                    </tr>
+                  )}
+                </>
               )}
             </tbody>
-            )}
           </table>
         </div>
         

@@ -341,16 +341,15 @@ export default function ProductsPage() {
                 <th style={{ padding: '1rem 1.5rem', fontSize: '0.85rem', fontWeight: 800, color: '#475569', width: '60px' }}></th>
               </tr>
             </thead>
-            {isLoading ? (
-              <tr>
-                <td colSpan={9} style={{ padding: '3rem', textAlign: 'center', color: '#64748b' }}>
-                  <div style={{ display: 'inline-block', width: '24px', height: '24px', border: '3px solid #e2e8f0', borderTopColor: '#0ea5e9', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></div>
-                  <div style={{ marginTop: '0.5rem' }}>Məlumatlar Buluddan (Supabase) Yüklənir...</div>
-                </td>
-              </tr>
-            ) : (
             <tbody>
-              {filteredProducts.map((item) => (
+              {isLoading ? (
+                <tr>
+                  <td colSpan={9} style={{ padding: '3rem', textAlign: 'center', color: '#64748b' }}>
+                    <div style={{ display: 'inline-block', width: '24px', height: '24px', border: '3px solid #e2e8f0', borderTopColor: '#0ea5e9', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></div>
+                    <div style={{ marginTop: '0.5rem' }}>Məlumatlar Buluddan (Supabase) Yüklənir...</div>
+                  </td>
+                </tr>
+              ) : filteredProducts.map((item) => (
                 <tr key={item.id} style={{ borderBottom: '1px solid #f1f5f9', backgroundColor: 'white', transition: 'background-color 0.2s' }} onMouseOver={e=>e.currentTarget.style.backgroundColor='#f8fafc'} onMouseOut={e=>e.currentTarget.style.backgroundColor='white'}>
                   <td style={{ padding: '1rem 1.5rem' }}>
                     <div style={{ width: '40px', height: '40px', borderRadius: '8px', backgroundColor: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#94a3b8' }}>
@@ -402,7 +401,6 @@ export default function ProductsPage() {
                 </tr>
               ))}
             </tbody>
-            )}
           </table>
         </div>
 

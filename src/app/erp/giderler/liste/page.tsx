@@ -177,16 +177,15 @@ export default function XercSiyahisiPage() {
                 <th style={{...thStyle, textAlign: 'center', width: '120px'}}>Əməliyyat</th>
               </tr>
             </thead>
-            {isLoading ? (
-              <tr>
-                <td colSpan={9} style={{ padding: '3rem', textAlign: 'center', color: '#64748b' }}>
-                  <div style={{ display: 'inline-block', width: '24px', height: '24px', border: '3px solid #e2e8f0', borderTopColor: '#3b82f6', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></div>
-                  <div style={{ marginTop: '0.5rem' }}>Məlumatlar Buluddan (Supabase) Yüklənir...</div>
-                </td>
-              </tr>
-            ) : (
             <tbody>
-              {filteredData.length > 0 ? filteredData.map((row) => (
+              {isLoading ? (
+                <tr>
+                  <td colSpan={9} style={{ padding: '3rem', textAlign: 'center', color: '#64748b' }}>
+                    <div style={{ display: 'inline-block', width: '24px', height: '24px', border: '3px solid #e2e8f0', borderTopColor: '#3b82f6', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></div>
+                    <div style={{ marginTop: '0.5rem' }}>Məlumatlar Buluddan (Supabase) Yüklənir...</div>
+                  </td>
+                </tr>
+              ) : filteredData.length > 0 ? filteredData.map((row) => (
                 <tr key={row.id} style={{ borderBottom: '1px solid #f1f5f9', transition: 'background-color 0.2s' }} onMouseOver={e => e.currentTarget.style.backgroundColor = '#f8fafc'} onMouseOut={e => e.currentTarget.style.backgroundColor = 'transparent'}>
                   <td style={tdStyle}>{row.tarix}</td>
                   <td style={{...tdStyle, fontWeight: 600, color: '#0f172a'}}>{row.kateqoriya}</td>
@@ -241,7 +240,6 @@ export default function XercSiyahisiPage() {
                 </tr>
               )}
             </tbody>
-            )}
             
             {/* Table Footer - Totals */}
             <tfoot>
