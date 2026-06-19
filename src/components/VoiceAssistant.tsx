@@ -16,9 +16,12 @@ export default function VoiceAssistant() {
   const [feedback, setFeedback] = useState('');
   const [mounted, setMounted] = useState(false);
   
-  const [convMode, setConvMode] = useState<'navigation' | 'create_expense'>('navigation');
+  const [convMode, setConvMode] = useState<'navigation' | 'create_expense' | 'create_sale'>('navigation');
   const [expenseStep, setExpenseStep] = useState<'amount' | 'category' | 'desc' | null>(null);
   const [expenseDraft, setExpenseDraft] = useState({ mebleg: '', kateqoriya: '', aciqlama: '' });
+  
+  const [saleStep, setSaleStep] = useState<'amount' | 'customer' | 'desc' | null>(null);
+  const [saleDraft, setSaleDraft] = useState({ mebleg: '', musteri: '', aciqlama: '' });
 
   const recognitionRef = useRef<any>(null);
 
@@ -132,7 +135,10 @@ export default function VoiceAssistant() {
         };
         
         const storageKey = 'app_erp_expenses';
-        const existing = JSON.parse(localStorage.getItem(storageKey) || localStorage.getItem('erp_expenses') || '[]');
+        let existing = [];
+        try {
+          existing = JSON.parse(localStorage.getItem(storageKey) || localStorage.getItem('erp_expenses') || '[]');
+        } catch(e) {}
         existing.unshift(finalExpense);
         localStorage.setItem(storageKey, JSON.stringify(existing));
         // Also set without prefix just in case
@@ -151,11 +157,70 @@ export default function VoiceAssistant() {
       }
     }
 
+    if (convMode === 'create_sale') {
+      if (saleStep === 'amount') {
+        const amountMatch = command.match(/\d+/);
+        if (amountMatch) {
+          setSaleDraft(prev => ({ ...prev, mebleg: amountMatch[0] }));
+          setSaleStep('customer');
+          speakAndListen("Məbləğ qeyd olundu. Müştərinin adı nədir?");
+        } else {
+          speakAndListen("Məbləği rəqəmlə anlaya bilmədim. Zəhmət olmasa sadəcə rəqəm deyin.");
+        }
+        return;
+      }
+      if (saleStep === 'customer') {
+        setSaleDraft(prev => ({ ...prev, musteri: command.charAt(0).toUpperCase() + command.slice(1) }));
+        setSaleStep('desc');
+        speakAndListen("Aydındır. Bu satış nə üçündür? Məhsulun və ya xidmətin adını qısa deyin.");
+        return;
+      }
+      if (saleStep === 'desc') {
+        const finalSale = {
+          id: Date.now(),
+          tarih: new Date().toISOString().split('T')[0],
+          evrakNo: 'EVR-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random() * 1000)).padStart(3, '0'),
+          faturaNo: 'INV-' + String(Math.floor(Math.random() * 10000)).padStart(4, '0'),
+          hesapAdi: saleDraft.musteri,
+          aciklama: command.charAt(0).toUpperCase() + command.slice(1),
+          teslimDurumu: 'Təslim Edildi',
+          miktar: Number(saleDraft.mebleg)
+        };
+        
+        const storageKey = 'app_erp_sales';
+        let existing = [];
+        try {
+          existing = JSON.parse(localStorage.getItem(storageKey) || localStorage.getItem('erp_sales') || '[]');
+        } catch(e) {}
+        existing.unshift(finalSale);
+        localStorage.setItem(storageKey, JSON.stringify(existing));
+        localStorage.setItem('erp_sales', JSON.stringify(existing));
+        
+        setConvMode('navigation');
+        setSaleStep(null);
+        setSaleDraft({ mebleg: '', musteri: '', aciqlama: '' });
+        
+        speakAndListen("Əla! Yeni satış uğurla yaradıldı və yadda saxlanıldı.");
+        
+        setTimeout(() => {
+          router.push('/erp/satislar/liste');
+        }, 3000);
+        return;
+      }
+    }
+
     // NORMAL NAVIGATION MODE
     if (command.includes('yeni xərc') || command.includes('xərc yarat')) {
       setConvMode('create_expense');
       setExpenseStep('amount');
       speakAndListen("Yeni xərc yaradırıq. Xərcin məbləği nə qədərdir?");
+      return;
+    }
+
+    if (command.includes('yeni satış') || command.includes('satış yarat') || command.includes('satis yarat') || command.includes('satiş yarat')) {
+      setConvMode('create_sale');
+      setSaleStep('amount');
+      speakAndListen("Yeni satış yaradırıq. Satışın məbləği nə qədərdir?");
       return;
     }
 
@@ -216,6 +281,7 @@ export default function VoiceAssistant() {
       // Reset state if manually stopped
       setConvMode('navigation');
       setExpenseStep(null);
+      setSaleStep(null);
     } else {
       setTranscript('');
       try { recognitionRef.current?.start(); } catch(e) {}
