@@ -4,6 +4,8 @@ import { Package, Search, Tag, Plus, Filter, MoreHorizontal, Image as ImageIcon,
 
 import { getAppStorage, setAppStorage, removeAppStorage } from '@/utils/storage';
 import { createClient } from '@/utils/supabase/client';
+
+export default function ProductsPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);

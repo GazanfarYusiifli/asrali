@@ -363,6 +363,7 @@ export default function SatisListesiPage() {
                 </tr>
               )}
             </tbody>
+            )}
           </table>
         </div>
         
