@@ -25,34 +25,44 @@ export default function SatisRaporuPage() {
   useEffect(() => {
     setIsMounted(true);
     // Fetch SMM records
-    const smmData = JSON.parse(getAppStorage('erp_smm_list') || '[]');
+    let smmData = [];
+    try {
+      smmData = JSON.parse(getAppStorage('erp_smm_list') || '[]');
+    } catch (e) {
+      smmData = [];
+    }
     const formattedSmm = smmData.map((item: any) => {
       const dateObj = new Date(item.id);
       return {
         id: `smm-${item.id}`,
         timestamp: item.id,
-        tarix: item.smmData.tarix.split('-').reverse().join('.'),
+        tarix: item.smmData?.tarix?.includes('-') ? item.smmData.tarix.split('-').reverse().join('.') : (item.smmData?.tarix || '-'),
         saat: dateObj.toLocaleTimeString('az-AZ', { hour: '2-digit', minute: '2-digit' }),
         nov: 'SMM (Qəbz)',
         fakturaNo: '-',
-        senedNo: `SPQ-${item.id.toString().slice(-5)}`,
-        hesabKodu: item.accountData.hesabKodu || '-',
-        musteriAdi: item.accountData.hesabAdi || 'Adsız',
-        aciqlama: item.smmData.xidmetAciklamasi || '-',
-        mebleg: Number(item.calc.totalPayable) || 0,
-        valyuta: item.accountData.valyuta || 'AZN'
+        senedNo: `SPQ-${item.id?.toString().slice(-5) || ''}`,
+        hesabKodu: item.accountData?.hesabKodu || '-',
+        musteriAdi: item.accountData?.hesabAdi || 'Adsız',
+        aciqlama: item.smmData?.xidmetAciklamasi || '-',
+        mebleg: Number(item.calc?.totalPayable) || 0,
+        valyuta: item.accountData?.valyuta || 'AZN'
       };
     });
 
     // Fetch Satış Siyahısı records
-    const satisData = JSON.parse(getAppStorage('erp_sales') || '[]');
+    let satisData = [];
+    try {
+      satisData = JSON.parse(getAppStorage('erp_sales') || '[]');
+    } catch (e) {
+      satisData = [];
+    }
     const formattedSales = satisData.map((item: any) => {
       // Mock timestamp if not exists, prioritizing id for sorting
       const ts = item.id > 1000000000000 ? item.id : new Date(item.tarih).getTime();
       return {
         id: `satis-${item.id}`,
         timestamp: ts,
-        tarix: item.tarih.includes('-') ? item.tarih.split('-').reverse().join('.') : item.tarih,
+        tarix: item.tarih?.includes('-') ? item.tarih.split('-').reverse().join('.') : (item.tarih || '-'),
         saat: '12:00', // Mock time for old static records
         nov: 'Satış Fakturası',
         fakturaNo: item.faturaNo || '-',
@@ -78,10 +88,10 @@ export default function SatisRaporuPage() {
     if (searchTerm) {
       const lowerSearch = searchTerm.toLowerCase();
       const matchesSearch = 
-        item.musteriAdi?.toLowerCase().includes(lowerSearch) ||
-        item.senedNo?.toLowerCase().includes(lowerSearch) ||
-        item.fakturaNo?.toLowerCase().includes(lowerSearch) ||
-        item.aciqlama?.toLowerCase().includes(lowerSearch);
+        String(item.musteriAdi || '').toLowerCase().includes(lowerSearch) ||
+        String(item.senedNo || '').toLowerCase().includes(lowerSearch) ||
+        String(item.fakturaNo || '').toLowerCase().includes(lowerSearch) ||
+        String(item.aciqlama || '').toLowerCase().includes(lowerSearch);
       if (!matchesSearch) return false;
     }
 

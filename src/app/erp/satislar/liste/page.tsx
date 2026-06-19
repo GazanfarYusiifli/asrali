@@ -13,12 +13,18 @@ export default function SatisListesiPage() {
   const [filterStatus, setFilterStatus] = useState<string>('Hamısı');
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const [isMounted, setIsMounted] = useState(false);
 
   // Initialize data from localStorage or use defaults
   useEffect(() => {
+    setIsMounted(true);
     const saved = getAppStorage('erp_sales');
     if (saved) {
-      setSalesData(JSON.parse(saved));
+      try {
+        setSalesData(JSON.parse(saved) || []);
+      } catch (e) {
+        setSalesData([]);
+      }
     } else {
       const defaultData = [
         { id: 1, tarih: '2026-06-17', evrakNo: 'EVR-2026-001', faturaNo: 'INV-1001', hesapAdi: 'Baku Electronics MMC', aciklama: 'Topdan noutbuk satışı', teslimDurumu: 'Təslim Edildi', miktar: 15400.00 },
@@ -39,6 +45,8 @@ export default function SatisListesiPage() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [dropdownRef]);
+
+  if (!isMounted) return null;
 
   const handleDelete = (id: number) => {
     if (confirm('Bu satışı silmək istədiyinizə əminsiniz?')) {
@@ -97,10 +105,10 @@ export default function SatisListesiPage() {
   const filteredData = salesData.filter(item => {
     const searchLower = searchTerm.toLowerCase();
     const matchesSearch = 
-      (item.hesapAdi?.toLowerCase() || '').includes(searchLower) || 
-      (item.evrakNo?.toLowerCase() || '').includes(searchLower) || 
-      (item.faturaNo?.toLowerCase() || '').includes(searchLower) ||
-      (item.aciklama?.toLowerCase() || '').includes(searchLower);
+      (String(item.hesapAdi || '')).toLowerCase().includes(searchLower) || 
+      (String(item.evrakNo || '')).toLowerCase().includes(searchLower) || 
+      (String(item.faturaNo || '')).toLowerCase().includes(searchLower) ||
+      (String(item.aciklama || '')).toLowerCase().includes(searchLower);
       
     const matchesFilter = filterStatus === 'Hamısı' ? true : item.teslimDurumu === filterStatus;
     
@@ -237,7 +245,7 @@ export default function SatisListesiPage() {
                   <td style={{ padding: '1rem 1.5rem', fontSize: '0.9rem', color: '#64748b' }}>{row.aciklama}</td>
                   <td style={{ padding: '1rem 1.5rem' }}>{getStatusBadge(row.teslimDurumu)}</td>
                   <td style={{ padding: '1rem 1.5rem', fontSize: '1rem', color: '#0f172a', fontWeight: 700, textAlign: 'right' }}>
-                    {row.miktar.toLocaleString('az-AZ', { style: 'currency', currency: 'AZN' })}
+                    {Number(row.miktar || 0).toLocaleString('az-AZ', { style: 'currency', currency: 'AZN' })}
                   </td>
                   <td style={{ padding: '1rem 1.5rem', position: 'relative' }}>
                     <button 
