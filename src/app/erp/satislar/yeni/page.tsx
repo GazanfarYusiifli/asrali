@@ -161,7 +161,7 @@ export default function YeniSatisPage() {
       const { error } = await supabase.from('erp_sales').insert([newSale]);
       if (error) {
         console.error(error);
-        alert("Satış yaradılarkən xəta baş verdi.");
+        alert(`Satış yaradılarkən xəta baş verdi: ${error.message} \n\nDetallar: ${error.details || ''} ${error.hint || ''}`);
         return;
       }
     }

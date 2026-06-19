@@ -91,7 +91,7 @@ export default function YeniXercPage() {
       const { error } = await supabase.from('erp_expenses').insert([newDoc]);
       if (error) {
         console.error(error);
-        alert("Xərc yaradılarkən xəta baş verdi.");
+        alert(`Xərc yaradılarkən xəta baş verdi: ${error.message} \n\nDetallar: ${error.details || ''} ${error.hint || ''}`);
         return;
       }
     }
