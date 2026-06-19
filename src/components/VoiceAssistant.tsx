@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/app/context/AuthContext';
+import { createClient } from '@/utils/supabase/client';
 
 const SpeechRecognition = typeof window !== 'undefined' ? 
   (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition : null;
@@ -100,7 +101,7 @@ export default function VoiceAssistant() {
     }
   }, [router, signOut, speakAndListen]);
 
-  const processCommand = useCallback((command: string) => {
+  const processCommand = useCallback(async (command: string) => {
     setFeedback(`Siz: "${command}"`);
     
     if (convMode === 'create_expense') {
@@ -122,27 +123,30 @@ export default function VoiceAssistant() {
         return;
       }
       if (expenseStep === 'desc') {
-        const finalExpense = {
-          id: Date.now(),
-          tarix: new Date().toISOString().split('T')[0],
-          kateqoriya: expenseDraft.kateqoriya,
-          kassaBanka: 'Əsas Bank Hesabı',
-          aciqlama: command.charAt(0).toUpperCase() + command.slice(1),
-          mebleg: Number(expenseDraft.mebleg),
-          valyuta: 'AZN',
-          veziyyet: 'Ödənilib',
-          tekrarla: 'Təkrarlanmır'
-        };
-        
-        const storageKey = 'app_erp_expenses';
-        let existing = [];
-        try {
-          existing = JSON.parse(localStorage.getItem(storageKey) || localStorage.getItem('erp_expenses') || '[]');
-        } catch(e) {}
-        existing.unshift(finalExpense);
-        localStorage.setItem(storageKey, JSON.stringify(existing));
-        // Also set without prefix just in case
-        localStorage.setItem('erp_expenses', JSON.stringify(existing));
+        const supabase = createClient();
+        const { data: { user } } = await supabase.auth.getUser();
+
+        if (user) {
+          const finalExpense = {
+            user_id: user.id,
+            tarix: new Date().toISOString().split('T')[0],
+            kateqoriya: expenseDraft.kateqoriya,
+            kassa_banka: 'Əsas Bank Hesabı',
+            aciqlama: command.charAt(0).toUpperCase() + command.slice(1),
+            mebleg: Number(expenseDraft.mebleg),
+            valyuta: 'AZN',
+            veziyyet: 'Ödənilib',
+            tekrarla: 'Təkrarlanmır'
+          };
+          
+          await supabase.from('erp_expenses').insert([finalExpense]);
+        } else {
+          speakAndListen("Sistemə daxil olmadığınız üçün xərci yadda saxlaya bilmədim.");
+          setConvMode('navigation');
+          setExpenseStep(null);
+          setExpenseDraft({ mebleg: '', kateqoriya: '', aciqlama: '' });
+          return;
+        }
         
         setConvMode('navigation');
         setExpenseStep(null);
@@ -176,25 +180,29 @@ export default function VoiceAssistant() {
         return;
       }
       if (saleStep === 'desc') {
-        const finalSale = {
-          id: Date.now(),
-          tarih: new Date().toISOString().split('T')[0],
-          evrakNo: 'EVR-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random() * 1000)).padStart(3, '0'),
-          faturaNo: 'INV-' + String(Math.floor(Math.random() * 10000)).padStart(4, '0'),
-          hesapAdi: saleDraft.musteri,
-          aciklama: command.charAt(0).toUpperCase() + command.slice(1),
-          teslimDurumu: 'Təslim Edildi',
-          miktar: Number(saleDraft.mebleg)
-        };
-        
-        const storageKey = 'app_erp_sales';
-        let existing = [];
-        try {
-          existing = JSON.parse(localStorage.getItem(storageKey) || localStorage.getItem('erp_sales') || '[]');
-        } catch(e) {}
-        existing.unshift(finalSale);
-        localStorage.setItem(storageKey, JSON.stringify(existing));
-        localStorage.setItem('erp_sales', JSON.stringify(existing));
+        const supabase = createClient();
+        const { data: { user } } = await supabase.auth.getUser();
+
+        if (user) {
+          const finalSale = {
+            user_id: user.id,
+            tarih: new Date().toISOString().split('T')[0],
+            evrak_no: 'EVR-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random() * 1000)).padStart(3, '0'),
+            fatura_no: 'INV-' + String(Math.floor(Math.random() * 10000)).padStart(4, '0'),
+            hesap_adi: saleDraft.musteri,
+            aciklama: command.charAt(0).toUpperCase() + command.slice(1),
+            teslim_durumu: 'Təslim Edildi',
+            miktar: Number(saleDraft.mebleg)
+          };
+          
+          await supabase.from('erp_sales').insert([finalSale]);
+        } else {
+          speakAndListen("Sistemə daxil olmadığınız üçün satışı yadda saxlaya bilmədim.");
+          setConvMode('navigation');
+          setSaleStep(null);
+          setSaleDraft({ mebleg: '', musteri: '', aciqlama: '' });
+          return;
+        }
         
         setConvMode('navigation');
         setSaleStep(null);

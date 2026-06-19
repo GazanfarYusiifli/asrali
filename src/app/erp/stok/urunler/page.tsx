@@ -3,8 +3,7 @@ import React, { useState } from 'react';
 import { Package, Search, Tag, Plus, Filter, MoreHorizontal, Image as ImageIcon, X, Save, Trash2, Edit2, CheckCircle2 } from 'lucide-react';
 
 import { getAppStorage, setAppStorage, removeAppStorage } from '@/utils/storage';
-
-export default function ProductsPage() {
+import { createClient } from '@/utils/supabase/client';
   const [searchTerm, setSearchTerm] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
@@ -41,19 +40,60 @@ export default function ProductsPage() {
     },
   ];
 
-  const [products, setProducts] = useState(defaultProducts);
+  const [products, setProducts] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   React.useEffect(() => {
     setIsMounted(true);
-    let stored = null;
-    try {
-      stored = getAppStorage('erp_products');
-      if (stored) {
-        setProducts(JSON.parse(stored));
-      } else {
-        setAppStorage('erp_products', JSON.stringify(defaultProducts));
+    
+    const fetchProducts = async () => {
+      setIsLoading(true);
+      const supabase = createClient();
+      
+      const { data, error } = await supabase
+        .from('erp_products')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error("Supabase fetch error (erp_products):", error);
+        setProducts([]);
+      } else if (data) {
+        // Map snake_case from DB back to camelCase used in the UI
+        const mappedData = data.map(item => ({
+          id: item.id,
+          kod: item.kod,
+          ad: item.ad,
+          merkezSobe: item.merkezSobe || 0,
+          toplam: item.toplam || 0,
+          alisFiyati: Number(item.alis_fiyati),
+          satisFiyati: Number(item.satis_fiyati),
+          img: item.img || null,
+          tur: item.tur || 'Məhsul',
+          izleme: item.izleme || 'İzlənməyəcək',
+          vahid: item.vahid || 'Ədəd',
+          depo: item.depo || 'Mərkəz Şöbə',
+          b2bGoster: item.b2bgoster || false,
+          kritikSeviyye: item.kritikseviyye || 0,
+          aciqlama: item.aciqlama || '',
+          edv: item.edv || 18,
+          satisValyuta: item.satisvalyuta || 'AZN',
+          satisNovu: item.satisnovu || 'ƏDV Daxil',
+          alisValyuta: item.alisvalyuta || 'AZN',
+          alisNovu: item.alisnovu || 'ƏDV Daxil',
+          barkod: item.barkod || '',
+          techizatciKodu: item.techizatcikodu || '',
+          refKodu: item.refkodu || '',
+          etiketler: item.etiketler || [],
+          sonSayimTarixi: item.sonsayimtarixi || '-',
+          sayimNeticesi: item.sayimneticesi || ''
+        }));
+        setProducts(mappedData);
       }
-    } catch(e) {}
+      setIsLoading(false);
+    };
+    
+    fetchProducts();
     
     try {
       const storedWarehouses = getAppStorage('erp_warehouses');
@@ -67,7 +107,7 @@ export default function ProductsPage() {
 
   const updateProducts = (newProducts: any) => {
     setProducts(newProducts);
-    setAppStorage('erp_products', JSON.stringify(newProducts));
+    // Legacy storage backup removed, rely on Supabase
   };
 
   const defaultForm = {
@@ -120,44 +160,87 @@ export default function ProductsPage() {
     setIsModalOpen(true);
   };
 
-  const handleDelete = (id: number) => {
+  const handleDelete = async (id: string | number) => {
     if (window.confirm('Bu məhsulu silmək istədiyinizə əminsiniz?')) {
-      updateProducts(products.filter(p => p.id !== id));
+      const supabase = createClient();
+      const { error } = await supabase.from('erp_products').delete().eq('id', id);
+      if (!error) {
+        setProducts(products.filter(p => p.id !== id));
+      } else {
+        alert("Silinərkən xəta baş verdi.");
+      }
     }
     setOpenDropdownId(null);
   };
 
-  const handleSaveProduct = () => {
+  const handleSaveProduct = async () => {
+    const supabase = createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    
+    if (!user) {
+      alert("İstifadəçi tapılmadı, daxil olun.");
+      return;
+    }
+
+    const dbProduct = {
+      user_id: user.id,
+      kod: formData.stokKodu || `YENI-${Math.floor(Math.random() * 1000)}`,
+      ad: formData.ad || 'Adsız Məhsul',
+      alis_fiyati: Number(formData.alisFiyati),
+      satis_fiyati: Number(formData.satisFiyati),
+      tur: formData.tur,
+      vahid: formData.vahid,
+      depo: formData.depo,
+      aciqlama: formData.aciqlama,
+      // Extra custom fields specific to the UI (can be added as JSONB or exact columns if extended)
+      merkezSobe: Number(formData.miqdar),
+      toplam: Number(formData.miqdar),
+      izleme: formData.izleme,
+      b2bgoster: formData.b2bGoster,
+      kritikseviyye: formData.kritikSeviyye,
+      etiketler: formData.etiketler,
+      edv: formData.edv,
+      satisvalyuta: formData.satisValyuta,
+      satisnovu: formData.satisNovu,
+      alisvalyuta: formData.alisValyuta,
+      alisnovu: formData.alisNovu,
+      barkod: formData.barkod,
+      techizatcikodu: formData.techizatciKodu,
+      refkodu: formData.refKodu
+    };
+
     if (editingId) {
       // Update
-      updateProducts(products.map(p => p.id === editingId ? {
-        ...p,
-        kod: formData.stokKodu || p.kod,
-        ad: formData.ad || p.ad,
-        merkezSobe: Number(formData.miqdar),
-        toplam: Number(formData.miqdar),
-        alisFiyati: Number(formData.alisFiyati),
-        satisFiyati: Number(formData.satisFiyati),
-        tur: formData.tur, izleme: formData.izleme, vahid: formData.vahid, depo: formData.depo, b2bGoster: formData.b2bGoster, kritikSeviyye: formData.kritikSeviyye, aciqlama: formData.aciqlama, etiketler: formData.etiketler,
-        edv: formData.edv, satisValyuta: formData.satisValyuta, satisNovu: formData.satisNovu, alisValyuta: formData.alisValyuta, alisNovu: formData.alisNovu, barkod: formData.barkod, techizatciKodu: formData.techizatciKodu, refKodu: formData.refKodu
-      } : p));
+      const { error } = await supabase.from('erp_products').update(dbProduct).eq('id', editingId);
+      if (!error) {
+        setProducts(products.map(p => p.id === editingId ? { ...p, ...formData, stokKodu: dbProduct.kod, alisFiyati: dbProduct.alis_fiyati, satisFiyati: dbProduct.satis_fiyati } : p));
+      } else {
+        console.error(error);
+        alert("Yenilənərkən xəta baş verdi.");
+        return;
+      }
     } else {
       // Create new
-      const newProduct = {
-        id: Date.now(),
-        kod: formData.stokKodu || `YENI-${Math.floor(Math.random() * 1000)}`,
-        ad: formData.ad || 'Adsız Məhsul',
-        merkezSobe: Number(formData.miqdar),
-        toplam: Number(formData.miqdar),
-        alisFiyati: Number(formData.alisFiyati),
-        satisFiyati: Number(formData.satisFiyati),
-        img: null,
-        tur: formData.tur, izleme: formData.izleme, vahid: formData.vahid, depo: formData.depo, b2bGoster: formData.b2bGoster, kritikSeviyye: formData.kritikSeviyye, aciqlama: formData.aciqlama, etiketler: formData.etiketler,
-        edv: formData.edv, satisValyuta: formData.satisValyuta, satisNovu: formData.satisNovu, alisValyuta: formData.alisValyuta, alisNovu: formData.alisNovu, barkod: formData.barkod, techizatciKodu: formData.techizatciKodu, refKodu: formData.refKodu,
-        sonSayimTarixi: '-', sayimNeticesi: ''
-      };
-      updateProducts([...products, newProduct]);
+      const { data, error } = await supabase.from('erp_products').insert([dbProduct]).select();
+      if (!error && data) {
+        const p = data[0];
+        setProducts([{
+          id: p.id,
+          kod: p.kod,
+          ad: p.ad,
+          alisFiyati: p.alis_fiyati,
+          satisFiyati: p.satis_fiyati,
+          tur: p.tur, vahid: p.vahid, depo: p.depo, aciqlama: p.aciqlama,
+          merkezSobe: p.merkezSobe, toplam: p.toplam, izleme: p.izleme, b2bGoster: p.b2bgoster, kritikSeviyye: p.kritikseviyye,
+          etiketler: p.etiketler, edv: p.edv, satisValyuta: p.satisvalyuta, satisNovu: p.satisnovu, alisValyuta: p.alisvalyuta, alisNovu: p.alisnovu, barkod: p.barkod, techizatciKodu: p.techizatcikodu, refKodu: p.refkodu
+        }, ...products]);
+      } else {
+        console.error(error);
+        alert("Yaradılarkən xəta baş verdi.");
+        return;
+      }
     }
+    
     setIsModalOpen(false);
     setFormData(defaultForm);
   };
@@ -256,6 +339,14 @@ export default function ProductsPage() {
                 <th style={{ padding: '1rem 1.5rem', fontSize: '0.85rem', fontWeight: 800, color: '#475569', width: '60px' }}></th>
               </tr>
             </thead>
+            {isLoading ? (
+              <tr>
+                <td colSpan={9} style={{ padding: '3rem', textAlign: 'center', color: '#64748b' }}>
+                  <div style={{ display: 'inline-block', width: '24px', height: '24px', border: '3px solid #e2e8f0', borderTopColor: '#0ea5e9', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></div>
+                  <div style={{ marginTop: '0.5rem' }}>Məlumatlar Buluddan (Supabase) Yüklənir...</div>
+                </td>
+              </tr>
+            ) : (
             <tbody>
               {filteredProducts.map((item) => (
                 <tr key={item.id} style={{ borderBottom: '1px solid #f1f5f9', backgroundColor: 'white', transition: 'background-color 0.2s' }} onMouseOver={e=>e.currentTarget.style.backgroundColor='#f8fafc'} onMouseOut={e=>e.currentTarget.style.backgroundColor='white'}>
@@ -309,6 +400,7 @@ export default function ProductsPage() {
                 </tr>
               ))}
             </tbody>
+            )}
           </table>
         </div>
 

@@ -4,6 +4,7 @@ import { TrendingDown, Plus, Search, Filter, Edit, Trash2, CheckCircle2, Clock, 
 import { useRouter } from 'next/navigation';
 
 import { getAppStorage, setAppStorage, removeAppStorage } from '@/utils/storage';
+import { createClient } from '@/utils/supabase/client';
 
 export default function XercSiyahisiPage() {
   const router = useRouter();
@@ -12,42 +13,75 @@ export default function XercSiyahisiPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('Hamısı');
 
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     setIsMounted(true);
-    const existing = getAppStorage('erp_expenses');
-    if (existing) {
-      setExpenseData(JSON.parse(existing));
-    } else {
-      const defaultData = [
-        { id: 1, tarix: '2026-06-17', kateqoriya: 'İcarə (Arenda)', kassaBanka: 'Əsas Bank Hesabı', aciqlama: 'Ofis icarəsi üçün iyun ayı ödənişi', mebleg: 1500.00, valyuta: 'AZN', veziyyet: 'Ödənilib' },
-        { id: 2, tarix: '2026-06-16', kateqoriya: 'Kommunal', kassaBanka: 'Kassa', aciqlama: 'İşıq pulu', mebleg: 120.50, valyuta: 'AZN', veziyyet: 'Ödənilməyib' }
-      ];
-      setExpenseData(defaultData);
-      setAppStorage('erp_expenses', JSON.stringify(defaultData));
-    }
+    const fetchExpenses = async () => {
+      setIsLoading(true);
+      const supabase = createClient();
+      
+      const { data, error } = await supabase
+        .from('erp_expenses')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error("Supabase fetch error (erp_expenses):", error);
+        setExpenseData([]);
+      } else if (data) {
+        const formattedData = data.map(item => ({
+          id: item.id,
+          tarix: item.tarix,
+          kateqoriya: item.kateqoriya,
+          kassaBanka: item.kassa_banka,
+          aciqlama: item.aciqlama,
+          mebleg: Number(item.mebleg),
+          valyuta: item.valyuta || 'AZN',
+          veziyyet: item.veziyyet,
+          tekrarla: item.tekrarla
+        }));
+        setExpenseData(formattedData);
+      }
+      setIsLoading(false);
+    };
+
+    fetchExpenses();
   }, []);
 
   if (!isMounted) return null;
 
-  const handleToggleStatus = (id: number) => {
-    const newData = expenseData.map(item => {
-      if (item.id === id) {
-        return {
-          ...item,
-          veziyyet: item.veziyyet === 'Ödənilib' ? 'Ödənilməyib' : 'Ödənilib'
-        };
-      }
-      return item;
-    });
-    setExpenseData(newData);
-    setAppStorage('erp_expenses', JSON.stringify(newData));
+  const handleToggleStatus = async (id: string | number) => {
+    const item = expenseData.find(i => i.id === id);
+    if (!item) return;
+
+    const newStatus = item.veziyyet === 'Ödənilib' ? 'Ödənilməyib' : 'Ödənilib';
+    const supabase = createClient();
+    
+    const { error } = await supabase
+      .from('erp_expenses')
+      .update({ veziyyet: newStatus })
+      .eq('id', id);
+
+    if (!error) {
+      const newData = expenseData.map(i => i.id === id ? { ...i, veziyyet: newStatus } : i);
+      setExpenseData(newData);
+    } else {
+      alert("Status yenilənərkən xəta baş verdi.");
+    }
   };
 
-  const handleDelete = (id: number) => {
+  const handleDelete = async (id: string | number) => {
     if(confirm('Bu xərci silmək istədiyinizə əminsiniz?')) {
-      const newData = expenseData.filter(item => item.id !== id);
-      setExpenseData(newData);
-      setAppStorage('erp_expenses', JSON.stringify(newData));
+      const supabase = createClient();
+      const { error } = await supabase.from('erp_expenses').delete().eq('id', id);
+      
+      if (!error) {
+        const newData = expenseData.filter(item => item.id !== id);
+        setExpenseData(newData);
+      } else {
+        alert("Silinərkən xəta baş verdi.");
+      }
     }
   };
 
@@ -143,6 +177,14 @@ export default function XercSiyahisiPage() {
                 <th style={{...thStyle, textAlign: 'center', width: '120px'}}>Əməliyyat</th>
               </tr>
             </thead>
+            {isLoading ? (
+              <tr>
+                <td colSpan={9} style={{ padding: '3rem', textAlign: 'center', color: '#64748b' }}>
+                  <div style={{ display: 'inline-block', width: '24px', height: '24px', border: '3px solid #e2e8f0', borderTopColor: '#3b82f6', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></div>
+                  <div style={{ marginTop: '0.5rem' }}>Məlumatlar Buluddan (Supabase) Yüklənir...</div>
+                </td>
+              </tr>
+            ) : (
             <tbody>
               {filteredData.length > 0 ? filteredData.map((row) => (
                 <tr key={row.id} style={{ borderBottom: '1px solid #f1f5f9', transition: 'background-color 0.2s' }} onMouseOver={e => e.currentTarget.style.backgroundColor = '#f8fafc'} onMouseOut={e => e.currentTarget.style.backgroundColor = 'transparent'}>
@@ -193,12 +235,13 @@ export default function XercSiyahisiPage() {
                 </tr>
               )) : (
                 <tr>
-                  <td colSpan={8} style={{ padding: '3rem', textAlign: 'center', color: '#94a3b8' }}>
+                  <td colSpan={9} style={{ padding: '3rem', textAlign: 'center', color: '#94a3b8' }}>
                     Axtarışınıza uyğun qeyd tapılmadı.
                   </td>
                 </tr>
               )}
             </tbody>
+            )}
             
             {/* Table Footer - Totals */}
             <tfoot>

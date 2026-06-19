@@ -8,6 +8,7 @@ import {
   Banknote, TrendingUp, History, Info
 } from 'lucide-react';
 import { getAppStorage, setAppStorage } from '@/utils/storage';
+import { createClient } from '@/utils/supabase/client';
 
 export default function DashboardPage() {
   const { t, language } = useI18n();
@@ -25,107 +26,74 @@ export default function DashboardPage() {
   });
 
   useEffect(() => {
-    // Initialize dummy data if empty or '[]' to make it dynamic
-    const existingSales = getAppStorage('erp_sales');
-    if (!existingSales || existingSales === '[]') {
-      setAppStorage('erp_sales', JSON.stringify([
-        { id: '1', date: '2026-06-15', amount: 1500, type: 'Kredit', status: 'Ödənilməyib', customer: 'Ali Vəliyev' },
-        { id: '2', date: '2026-06-18', amount: 2000, type: 'Nağd', status: 'Ödənilib', customer: 'Ayşə Məmmədova' },
-        { id: '3', date: '2026-06-19', amount: 3500, type: 'Taksit', status: 'Ödənilməyib', customer: 'Vəli Əliyev' }
-      ]));
-    }
-
-    const existingExpenses = getAppStorage('erp_expenses');
-    if (!existingExpenses || existingExpenses === '[]') {
-      setAppStorage('erp_expenses', JSON.stringify([
-        { id: '1', tarix: '2026-06-10', mebleg: 500, veziyyet: 'Ödənilməyib', aciqlama: 'Ofis kirayəsi', tip: 'Cari' },
-        { id: '2', tarix: '2026-06-12', mebleg: 300, veziyyet: 'Ödənilməyib', aciqlama: 'Təchizatçı', tip: 'Çek' },
-        { id: '3', tarix: '2026-06-14', mebleg: 1200, veziyyet: 'Ödənilməyib', aciqlama: 'Maaşlar', tip: 'Cari' }
-      ]));
-    }
-
-    const existingTransactions = getAppStorage('erp_transactions');
-    if (!existingTransactions || existingTransactions === '[]') {
-      setAppStorage('erp_transactions', JSON.stringify([
-        { id: 't1', date: '18.06.2026', customer: '123', action: 'İcra Başlat', debt: '-', credit: '-' },
-        { id: 't2', date: '17.06.2026', customer: 'Ali Vəliyev', action: 'Satış', debt: '1500', credit: '-' },
-        { id: 't3', date: '15.06.2026', customer: 'Ofis kirayəsi', action: 'Xərc', debt: '-', credit: '500' }
-      ]));
-    }
-
-    const existingAssets = getAppStorage('erp_assets');
-    if (!existingAssets || existingAssets === '[]') {
-      setAppStorage('erp_assets', JSON.stringify({
-        mainCash: 12500,
-        creditCards: 3200,
-        pos: 4500
-      }));
-    }
-
-    // Load and calculate
-    let sales = [];
-    let expenses = [];
-    let transactions = [];
-    let storedAssets = { mainCash: 12500, creditCards: 3200, pos: 4500 };
-
-    try {
-      sales = JSON.parse(getAppStorage('erp_sales') || '[]');
-      expenses = JSON.parse(getAppStorage('erp_expenses') || '[]');
-      transactions = JSON.parse(getAppStorage('erp_transactions') || '[]');
-      const a = JSON.parse(getAppStorage('erp_assets') || 'null');
-      if (a) storedAssets = a;
-    } catch(e) {}
-
-    let recTotal = 0;
-    sales.forEach((s: any) => { 
-      const amount = Number(s.miktar || s.amount || s.qiymet || s.total || 0);
-      if (s.teslimDurumu === 'Təslim Edilməyib' || s.status === 'Ödənilməyib') recTotal += amount; 
-    });
-
-    let payTotal = 0, payCurrent = 0, payChecks = 0;
-    expenses.forEach((e: any) => { 
-      const amount = Number(e.mebleg || e.amount || e.total || 0);
-      if (e.veziyyet === 'Ödənilməyib' || e.status === 'Ödənilməyib') {
-        payTotal += amount;
-        if (e.kassaBanka === 'Əsas Bank Hesabı' || e.tip === 'Cari') payCurrent += amount;
-        if (e.kateqoriya?.toLowerCase().includes('çek') || e.tip === 'Çek') payChecks += amount;
-      }
-    });
-
-    let profit = 0;
-    sales.forEach((s: any) => {
-      profit += Number(s.miktar || s.amount || s.qiymet || s.total || 0);
-    });
-    expenses.forEach((e: any) => {
-      profit -= Number(e.mebleg || e.amount || e.total || 0);
-    });
-
-    // Extract recent transactions effectively
-    const recent = [];
-    sales.slice(0, 3).forEach((s: any) => recent.push({
-      id: s.id, date: s.tarih || s.date, customer: s.hesapAdi || s.customer, action: 'Satış', debt: Number(s.miktar || 0), credit: '-'
-    }));
-    expenses.slice(0, 2).forEach((e: any) => recent.push({
-      id: e.id, date: e.tarix || e.date, customer: e.kateqoriya || e.aciqlama, action: 'Xərc', debt: '-', credit: Number(e.mebleg || 0)
-    }));
-    recent.sort((a,b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-
-    // Handle NaN just in case
-    if (isNaN(profit)) profit = 0;
-    if (isNaN(recTotal)) recTotal = 0;
-    if (isNaN(payTotal)) payTotal = 0;
-
-    setStats({
-      receivables: { total: recTotal, planned: recTotal * 0.8, installments: recTotal * 0.2, checks: 0, notes: 0 },
-      payables: { total: payTotal, current: payCurrent, planned: 0, creditCards: 0, checks: payChecks, notes: 0 },
-      vat: profit * 0.18,
-      profit: profit,
-      assets: { mainCash: storedAssets.mainCash || 0, creditCards: storedAssets.creditCards || 0, pos: storedAssets.pos || 0 },
-      recentTransactions: recent.length > 0 ? recent.slice(0, 5) : transactions.slice(0, 5)
-    });
-    
     setIsMounted(true);
 
+    const fetchStats = async () => {
+      const supabase = createClient();
+
+      // Fetch all required data
+      const { data: salesData } = await supabase.from('erp_sales').select('*');
+      const { data: expensesData } = await supabase.from('erp_expenses').select('*');
+      
+      const sales = salesData || [];
+      const expenses = expensesData || [];
+      let storedAssets = { mainCash: 12500, creditCards: 3200, pos: 4500 };
+
+      try {
+        const a = JSON.parse(getAppStorage('erp_assets') || 'null');
+        if (a) storedAssets = a;
+      } catch(e) {}
+
+      let recTotal = 0;
+      sales.forEach((s: any) => { 
+        const amount = Number(s.miktar || s.amount || s.qiymet || s.total || 0);
+        if (s.teslim_durumu === 'Təslim Edilməyib' || s.status === 'Ödənilməyib') recTotal += amount; 
+      });
+
+      let payTotal = 0, payCurrent = 0, payChecks = 0;
+      expenses.forEach((e: any) => { 
+        const amount = Number(e.mebleg || e.amount || e.total || 0);
+        if (e.veziyyet === 'Ödənilməyib' || e.status === 'Ödənilməyib') {
+          payTotal += amount;
+          if (e.kassa_banka === 'Əsas Bank Hesabı' || e.tip === 'Cari') payCurrent += amount;
+          if (e.kateqoriya?.toLowerCase().includes('çek') || e.tip === 'Çek') payChecks += amount;
+        }
+      });
+
+      let profit = 0;
+      sales.forEach((s: any) => {
+        profit += Number(s.miktar || s.amount || s.qiymet || s.total || 0);
+      });
+      expenses.forEach((e: any) => {
+        profit -= Number(e.mebleg || e.amount || e.total || 0);
+      });
+
+      // Extract recent transactions effectively
+      const recent: any[] = [];
+      sales.slice(0, 3).forEach((s: any) => recent.push({
+        id: s.id, date: s.tarih || s.date, customer: s.hesap_adi || s.customer, action: 'Satış', debt: Number(s.miktar || 0), credit: '-'
+      }));
+      expenses.slice(0, 2).forEach((e: any) => recent.push({
+        id: e.id, date: e.tarix || e.date, customer: e.kateqoriya || e.aciqlama, action: 'Xərc', debt: '-', credit: Number(e.mebleg || 0)
+      }));
+      recent.sort((a,b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+      // Handle NaN just in case
+      if (isNaN(profit)) profit = 0;
+      if (isNaN(recTotal)) recTotal = 0;
+      if (isNaN(payTotal)) payTotal = 0;
+
+      setStats({
+        receivables: { total: recTotal, planned: recTotal * 0.8, installments: recTotal * 0.2, checks: 0, notes: 0 },
+        payables: { total: payTotal, current: payCurrent, planned: 0, creditCards: 0, checks: payChecks, notes: 0 },
+        vat: profit * 0.18,
+        profit: profit,
+        assets: { mainCash: storedAssets.mainCash || 0, creditCards: storedAssets.creditCards || 0, pos: storedAssets.pos || 0 },
+        recentTransactions: recent.slice(0, 5)
+      });
+    };
+
+    fetchStats();
   }, []);
   
   const [formattedDate, setFormattedDate] = useState<string>('');

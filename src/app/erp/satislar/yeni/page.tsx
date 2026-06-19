@@ -4,6 +4,7 @@ import { Save, X, ShoppingCart, Plus, Trash2, Calculator, ArrowLeft, Search } fr
 import { useRouter } from 'next/navigation';
 
 import { getAppStorage, setAppStorage, removeAppStorage } from '@/utils/storage';
+import { createClient } from '@/utils/supabase/client';
 
 export default function YeniSatisPage() {
   const router = useRouter();
@@ -21,35 +22,41 @@ export default function YeniSatisPage() {
   ]);
 
   useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-    const editId = searchParams.get('id');
-    if (editId) {
-      const existingSales = JSON.parse(getAppStorage('erp_sales') || '[]');
-      const saleToEdit = existingSales.find((s: any) => s.id.toString() === editId);
-      if (saleToEdit) {
-        setDocData({
-          tarix: saleToEdit.tarih || new Date().toISOString().split('T')[0],
-          aciqlama: saleToEdit.aciklama || '',
-          fakturaNo: saleToEdit.faturaNo || '',
-          musteri: saleToEdit.hesapAdi || 'Müştəri Seçilməyib (Anonim Satış)',
-          teslimDurumu: saleToEdit.teslimDurumu || 'Təslim Edilməyib'
-        });
-        if (saleToEdit.rows && saleToEdit.rows.length > 0) {
-          setRows(saleToEdit.rows);
-        } else if (saleToEdit.miktar) {
-          // Legacy records that didn't have rows saved, restore them from total amount
-          setRows([{
-            id: Date.now(),
-            itemName: 'Bərpa edilmiş məhsul (Köhnə qeyd)',
-            quantity: 1,
-            vat: 0,
-            price: Number(saleToEdit.miktar),
-            includeVat: true,
-            total: Number(saleToEdit.miktar)
-          }]);
+    const fetchEditData = async () => {
+      const searchParams = new URLSearchParams(window.location.search);
+      const editId = searchParams.get('id');
+      
+      if (editId) {
+        const supabase = createClient();
+        const { data, error } = await supabase.from('erp_sales').select('*').eq('id', editId).single();
+        
+        if (data && !error) {
+          setDocData({
+            tarix: data.tarih || new Date().toISOString().split('T')[0],
+            aciqlama: data.aciklama || '',
+            fakturaNo: data.fatura_no || '',
+            musteri: data.hesap_adi || 'Müştəri Seçilməyib (Anonim Satış)',
+            teslimDurumu: data.teslim_durumu || 'Təslim Edilməyib'
+          });
+          
+          if (data.satirlar && data.satirlar.length > 0) {
+            setRows(data.satirlar);
+          } else if (data.miktar) {
+            setRows([{
+              id: Date.now(),
+              itemName: 'Bərpa edilmiş məhsul (Köhnə qeyd)',
+              quantity: 1,
+              vat: 0,
+              price: Number(data.miktar),
+              includeVat: true,
+              total: Number(data.miktar)
+            }]);
+          }
         }
       }
-    }
+    };
+    
+    fetchEditData();
   }, []);
 
   const addRow = () => {
@@ -103,7 +110,7 @@ export default function YeniSatisPage() {
 
   const grandTotal = rows.reduce((acc, row) => acc + row.total, 0);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     // Validation
     if (!docData.fakturaNo.trim()) {
       alert("XƏTA: Zəhmət olmasa 'Faktura Nömrəsi' xanasını doldurun.");
@@ -118,29 +125,45 @@ export default function YeniSatisPage() {
       return;
     }
 
-    // Save to localStorage
-    const existingSales = JSON.parse(getAppStorage('erp_sales') || '[]');
+    const supabase = createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    
+    if (!user) {
+      alert("İstifadəçi tapılmadı, daxil olun.");
+      return;
+    }
+
     const searchParams = new URLSearchParams(window.location.search);
     const editId = searchParams.get('id');
     
-    // Create new sale object
     const newSale = {
-      id: editId ? Number(editId) : Date.now(),
+      user_id: user.id,
       tarih: docData.tarix,
-      evrakNo: editId ? (existingSales.find((s:any) => s.id.toString() === editId)?.evrakNo || 'EVR-' + Math.floor(Math.random() * 10000)) : 'EVR-' + Math.floor(Math.random() * 10000),
-      faturaNo: docData.fakturaNo,
-      hesapAdi: docData.musteri,
+      evrak_no: editId ? undefined : 'EVR-' + Math.floor(Math.random() * 10000), // Only set for new
+      fatura_no: docData.fakturaNo,
+      hesap_adi: docData.musteri,
       aciklama: docData.aciqlama || 'Yeni satış əməliyyatı',
-      teslimDurumu: docData.teslimDurumu,
+      teslim_durumu: docData.teslimDurumu,
       miktar: grandTotal,
-      rows: rows // explicitly save the rows so we can load them later!
+      satirlar: rows
     };
 
     if (editId) {
-      const updatedSales = existingSales.map((s: any) => s.id.toString() === editId ? newSale : s);
-      setAppStorage('erp_sales', JSON.stringify(updatedSales));
+      // Don't overwrite evrak_no on update
+      delete newSale.evrak_no;
+      const { error } = await supabase.from('erp_sales').update(newSale).eq('id', editId);
+      if (error) {
+        console.error(error);
+        alert("Satış yenilənərkən xəta baş verdi.");
+        return;
+      }
     } else {
-      setAppStorage('erp_sales', JSON.stringify([newSale, ...existingSales]));
+      const { error } = await supabase.from('erp_sales').insert([newSale]);
+      if (error) {
+        console.error(error);
+        alert("Satış yaradılarkən xəta baş verdi.");
+        return;
+      }
     }
 
     alert(editId ? "Satış məlumatları uğurla yeniləndi!" : "Satış uğurla tamamlandı və qeydə alındı!");

@@ -4,6 +4,7 @@ import { Search, Plus, Filter, Download, MoreHorizontal, FileText, CheckCircle2,
 import { useRouter } from 'next/navigation';
 
 import { getAppStorage, setAppStorage, removeAppStorage } from '@/utils/storage';
+import { createClient } from '@/utils/supabase/client';
 
 export default function SatisListesiPage() {
   const router = useRouter();
@@ -15,24 +16,43 @@ export default function SatisListesiPage() {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [isMounted, setIsMounted] = useState(false);
 
-  // Initialize data from localStorage or use defaults
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Initialize data from Supabase
   useEffect(() => {
     setIsMounted(true);
-    const saved = getAppStorage('erp_sales');
-    if (saved) {
-      try {
-        setSalesData(JSON.parse(saved) || []);
-      } catch (e) {
+    
+    const fetchSales = async () => {
+      setIsLoading(true);
+      const supabase = createClient();
+      
+      const { data, error } = await supabase
+        .from('erp_sales')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error("Supabase fetch error (erp_sales):", error);
+        // Fallback or empty if table doesn't exist yet
         setSalesData([]);
+      } else if (data) {
+        // Map database fields back to camelCase used in UI if needed
+        const formattedData = data.map(item => ({
+          id: item.id,
+          tarih: item.tarih,
+          evrakNo: item.evrak_no,
+          faturaNo: item.fatura_no,
+          hesapAdi: item.hesap_adi,
+          aciklama: item.aciklama,
+          teslimDurumu: item.teslim_durumu,
+          miktar: Number(item.miktar)
+        }));
+        setSalesData(formattedData);
       }
-    } else {
-      const defaultData = [
-        { id: 1, tarih: '2026-06-17', evrakNo: 'EVR-2026-001', faturaNo: 'INV-1001', hesapAdi: 'Baku Electronics MMC', aciklama: 'Topdan noutbuk satışı', teslimDurumu: 'Təslim Edildi', miktar: 15400.00 },
-        { id: 2, tarih: '2026-06-16', evrakNo: 'EVR-2026-002', faturaNo: 'INV-1002', hesapAdi: 'Kontakt Home MMC', aciklama: 'Kondisioner satışı (3 ədəd)', teslimDurumu: 'Təslim Edilməyib', miktar: 3200.50 }
-      ];
-      setSalesData(defaultData);
-      setAppStorage('erp_sales', JSON.stringify(defaultData));
-    }
+      setIsLoading(false);
+    };
+
+    fetchSales();
   }, []);
 
   // Close dropdown when clicked outside
@@ -48,41 +68,81 @@ export default function SatisListesiPage() {
 
   if (!isMounted) return null;
 
-  const handleDelete = (id: number) => {
+  const handleDelete = async (id: string | number) => {
     if (confirm('Bu satışı silmək istədiyinizə əminsiniz?')) {
-      const newData = salesData.filter(item => item.id !== id);
-      setSalesData(newData);
-      setAppStorage('erp_sales', JSON.stringify(newData));
+      const supabase = createClient();
+      const { error } = await supabase.from('erp_sales').delete().eq('id', id);
+      
+      if (!error) {
+        const newData = salesData.filter(item => item.id !== id);
+        setSalesData(newData);
+      } else {
+        alert("Silinərkən xəta baş verdi. Verilənlər bazası bağlantısını yoxlayın.");
+      }
       setActiveDropdown(null);
     }
   };
 
-  const handleCopy = (row: any) => {
+  const handleCopy = async (row: any) => {
+    const supabase = createClient();
+    
+    // Get currently logged in user
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      alert("İstifadəçi tapılmadı, zəhmət olmasa yenidən daxil olun.");
+      return;
+    }
+
     const newSale = { 
-      ...row, 
-      id: Date.now(), 
-      evrakNo: row.evrakNo + ' (Kopya)', 
-      faturaNo: row.faturaNo ? row.faturaNo + ' (Kopya)' : '-' 
+      user_id: user.id,
+      tarih: row.tarih,
+      evrak_no: row.evrakNo + ' (Kopya)',
+      fatura_no: row.faturaNo ? row.faturaNo + ' (Kopya)' : '-',
+      hesap_adi: row.hesapAdi,
+      aciklama: row.aciklama,
+      teslim_durumu: row.teslimDurumu,
+      miktar: row.miktar
     };
-    const newData = [newSale, ...salesData];
-    setSalesData(newData);
-    setAppStorage('erp_sales', JSON.stringify(newData));
+
+    const { data, error } = await supabase.from('erp_sales').insert([newSale]).select();
+
+    if (!error && data) {
+      const formattedSale = {
+        id: data[0].id,
+        tarih: data[0].tarih,
+        evrakNo: data[0].evrak_no,
+        faturaNo: data[0].fatura_no,
+        hesapAdi: data[0].hesap_adi,
+        aciklama: data[0].aciklama,
+        teslimDurumu: data[0].teslim_durumu,
+        miktar: data[0].miktar
+      };
+      setSalesData([formattedSale, ...salesData]);
+      alert('Satış qeydi uğurla kopyalandı!');
+    } else {
+      alert("Kopyalanarkən xəta baş verdi.");
+    }
     setActiveDropdown(null);
-    alert('Satış qeydi uğurla kopyalandı!');
   };
 
-  const handleToggleStatus = (id: number) => {
-    const newData = salesData.map(item => {
-      if (item.id === id) {
-        return {
-          ...item,
-          teslimDurumu: item.teslimDurumu === 'Təslim Edildi' ? 'Təslim Edilməyib' : 'Təslim Edildi'
-        };
-      }
-      return item;
-    });
-    setSalesData(newData);
-    setAppStorage('erp_sales', JSON.stringify(newData));
+  const handleToggleStatus = async (id: string | number) => {
+    const item = salesData.find(i => i.id === id);
+    if (!item) return;
+
+    const newStatus = item.teslimDurumu === 'Təslim Edildi' ? 'Təslim Edilməyib' : 'Təslim Edildi';
+    const supabase = createClient();
+    
+    const { error } = await supabase
+      .from('erp_sales')
+      .update({ teslim_durumu: newStatus })
+      .eq('id', id);
+
+    if (!error) {
+      const newData = salesData.map(i => i.id === id ? { ...i, teslimDurumu: newStatus } : i);
+      setSalesData(newData);
+    } else {
+      alert("Status yenilənərkən xəta baş verdi.");
+    }
     setActiveDropdown(null);
   };
 
@@ -235,6 +295,14 @@ export default function SatisListesiPage() {
                 <th style={{ padding: '1rem 1.5rem', width: '50px' }}></th>
               </tr>
             </thead>
+            {isLoading ? (
+              <tr>
+                <td colSpan={8} style={{ padding: '3rem', textAlign: 'center', color: '#64748b' }}>
+                  <div style={{ display: 'inline-block', width: '24px', height: '24px', border: '3px solid #e2e8f0', borderTopColor: '#3b82f6', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></div>
+                  <div style={{ marginTop: '0.5rem' }}>Məlumatlar Buluddan (Supabase) Yüklənir...</div>
+                </td>
+              </tr>
+            ) : (
             <tbody>
               {filteredData.map((row) => (
                 <tr key={row.id} style={{ borderBottom: '1px solid #e2e8f0', transition: 'background-color 0.15s' }} className="hover-row">

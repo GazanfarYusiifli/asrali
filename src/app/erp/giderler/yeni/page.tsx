@@ -4,6 +4,7 @@ import { Save, X, ArrowLeft, Receipt, Calculator } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 import { getAppStorage, setAppStorage, removeAppStorage } from '@/utils/storage';
+import { createClient } from '@/utils/supabase/client';
 
 export default function YeniXercPage() {
   const router = useRouter();
@@ -21,28 +22,31 @@ export default function YeniXercPage() {
   });
 
   useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-    const editId = searchParams.get('id');
-    if (editId) {
-      const existing = JSON.parse(getAppStorage('erp_expenses') || '[]');
-      const toEdit = existing.find((s: any) => s.id?.toString() === editId);
-      if (toEdit) {
-        setDocData({
-          tarix: toEdit.tarix || new Date().toISOString().split('T')[0],
-          kateqoriya: toEdit.kateqoriya || 'Ofis Xərcləri',
-          kassaBanka: toEdit.kassaBanka || 'Əsas Bank Hesabı',
-          tekrarla: toEdit.tekrarla || 'Təkrarlanmır',
-          aciqlama: toEdit.aciqlama || '',
-          mebleg: toEdit.mebleg || '',
-          edv: toEdit.edv || '0',
-          valyuta: toEdit.valyuta || 'AZN',
-          veziyyet: toEdit.veziyyet || 'Ödənilib'
-        });
+    const fetchEditData = async () => {
+      const searchParams = new URLSearchParams(window.location.search);
+      const editId = searchParams.get('id');
+      if (editId) {
+        const supabase = createClient();
+        const { data, error } = await supabase.from('erp_expenses').select('*').eq('id', editId).single();
+        if (data && !error) {
+          setDocData({
+            tarix: data.tarix || new Date().toISOString().split('T')[0],
+            kateqoriya: data.kateqoriya || 'Ofis Xərcləri',
+            kassaBanka: data.kassa_banka || 'Əsas Bank Hesabı',
+            tekrarla: data.tekrarla || 'Təkrarlanmır',
+            aciqlama: data.aciqlama || '',
+            mebleg: data.mebleg?.toString() || '',
+            edv: '0', // edv not explicitly stored in our basic schema, default to 0
+            valyuta: data.valyuta || 'AZN',
+            veziyyet: data.veziyyet || 'Ödənilib'
+          });
+        }
       }
-    }
+    };
+    fetchEditData();
   }, []);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     // Validation
     if (!docData.mebleg || Number(docData.mebleg) <= 0) {
       alert("XƏTA: Zəhmət olmasa düzgün məbləğ daxil edin.");
@@ -53,28 +57,43 @@ export default function YeniXercPage() {
       return;
     }
 
-    const existing = JSON.parse(getAppStorage('erp_expenses') || '[]');
+    const supabase = createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    
+    if (!user) {
+      alert("İstifadəçi tapılmadı, daxil olun.");
+      return;
+    }
+
     const searchParams = new URLSearchParams(window.location.search);
     const editId = searchParams.get('id');
     
     const newDoc = {
-      id: editId ? Number(editId) : Date.now(),
+      user_id: user.id,
       tarix: docData.tarix,
       kateqoriya: docData.kateqoriya,
-      kassaBanka: docData.kassaBanka,
+      kassa_banka: docData.kassaBanka,
       tekrarla: docData.tekrarla,
       aciqlama: docData.aciqlama,
       mebleg: Number(docData.mebleg),
-      edv: Number(docData.edv),
       valyuta: docData.valyuta,
       veziyyet: docData.veziyyet
     };
 
     if (editId) {
-      const updated = existing.map((s: any) => s.id?.toString() === editId ? newDoc : s);
-      setAppStorage('erp_expenses', JSON.stringify(updated));
+      const { error } = await supabase.from('erp_expenses').update(newDoc).eq('id', editId);
+      if (error) {
+        console.error(error);
+        alert("Xərc yenilənərkən xəta baş verdi.");
+        return;
+      }
     } else {
-      setAppStorage('erp_expenses', JSON.stringify([newDoc, ...existing]));
+      const { error } = await supabase.from('erp_expenses').insert([newDoc]);
+      if (error) {
+        console.error(error);
+        alert("Xərc yaradılarkən xəta baş verdi.");
+        return;
+      }
     }
 
     alert(editId ? "Xərc məlumatları uğurla yeniləndi!" : "Xərc uğurla qeydə alındı!");
