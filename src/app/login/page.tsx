@@ -111,6 +111,27 @@ function LoginContent() {
     }
   };
 
+  const handleFacebookLogin = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'facebook',
+        options: {
+          redirectTo: `${window.location.origin}/api/auth/callback`,
+        },
+      });
+
+      if (error) {
+        throw error;
+      }
+    } catch (err: any) {
+      console.error('Facebook Login Error:', err.message);
+      setError('Facebook ilə giriş edərkən xəta baş verdi. Zəhmət olmasa yenidən cəhd edin.');
+      setLoading(false);
+    }
+  };
+
   return (
     <div style={{ 
       minHeight: '100vh', 
@@ -210,27 +231,48 @@ function LoginContent() {
           <div style={{ flex: 1, height: '1px', backgroundColor: 'rgba(255,255,255,0.1)' }}></div>
         </div>
 
-        <button 
-          onClick={handleGoogleLogin}
-          disabled={loading}
-          className="google-btn"
-        >
-          {loading ? (
-            <Loader2 size={24} style={{ animation: 'spin 1s linear infinite' }} />
-          ) : (
-            <>
-              <div style={{ backgroundColor: 'white', borderRadius: '50%', padding: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M22.56 12.25C22.56 11.47 22.49 10.72 22.36 10H12V14.26H17.92C17.66 15.63 16.88 16.78 15.72 17.56V20.31H19.28C21.36 18.4 22.56 15.6 22.56 12.25Z" fill="#4285F4"/>
-                  <path d="M12 23C14.97 23 17.46 22.02 19.28 20.31L15.72 17.56C14.73 18.22 13.48 18.63 12 18.63C9.13 18.63 6.7 16.69 5.82 14.1H2.15V16.94C3.96 20.53 7.69 23 12 23Z" fill="#34A853"/>
-                  <path d="M5.82 14.1C5.6 13.44 5.47 12.73 5.47 12C5.47 11.27 5.6 10.56 5.82 9.9V7.06H2.15C1.41 8.54 1 10.22 1 12C1 13.78 1.41 15.46 2.15 16.94L5.82 14.1Z" fill="#FBBC05"/>
-                  <path d="M12 5.38C13.62 5.38 15.06 5.94 16.2 7.02L19.36 3.86C17.46 2.09 14.97 1 12 1C7.69 1 3.96 3.47 2.15 7.06L5.82 9.9C6.7 7.31 9.13 5.38 12 5.38Z" fill="#EA4335"/>
-                </svg>
-              </div>
-              {t('login_google_btn')}
-            </>
-          )}
-        </button>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <button 
+            onClick={handleGoogleLogin}
+            disabled={loading}
+            className="oauth-btn google-btn"
+          >
+            {loading ? (
+              <Loader2 size={24} style={{ animation: 'spin 1s linear infinite' }} />
+            ) : (
+              <>
+                <div style={{ backgroundColor: 'white', borderRadius: '50%', padding: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22.56 12.25C22.56 11.47 22.49 10.72 22.36 10H12V14.26H17.92C17.66 15.63 16.88 16.78 15.72 17.56V20.31H19.28C21.36 18.4 22.56 15.6 22.56 12.25Z" fill="#4285F4"/>
+                    <path d="M12 23C14.97 23 17.46 22.02 19.28 20.31L15.72 17.56C14.73 18.22 13.48 18.63 12 18.63C9.13 18.63 6.7 16.69 5.82 14.1H2.15V16.94C3.96 20.53 7.69 23 12 23Z" fill="#34A853"/>
+                    <path d="M5.82 14.1C5.6 13.44 5.47 12.73 5.47 12C5.47 11.27 5.6 10.56 5.82 9.9V7.06H2.15C1.41 8.54 1 10.22 1 12C1 13.78 1.41 15.46 2.15 16.94L5.82 14.1Z" fill="#FBBC05"/>
+                    <path d="M12 5.38C13.62 5.38 15.06 5.94 16.2 7.02L19.36 3.86C17.46 2.09 14.97 1 12 1C7.69 1 3.96 3.47 2.15 7.06L5.82 9.9C6.7 7.31 9.13 5.38 12 5.38Z" fill="#EA4335"/>
+                  </svg>
+                </div>
+                {t('login_google_btn')}
+              </>
+            )}
+          </button>
+
+          <button 
+            onClick={handleFacebookLogin}
+            disabled={loading}
+            className="oauth-btn facebook-btn"
+          >
+            {loading ? (
+              <Loader2 size={24} style={{ animation: 'spin 1s linear infinite' }} />
+            ) : (
+              <>
+                <div style={{ backgroundColor: '#1877F2', borderRadius: '50%', padding: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M23.9981 11.9991C23.9981 5.37216 18.626 0 11.9991 0C5.37216 0 0 5.37216 0 11.9991C0 17.9882 4.38789 22.9522 10.1242 23.8524V15.4676H7.07758V11.9991H10.1242V9.35553C10.1242 6.34826 11.9156 4.68714 14.6564 4.68714C15.9692 4.68714 17.3424 4.92149 17.3424 4.92149V7.87439H15.8294C14.3388 7.87439 13.874 8.79933 13.874 9.74824V11.9991H17.2018L16.6698 15.4676H13.874V23.8524C19.6103 22.9522 23.9981 17.9882 23.9981 11.9991Z" fill="white"/>
+                  </svg>
+                </div>
+                Facebook ilə daxil ol
+              </>
+            )}
+          </button>
+        </div>
 
         <div style={{ marginTop: '2rem', fontSize: '0.9rem', color: '#64748b' }}>
           {t('login_no_account')}{' '}
@@ -279,7 +321,7 @@ function LoginContent() {
             opacity: 0.7;
             cursor: not-allowed;
           }
-          .google-btn {
+          .oauth-btn {
             width: 100%;
             padding: 1rem 1.5rem;
             background: linear-gradient(135deg, #1e293b, #0f172a);
@@ -298,30 +340,40 @@ function LoginContent() {
             overflow: hidden;
             z-index: 1;
           }
-          .google-btn::before {
+          .oauth-btn::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(135deg, #2563eb, #06b6d4);
             opacity: 0;
             z-index: -1;
             transition: opacity 0.3s ease;
           }
-          .google-btn:hover {
+          .google-btn::before {
+            background: linear-gradient(135deg, #2563eb, #06b6d4);
+          }
+          .facebook-btn::before {
+            background: linear-gradient(135deg, #1877F2, #0e56b4);
+          }
+          .oauth-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px -10px rgba(14, 165, 233, 0.5);
             border-color: rgba(255,255,255,0.2);
           }
-          .google-btn:hover::before {
+          .google-btn:hover {
+            box-shadow: 0 10px 20px -10px rgba(14, 165, 233, 0.5);
+          }
+          .facebook-btn:hover {
+            box-shadow: 0 10px 20px -10px rgba(24, 119, 242, 0.5);
+          }
+          .oauth-btn:hover::before {
             opacity: 1;
           }
-          .google-btn:disabled {
+          .oauth-btn:disabled {
             cursor: not-allowed;
             opacity: 0.7;
             transform: none;
             box-shadow: none;
           }
-          .google-btn:disabled::before {
+          .oauth-btn:disabled::before {
             display: none;
           }
         `}} />
