@@ -402,8 +402,8 @@ export default function Home() {
           <div>
             <h4 style={{ color: 'white', fontWeight: 700, marginBottom: '1.5rem' }}>Əlaqə</h4>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <li style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span style={{ backgroundColor: 'rgba(255,255,255,0.05)', padding: '0.4rem', borderRadius: '50%' }}>✉</span> info@ashrali.az</li>
-              <li style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span style={{ backgroundColor: 'rgba(255,255,255,0.05)', padding: '0.4rem', borderRadius: '50%' }}>📞</span> +994 50 000 00 00</li>
+              <li style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span style={{ backgroundColor: 'rgba(255,255,255,0.05)', padding: '0.4rem', borderRadius: '50%' }}>✉</span> info@asrali.az</li>
+              <li style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span style={{ backgroundColor: 'rgba(255,255,255,0.05)', padding: '0.4rem', borderRadius: '50%' }}>📞</span> +994 55 594 51 00</li>
               <li style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span style={{ backgroundColor: 'rgba(255,255,255,0.05)', padding: '0.4rem', borderRadius: '50%' }}>📍</span> Bakı, Azərbaycan</li>
             </ul>
           </div>
