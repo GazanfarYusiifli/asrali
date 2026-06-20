@@ -12,7 +12,7 @@ import { getAppStorage, setAppStorage, removeAppStorage } from '@/utils/storage'
 import { 
   LayoutDashboard, ShoppingCart, ShoppingBag, TrendingDown, Users, 
   CreditCard, Package, Settings, Wrench, FileCheck, Globe, BarChart3, HelpCircle, 
-  ChevronDown, ChevronRight, LogOut, Bell, Wallet
+  ChevronDown, ChevronRight, LogOut, Bell, Wallet, Video
 } from 'lucide-react';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -23,7 +23,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   
   const menuNames = [
     'Ümumi Baxış', 'Satışlar', 'Alışlar', 'Xərclər', 'Müştəri və Təchizatçı',
-    'Kassa və Bank', 'Anbar', 'Digər Xüsusiyyətlər', 'E-Faktura', 'E-Ticarət',
+    'Kassa və Bank', 'Anbar', 'Digər Xüsusiyyətlər', 'E-Faktura', 'E-Ticarət', 'E-Konsultasiya',
     'Hesabatlar', 'Sistem Tənzimləmələri', 'Dəstək'
   ];
   const [openMenus, setOpenMenus] = useState<string[]>([]);
@@ -212,6 +212,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       ]
     },
     {
+      name: 'E-Konsultasiya',
+      icon: <Video size={20} />,
+      roles: ['SUPERADMIN', 'ACCOUNTANT'],
+      isPro: true,
+      path: 'https://nitrocalls.site',
+      subItems: []
+    },
+    {
       name: t('menu_support'),
       icon: <HelpCircle size={20} />,
       roles: ['SUPERADMIN', 'ACCOUNTANT'],
@@ -246,10 +254,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               : pathname === menu.path;
 
             if (!hasSubItems && menu.path) {
+              const isExternal = menu.path.startsWith('http');
+              const LinkComponent = isExternal ? 'a' : Link;
+              const linkProps = isExternal ? { href: menu.path, target: "_blank", rel: "noopener noreferrer" } : { href: menu.path };
+              
               return (
                 <div key={menu.name} style={{ marginBottom: '0.25rem' }}>
-                  <Link
-                    href={menu.path}
+                  <LinkComponent
+                    {...linkProps}
                     style={{
                       width: '100%',
                       display: 'flex',
@@ -266,7 +278,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   >
                     <div style={{ opacity: isAnyChildActive ? 1 : 0.7 }}>{menu.icon}</div>
                     {menu.name}
-                  </Link>
+                  </LinkComponent>
                   {menu.separatorAfter && (
                     <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.08)', margin: '0.75rem 1rem' }}></div>
                   )}
