@@ -235,7 +235,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
           <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'linear-gradient(135deg, #3b82f6, #0ea5e9)' }}></div>
-          <span style={{ fontSize: '1.25rem', fontWeight: 800, letterSpacing: '-0.5px', color: 'white' }}>ASRALI</span>
+          <img src="/logo.png" alt="ASRALI" style={{ height: "32px", width: "auto", borderRadius: "8px" }} />
         </div>
 
         <nav style={{ flex: 1, overflowY: 'auto', padding: '1rem 0.5rem' }}>

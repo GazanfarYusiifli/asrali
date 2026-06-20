@@ -24,7 +24,7 @@ export default function Home() {
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer' }} className="hover-lift-sm">
           <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'linear-gradient(135deg, #10b981, #0ea5e9)', boxShadow: '0 4px 10px rgba(16, 185, 129, 0.3)' }}></div>
-          <span style={{ fontSize: '1.5rem', fontWeight: 900, letterSpacing: '-0.5px', color: 'white' }}>ASRALI</span>
+          <img src="/logo.png" alt="ASRALI" style={{ height: "40px", width: "auto", borderRadius: "8px" }} />
         </div>
         
         <nav style={{ display: 'none', gap: '2.5rem', alignItems: 'center' }} className="desktop-nav">
@@ -373,7 +373,7 @@ export default function Home() {
           <div style={{ gridColumn: '1 / -1' }} className="footer-brand-col">
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
               <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'linear-gradient(135deg, #10b981, #0ea5e9)' }}></div>
-              <span style={{ fontSize: '1.5rem', fontWeight: 900, letterSpacing: '-0.5px', color: 'white' }}>ASRALI</span>
+              <img src="/logo.png" alt="ASRALI" style={{ height: "40px", width: "auto", borderRadius: "8px" }} />
             </div>
             <p style={{ lineHeight: 1.6, maxWidth: '300px', color: '#64748b' }}>
               Azərbaycan biznesləri üçün maliyyə idarəetməsini daha sadə, şəffaf və sistemli edən rəqəmsal platforma.

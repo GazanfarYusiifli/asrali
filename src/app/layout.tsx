@@ -9,6 +9,9 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Asrali.com - Super App",
   description: "Bütün sektorlar üçün ERP sistemi",
+  icons: {
+    icon: '/logo.png',
+  },
 };
 
 import { AuthProvider } from "./context/AuthContext";
