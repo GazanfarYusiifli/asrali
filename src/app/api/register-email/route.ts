@@ -32,7 +32,7 @@ export async function POST(request: Request) {
       to: 'yusifliqezenfer90@gmail.com', // Always send to this email
       subject: `Yeni Qeydiyyat: ${orgName}`,
       html: `
-        <h2>ASHRALI - Yeni Müştəri Qeydiyyatı</h2>
+        <h2>ASRALI - Yeni Müştəri Qeydiyyatı</h2>
         <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse;">
           <tr>
             <td style="background-color: #f1f5f9; font-weight: bold;">Təşkilat Tipi</td>
@@ -56,7 +56,7 @@ export async function POST(request: Request) {
           </tr>
           <tr>
             <td style="background-color: #f1f5f9; font-weight: bold;">İstənilən Subdomain</td>
-            <td>${subdomain}.ashrali.az</td>
+            <td>${subdomain}.asrali.az</td>
           </tr>
           <tr>
             <td style="background-color: #f1f5f9; font-weight: bold;">Əlavə Qeyd</td>

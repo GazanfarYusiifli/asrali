@@ -17,7 +17,7 @@ export async function POST(req: Request) {
           price_data: {
             currency: 'azn',
             product_data: {
-              name: 'ASHRALI PRO Paket (Aylıq)',
+              name: 'ASRALI PRO Paket (Aylıq)',
               description: 'Bütün modullara limitsiz giriş və avtomatlaşdırma',
             },
             unit_amount: 5782, // 57.82 AZN in qəpik

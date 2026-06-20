@@ -24,7 +24,7 @@ export default function Home() {
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer' }} className="hover-lift-sm">
           <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'linear-gradient(135deg, #10b981, #0ea5e9)', boxShadow: '0 4px 10px rgba(16, 185, 129, 0.3)' }}></div>
-          <span style={{ fontSize: '1.5rem', fontWeight: 900, letterSpacing: '-0.5px', color: 'white' }}>ASHRALI</span>
+          <span style={{ fontSize: '1.5rem', fontWeight: 900, letterSpacing: '-0.5px', color: 'white' }}>ASRALI</span>
         </div>
         
         <nav style={{ display: 'none', gap: '2.5rem', alignItems: 'center' }} className="desktop-nav">
@@ -97,7 +97,7 @@ export default function Home() {
           <div className="glass-dashboard hover-3d">
             <Image 
               src="/dashboard_mockup.png" 
-              alt="ASHRALI Dashboard Mockup" 
+              alt="ASRALI Dashboard Mockup" 
               width={1200} 
               height={800} 
               style={{ width: '100%', height: 'auto', display: 'block', borderRadius: '16px' }}
@@ -141,13 +141,13 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FEATURES (Niyə ASHRALI?) */}
+      {/* FEATURES (Niyə ASRALI?) */}
       <section id="xususiyyetler" style={{ padding: '8rem 5%', backgroundColor: '#0f172a', position: 'relative' }}>
         <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'radial-gradient(circle at top right, rgba(16,185,129,0.05), transparent 600px)' }}></div>
         <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div style={{ textAlign: 'center', marginBottom: '5rem' }} className="fade-in-up reveal">
             <h2 className="section-subtitle">Əsas imkanlar</h2>
-            <h3 className="section-title">Niyə ASHRALI?</h3>
+            <h3 className="section-title">Niyə ASRALI?</h3>
             <p className="section-desc">
               Biznesinizin gündəlik maliyyə və idarəetmə əməliyyatlarını vahid sistemdə toplamaq üçün hazırlanmış modullar.
             </p>
@@ -215,7 +215,7 @@ export default function Home() {
             <h2 className="section-subtitle">Uyğunluq</h2>
             <h3 className="section-title" style={{ color: 'white' }}>Hər Təşkilat Növü Üçün</h3>
             <p className="section-desc" style={{ color: '#94a3b8' }}>
-              ASHRALI müxtəlif ölçülü və fərqli idarəetmə modelinə sahib müəssisələrə asanlıqla uyğunlaşdırıla bilər.
+              ASRALI müxtəlif ölçülü və fərqli idarəetmə modelinə sahib müəssisələrə asanlıqla uyğunlaşdırıla bilər.
             </p>
           </div>
 
@@ -335,8 +335,8 @@ export default function Home() {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <div className="faq-card reveal">
-              <h4 style={{ fontSize: '1.125rem', fontWeight: 700, color: 'white', marginBottom: '0.5rem' }}>ASHRALI nədir?</h4>
-              <p style={{ color: '#94a3b8', lineHeight: 1.6 }}>ASHRALI mağazalar, şirkətlər, kurslar və digər biznes müəssisələri üçün hazırlanmış maliyyə idarəetmə sistemidir (ERP). Sistem ödəniş, borc, müqavilə, xərc, inventar və hesabat proseslərini vahid paneldə toplamağa kömək edir.</p>
+              <h4 style={{ fontSize: '1.125rem', fontWeight: 700, color: 'white', marginBottom: '0.5rem' }}>ASRALI nədir?</h4>
+              <p style={{ color: '#94a3b8', lineHeight: 1.6 }}>ASRALI mağazalar, şirkətlər, kurslar və digər biznes müəssisələri üçün hazırlanmış maliyyə idarəetmə sistemidir (ERP). Sistem ödəniş, borc, müqavilə, xərc, inventar və hesabat proseslərini vahid paneldə toplamağa kömək edir.</p>
             </div>
             
             <div className="faq-card reveal">
@@ -373,7 +373,7 @@ export default function Home() {
           <div style={{ gridColumn: '1 / -1' }} className="footer-brand-col">
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
               <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'linear-gradient(135deg, #10b981, #0ea5e9)' }}></div>
-              <span style={{ fontSize: '1.5rem', fontWeight: 900, letterSpacing: '-0.5px', color: 'white' }}>ASHRALI</span>
+              <span style={{ fontSize: '1.5rem', fontWeight: 900, letterSpacing: '-0.5px', color: 'white' }}>ASRALI</span>
             </div>
             <p style={{ lineHeight: 1.6, maxWidth: '300px', color: '#64748b' }}>
               Azərbaycan biznesləri üçün maliyyə idarəetməsini daha sadə, şəffaf və sistemli edən rəqəmsal platforma.
@@ -410,7 +410,7 @@ export default function Home() {
 
         </div>
         <div style={{ textAlign: 'center', fontSize: '0.875rem', color: '#64748b' }}>
-          &copy; {new Date().getFullYear()} ASHRALI. Bütün hüquqlar qorunur.
+          &copy; {new Date().getFullYear()} ASRALI. Bütün hüquqlar qorunur.
         </div>
       </footer>
 

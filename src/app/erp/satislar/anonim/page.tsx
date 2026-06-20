@@ -8,7 +8,7 @@ export default function Page() {
         Anonim Satış
       </h1>
       <div style={{ padding: '2rem', backgroundColor: 'white', borderRadius: '12px', border: '1px dashed #cbd5e1', textAlign: 'center', color: '#64748b' }}>
-        <p>Bu modul <strong>ASHRALI</strong> arxitekturasının bir parçası olaraq hazırlanır.</p>
+        <p>Bu modul <strong>ASRALI</strong> arxitekturasının bir parçası olaraq hazırlanır.</p>
         <p>Tezliklə burada canlı məlumatlar və funksionallıq əlavə ediləcəkdir.</p>
       </div>
     </div>

@@ -24,7 +24,7 @@ export default function TermsOfServicePage() {
         <div style={{ lineHeight: '1.8', fontSize: '1.05rem', color: '#475569' }}>
           <h2 style={{ color: '#1e293b', fontSize: '1.5rem', fontWeight: 700, marginTop: '2rem', marginBottom: '1rem' }}>1. Qəbul Etmə</h2>
           <p style={{ marginBottom: '1.5rem' }}>
-            Bu platformadan ("ASHRALI" və ya "Nitrocalls" xidmətləri) istifadə edərək siz aşağıdakı istifadə şərtlərini oxuduğunuzu, anladığınızı və qəbul etdiyinizi təsdiq edirsiniz. Şərtlərlə razı deyilsinizsə, xahiş edirik sistemdən istifadə etməyin.
+            Bu platformadan ("ASRALI" və ya "Nitrocalls" xidmətləri) istifadə edərək siz aşağıdakı istifadə şərtlərini oxuduğunuzu, anladığınızı və qəbul etdiyinizi təsdiq edirsiniz. Şərtlərlə razı deyilsinizsə, xahiş edirik sistemdən istifadə etməyin.
           </p>
 
           <h2 style={{ color: '#1e293b', fontSize: '1.5rem', fontWeight: 700, marginTop: '2rem', marginBottom: '1rem' }}>2. Xidmət Səviyyəsi</h2>

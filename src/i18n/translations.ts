@@ -13,12 +13,12 @@ export const translations: Record<Language, Record<string, string>> = {
     // Landing Hero
     hero_badge: "Bizneslər üçün rəqəmsal idarəetmə paneli",
     hero_title: "Biznesinizi daha sadə və\nnəzarətli idarə edin",
-    hero_desc: "ASHRALI müştəri borcları, müqavilələr, satışlar, xərclər, inventar və hesabatları vahid platformada birləşdirir. Məqsədimiz şirkətinizin maliyyə proseslərini daha sürətli, şəffaf və sistemli etməkdir.",
+    hero_desc: "ASRALI müştəri borcları, müqavilələr, satışlar, xərclər, inventar və hesabatları vahid platformada birləşdirir. Məqsədimiz şirkətinizin maliyyə proseslərini daha sürətli, şəffaf və sistemli etməkdir.",
     btn_demo: "Demo Görünüş →",
     btn_register_now: "İndi Yoxla →",
     
     // Login Page
-    login_title: "ASHRALI",
+    login_title: "ASRALI",
     login_desc: "Sistemə daxil olmaq üçün Gmail hesabınızı istifadə edin.",
     login_google_btn: "Google ilə daxil ol",
     login_no_account: "Hesabınız yoxdur?",
@@ -98,7 +98,7 @@ export const translations: Record<Language, Record<string, string>> = {
     sub_support_center: "Dəstək Mərkəzi",
 
     // Dashboard Overview
-    dash_ai_banner: "ASHRALI süni intellekt köməkçisi MİRA təlimə başladı 🚀 Təlimə qoşulmaq üçün siz də sual verin 💬",
+    dash_ai_banner: "ASRALI süni intellekt köməkçisi MİRA təlimə başladı 🚀 Təlimə qoşulmaq üçün siz də sual verin 💬",
     dash_usage_left: "İstifadə müddətinizin bitməsinə {days} gün qaldı.",
     dash_receivables: "Cari Alacaqlar",
     dash_planned_collection: "Planlı Təhsilat",
@@ -154,11 +154,11 @@ export const translations: Record<Language, Record<string, string>> = {
     
     hero_badge: "Digital management panel for businesses",
     hero_title: "Manage your business\nsimply and securely",
-    hero_desc: "ASHRALI brings together customer debts, contracts, sales, expenses, inventory, and reports in a unified platform. Our goal is to make your financial processes faster, transparent, and systematic.",
+    hero_desc: "ASRALI brings together customer debts, contracts, sales, expenses, inventory, and reports in a unified platform. Our goal is to make your financial processes faster, transparent, and systematic.",
     btn_demo: "View Demo →",
     btn_register_now: "Try Now →",
     
-    login_title: "ASHRALI",
+    login_title: "ASRALI",
     login_desc: "Use your Gmail account to log in to the system.",
     login_google_btn: "Sign in with Google",
     login_no_account: "Don't have an account?",
@@ -235,7 +235,7 @@ export const translations: Record<Language, Record<string, string>> = {
     sub_support_center: "Support Center",
 
     // Dashboard Overview
-    dash_ai_banner: "ASHRALI AI assistant MIRA has started training 🚀 Ask a question to join the training 💬",
+    dash_ai_banner: "ASRALI AI assistant MIRA has started training 🚀 Ask a question to join the training 💬",
     dash_usage_left: "You have {days} days left in your trial.",
     dash_receivables: "Receivables",
     dash_planned_collection: "Planned Collection",
@@ -291,11 +291,11 @@ export const translations: Record<Language, Record<string, string>> = {
     
     hero_badge: "Цифровая панель управления для бизнеса",
     hero_title: "Управляйте бизнесом\nпросто и надежно",
-    hero_desc: "ASHRALI объединяет долги клиентов, контракты, продажи, расходы, запасы и отчеты на единой платформе. Наша цель - сделать ваши финансовые процессы быстрыми и прозрачными.",
+    hero_desc: "ASRALI объединяет долги клиентов, контракты, продажи, расходы, запасы и отчеты на единой платформе. Наша цель - сделать ваши финансовые процессы быстрыми и прозрачными.",
     btn_demo: "Смотреть Демо →",
     btn_register_now: "Попробовать →",
     
-    login_title: "ASHRALI",
+    login_title: "ASRALI",
     login_desc: "Используйте свой аккаунт Gmail для входа в систему.",
     login_google_btn: "Войти через Google",
     login_no_account: "Нет аккаунта?",
@@ -372,7 +372,7 @@ export const translations: Record<Language, Record<string, string>> = {
     sub_support_center: "Центр поддержки",
 
     // Dashboard Overview
-    dash_ai_banner: "ИИ-ассистент ASHRALI MIRA начал обучение 🚀 Задайте вопрос, чтобы присоединиться к обучению 💬",
+    dash_ai_banner: "ИИ-ассистент ASRALI MIRA начал обучение 🚀 Задайте вопрос, чтобы присоединиться к обучению 💬",
     dash_usage_left: "До конца пробного периода осталось {days} дней.",
     dash_receivables: "Дебиторская задолженность",
     dash_planned_collection: "Плановый сбор",
@@ -428,11 +428,11 @@ export const translations: Record<Language, Record<string, string>> = {
     
     hero_badge: "İşletmeler için dijital yönetim paneli",
     hero_title: "İşletmenizi daha basit ve\nkontrollü yönetin",
-    hero_desc: "ASHRALI, müşteri borçlarını, sözleşmeleri, satışları, giderleri, envanteri ve raporları tek bir platformda birleştirir. Amacımız süreçlerinizi hızlandırmak ve şeffaflaştırmaktır.",
+    hero_desc: "ASRALI, müşteri borçlarını, sözleşmeleri, satışları, giderleri, envanteri ve raporları tek bir platformda birleştirir. Amacımız süreçlerinizi hızlandırmak ve şeffaflaştırmaktır.",
     btn_demo: "Demoyu İncele →",
     btn_register_now: "Şimdi Dene →",
     
-    login_title: "ASHRALI",
+    login_title: "ASRALI",
     login_desc: "Sisteme giriş yapmak için Gmail hesabınızı kullanın.",
     login_google_btn: "Google ile giriş yap",
     login_no_account: "Hesabınız yok mu?",
@@ -509,7 +509,7 @@ export const translations: Record<Language, Record<string, string>> = {
     sub_support_center: "Destek Merkezi",
 
     // Dashboard Overview
-    dash_ai_banner: "ASHRALI yapay zeka destek asistanı MİRA eğitimine başladı 🚀 Eğitime katılmak için siz de soru sorun 💬",
+    dash_ai_banner: "ASRALI yapay zeka destek asistanı MİRA eğitimine başladı 🚀 Eğitime katılmak için siz de soru sorun 💬",
     dash_usage_left: "Kullanım sürenizin bitmesine {days} gün kaldı.",
     dash_receivables: "Cari Alacak",
     dash_planned_collection: "Planlı Tahsilat",

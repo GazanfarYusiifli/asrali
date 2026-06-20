@@ -17,7 +17,7 @@ export default function TekliflerPage() {
     greeting: 'Hazırladığımız qiymət təklifini dəyərləndirmənizə təqdim edirik.',
     note: 'Təklif 15 gün müddətində qüvvədədir.',
     footerGreeting: 'Sizinlə işləməkdən məmnunluq duyarıq.\nTəklifimizlə bağlı suallarınızı cavablandırmağa hazır olduğumuzu bildirir, işlərinizdə uğurlar diləyirik.',
-    sender: 'Hörmətlə,\nASHRALI Komandası'
+    sender: 'Hörmətlə,\nASRALI Komandası'
   });
 
   const [rows, setRows] = useState([

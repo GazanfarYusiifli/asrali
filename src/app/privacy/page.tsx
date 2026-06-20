@@ -24,7 +24,7 @@ export default function PrivacyPolicyPage() {
         <div style={{ lineHeight: '1.8', fontSize: '1.05rem', color: '#475569' }}>
           <h2 style={{ color: '#1e293b', fontSize: '1.5rem', fontWeight: 700, marginTop: '2rem', marginBottom: '1rem' }}>1. Ümumi Müddəalar</h2>
           <p style={{ marginBottom: '1.5rem' }}>
-            "ASHRALI" və "Nitrocalls" olaraq sizin məxfiliyiniz bizim üçün çox vacibdir. Bu Məxfilik Siyasəti platformamızdan istifadə etdiyiniz zaman hansı məlumatların toplandığını, necə istifadə edildiyini və qorunduğunu izah edir.
+            "ASRALI" və "Nitrocalls" olaraq sizin məxfiliyiniz bizim üçün çox vacibdir. Bu Məxfilik Siyasəti platformamızdan istifadə etdiyiniz zaman hansı məlumatların toplandığını, necə istifadə edildiyini və qorunduğunu izah edir.
           </p>
 
           <h2 style={{ color: '#1e293b', fontSize: '1.5rem', fontWeight: 700, marginTop: '2rem', marginBottom: '1rem' }}>2. Toplanan Məlumatlar</h2>

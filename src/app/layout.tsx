@@ -7,7 +7,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "NextERP - Super App",
+  title: "Asrali.com - Super App",
   description: "Bütün sektorlar üçün ERP sistemi",
 };
 

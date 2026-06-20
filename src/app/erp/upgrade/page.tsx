@@ -21,7 +21,7 @@ export default function UpgradePage() {
       <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
         <h1 style={{ fontSize: '2.5rem', fontWeight: 800, color: '#0f172a', marginBottom: '1rem', letterSpacing: '-0.5px' }}>Biznesinizi Daha İrəli Aparın</h1>
         <p style={{ fontSize: '1.1rem', color: '#64748b', maxWidth: '600px', margin: '0 auto' }}>
-          ASHRALI PRO ilə bütün modullara məhdudiyyətsiz giriş əldə edin və biznes proseslərinizi tam avtomatlaşdırın.
+          ASRALI PRO ilə bütün modullara məhdudiyyətsiz giriş əldə edin və biznes proseslərinizi tam avtomatlaşdırın.
         </p>
       </div>
 

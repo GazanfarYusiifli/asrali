@@ -153,7 +153,7 @@ export default function IsciMaasveIcazePage() {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', flex: 1, minWidth: '150px' }}>
-          <label style={{ fontSize: '0.8rem', fontWeight: 700, color: '#64748b' }}>ASHRALI Yetkisi</label>
+          <label style={{ fontSize: '0.8rem', fontWeight: 700, color: '#64748b' }}>ASRALI Yetkisi</label>
           <select style={selectStyle}>
             <option value="">Bütün Yetkilər</option>
             <option value="Satış (Məhdud)">Satış (Məhdud)</option>

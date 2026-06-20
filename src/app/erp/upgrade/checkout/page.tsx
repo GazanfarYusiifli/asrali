@@ -40,7 +40,7 @@ export default function CheckoutPage() {
         
         <div style={{ textAlign: 'center' }}>
           <h1 style={{ fontSize: '2.5rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.5rem', letterSpacing: '-0.5px' }}>Sifarişinizi Rəsmiləşdirin</h1>
-          <p style={{ color: '#64748b', fontSize: '1.1rem' }}>ASHRALI PRO üçün ödəniş mərhələsi</p>
+          <p style={{ color: '#64748b', fontSize: '1.1rem' }}>ASRALI PRO üçün ödəniş mərhələsi</p>
         </div>
 
         <div style={{ backgroundColor: 'white', borderRadius: '24px', padding: '2.5rem', border: '1px solid #e2e8f0', boxShadow: '0 20px 25px -5px rgba(0,0,0,0.05)' }}>

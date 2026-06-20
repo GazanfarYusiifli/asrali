@@ -22,7 +22,7 @@ export default function ETicaretProPage() {
         </div>
         
         <p style={{ color: '#64748b', fontSize: '1.1rem', lineHeight: '1.6', marginBottom: '2.5rem' }}>
-          E-Ticarət modulu, o cümlədən Gələn Sifarişlər və Tənzimləmələr yalnız <strong>ASHRALI PRO</strong> istifadəçiləri üçün aktivdir. Daha çox funksiya və tam inteqrasiya üçün paketini yüksəlt.
+          E-Ticarət modulu, o cümlədən Gələn Sifarişlər və Tənzimləmələr yalnız <strong>ASRALI PRO</strong> istifadəçiləri üçün aktivdir. Daha çox funksiya və tam inteqrasiya üçün paketini yüksəlt.
         </p>
         
         <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}>

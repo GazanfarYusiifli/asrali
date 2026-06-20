@@ -73,7 +73,7 @@ function SuccessPageInner() {
             <h2 style={{ fontSize: '2rem', color: '#0f172a', marginBottom: '1rem', fontWeight: 800 }}>Təbriklər!</h2>
             <p style={{ color: '#64748b', fontSize: '1.1rem', lineHeight: '1.6', marginBottom: '2rem' }}>
               Ödənişiniz <strong>Stripe</strong> tərəfindən uğurla doğrulandı. <br />
-              Siz artıq <strong style={{ color: '#10b981' }}>ASHRALI PRO</strong> istifadəçisisiniz!
+              Siz artıq <strong style={{ color: '#10b981' }}>ASRALI PRO</strong> istifadəçisisiniz!
             </p>
             <p style={{ fontSize: '0.9rem', color: '#94a3b8' }}>Sistemə yönləndirilirsiniz...</p>
           </div>
