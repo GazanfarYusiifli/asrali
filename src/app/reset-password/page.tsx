@@ -116,7 +116,6 @@ export default function ResetPasswordPage() {
       }}>
         
         <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
-          <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'linear-gradient(135deg, #10b981, #0ea5e9)', boxShadow: '0 4px 15px rgba(16, 185, 129, 0.4)' }}></div>
         </div>
         <h1 style={{ fontSize: '2rem', fontWeight: 900, color: 'white', marginBottom: '0.5rem', letterSpacing: '-1px' }}>
           Yeni Şifrə Təyin Et

@@ -46,7 +46,6 @@ export default function RegisterPage() {
       {/* LEFT SIDEBAR - INFO */}
       <div style={{ flex: '0 0 40%', backgroundColor: '#020617', padding: '4rem', display: 'none', flexDirection: 'column', color: 'white' }} className="desktop-sidebar">
         <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none', marginBottom: '4rem' }}>
-          <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'linear-gradient(135deg, #10b981, #0ea5e9)' }}></div>
           <img src="/logo.png" alt="ASRALI" style={{ height: "40px", width: "auto", borderRadius: "8px" }} />
         </Link>
 
@@ -116,7 +115,6 @@ export default function RegisterPage() {
         {/* Mobile Header (visible only on small screens) */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '3rem' }} className="mobile-header">
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none' }}>
-            <div style={{ width: '28px', height: '28px', borderRadius: '8px', background: 'linear-gradient(135deg, #10b981, #0ea5e9)' }}></div>
             <img src="/logo.png" alt="ASRALI" style={{ height: "32px", width: "auto", borderRadius: "8px" }} />
           </Link>
           <div style={{ fontSize: '0.875rem', color: '#64748b' }}>

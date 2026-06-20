@@ -234,7 +234,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         flexShrink: 0
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-          <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'linear-gradient(135deg, #3b82f6, #0ea5e9)' }}></div>
           <img src="/logo.png" alt="ASRALI" style={{ height: "32px", width: "auto", borderRadius: "8px" }} />
         </div>
 
