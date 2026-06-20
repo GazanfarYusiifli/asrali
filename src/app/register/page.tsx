@@ -174,9 +174,6 @@ export default function RegisterPage() {
                     <h4 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.25rem' }}>{type.title}</h4>
                     <p style={{ color: '#64748b', fontSize: '0.9rem' }}>{type.desc}</p>
                   </div>
-                  <div style={{ marginLeft: 'auto', width: '24px', height: '24px', borderRadius: '50%', border: `2px solid ${orgType === type.id ? '#0ea5e9' : '#cbd5e1'}`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    {orgType === type.id && <div style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#0ea5e9' }}></div>}
-                  </div>
                 </div>
               ))}
 
