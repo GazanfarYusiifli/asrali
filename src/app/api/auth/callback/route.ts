@@ -14,12 +14,12 @@ export async function GET(request: Request) {
       const isRegistered = session.user.user_metadata?.registered === true;
       
       if (!isRegistered) {
-        // Auto-register the user if they login/register with Google or Facebook for the first time
-        const { error: updateError } = await supabase.auth.updateUser({
-          data: { registered: true }
-        });
-        
-        if (!updateError) {
+        try {
+          // Auto-register the user if they login/register with Google or Facebook for the first time
+          await supabase.auth.updateUser({
+            data: { registered: true }
+          });
+          
           // Fetch full name from OAuth provider or default to "Yeni İstifadəçi"
           const fullName = session.user.user_metadata?.full_name || session.user.user_metadata?.name || 'Yeni İstifadəçi';
           const email = session.user.email || '';
@@ -27,20 +27,24 @@ export async function GET(request: Request) {
           // Complete registration by calling the RPC
           await supabase.rpc('complete_user_registration', {
             p_full_name: fullName,
-            p_company_name: 'Mənim Şirkətim', // Default company name for OAuth users
+            p_company_name: email ? email.split('@')[0] + ' MMC' : 'Şirkət',
             p_phone: '',
             p_country: 'Azərbaycan',
             p_city: 'Bakı',
-            p_username: email.split('@')[0],
+            p_username: email ? email.split('@')[0] : 'user_' + Math.floor(Math.random() * 10000),
             p_email: email
           });
+        } catch (e) {
+          console.error("Auto registration error:", e);
         }
       }
       
-      // Hər halda daxil olduqdan sonra ana səhifəyə yox, birbaşa idarəetmə panelinə yönləndir
       return NextResponse.redirect(`${origin}${next}`)
+    } else {
+      console.error("Exchange code error:", error);
+      return NextResponse.redirect(`${origin}/login?error=exchange_failed`)
     }
   }
 
-  return NextResponse.redirect(`${origin}/login?message=Could not authenticate user`)
+  return NextResponse.redirect(`${origin}/login?error=no_code`)
 }
