@@ -11,13 +11,18 @@ export default async function NetworkPage({ searchParams }: { searchParams: { ta
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return <div>Auth error</div>;
 
-  const { data: currentUser } = await supabase
+  const { data: currentUser, error: userError } = await supabase
     .from('users')
     .select('id, username')
     .eq('id', user.id)
     .single();
 
-  if (!currentUser) return <div>User error</div>;
+  if (!currentUser) return (
+    <div className="p-8 max-w-xl mx-auto mt-10 bg-red-50 text-red-700 rounded-2xl border border-red-200 shadow-sm">
+      <h2 className="text-xl font-bold mb-2">User Error</h2>
+      <p className="font-mono text-sm">{userError?.message || 'Unknown error. Did you run the SQL migration?'}</p>
+    </div>
+  );
 
   // Fetch documents
   let query = supabase
