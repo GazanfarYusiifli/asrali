@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { ArrowRightLeft, Calculator, TrendingUp, DollarSign, Coins } from 'lucide-react';
+import { ArrowRightLeft, Calculator, TrendingUp } from 'lucide-react';
 
 type Valute = {
   code: string;
@@ -11,7 +11,7 @@ type Valute = {
 };
 
 export default function CurrencyCalculator({ rates }: { rates: Valute[] }) {
-  const [amount, setAmount] = useState<string>('100');
+  const [amount, setAmount] = useState<string>('1');
   const [fromCurrency, setFromCurrency] = useState<string>('USD');
   const [toCurrency, setToCurrency] = useState<string>('AZN');
 
@@ -28,7 +28,7 @@ export default function CurrencyCalculator({ rates }: { rates: Valute[] }) {
     const toVal = toRate.value / parseFloat(toRate.nominal.replace(/[^\d.-]/g, '') || '1');
 
     const result = (parsedAmount * fromVal) / toVal;
-    return result.toFixed(2);
+    return result.toFixed(4);
   }, [amount, fromCurrency, toCurrency, fromRate, toRate]);
 
   const handleSwap = () => {
@@ -37,167 +37,165 @@ export default function CurrencyCalculator({ rates }: { rates: Valute[] }) {
   };
 
   return (
-    <div className="p-4 md:p-8 max-w-7xl mx-auto">
-      {/* Header Section */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-extrabold text-slate-800 tracking-tight flex items-center gap-3">
-          <div className="w-12 h-12 bg-gradient-to-br from-sky-400 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/30">
-            <Calculator className="text-white" size={24} />
+    <div style={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+      
+      {/* Header */}
+      <div style={{ marginBottom: '2rem' }}>
+        <h1 style={{ fontSize: '2rem', fontWeight: '800', color: '#1e293b', display: 'flex', alignItems: 'center', gap: '0.75rem', margin: 0 }}>
+          <div style={{ backgroundColor: '#0ea5e9', padding: '0.5rem', borderRadius: '0.75rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Calculator color="white" size={24} />
           </div>
           Valyuta Kalkulyatoru
         </h1>
-        <p className="text-slate-500 mt-2 font-medium">Azərbaycan Respublikası Mərkəzi Bankının (ARMB) rəsmi məzənnələri əsasında canlı hesablanma</p>
+        <p style={{ color: '#64748b', marginTop: '0.5rem', fontSize: '1rem' }}>
+          Azərbaycan Respublikası Mərkəzi Bankının (ARMB) rəsmi məzənnələrinə əsasən
+        </p>
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
         
-        {/* Main Calculator */}
-        <div className="xl:col-span-2 flex flex-col gap-8">
-          <div className="bg-white/70 backdrop-blur-xl rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-100 p-8 relative overflow-hidden">
-            {/* Decorative background blur */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-sky-200/30 rounded-full blur-3xl -z-10 translate-x-1/2 -translate-y-1/2"></div>
-            
-            <div className="flex flex-col md:flex-row gap-6 items-center z-10">
-              
-              {/* Amount Input */}
-              <div className="flex-1 w-full relative group">
-                <label className="block text-sm font-semibold text-slate-600 mb-3 ml-1 uppercase tracking-wider">Məbləğ</label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <DollarSign className="h-5 w-5 text-slate-400 group-focus-within:text-sky-500 transition-colors" />
-                  </div>
-                  <input
-                    type="number"
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
-                    className="w-full pl-12 pr-4 py-4 text-2xl font-bold text-slate-800 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:ring-0 focus:border-sky-500 focus:bg-white outline-none transition-all shadow-inner"
-                    placeholder="0.00"
-                  />
-                </div>
-              </div>
-
-              {/* From Currency */}
-              <div className="flex-1 w-full">
-                <label className="block text-sm font-semibold text-slate-600 mb-3 ml-1 uppercase tracking-wider">Bu valyutadan</label>
-                <div className="relative">
-                  <select
-                    value={fromCurrency}
-                    onChange={(e) => setFromCurrency(e.target.value)}
-                    className="w-full px-4 py-4 text-lg font-bold text-slate-700 bg-slate-50 border-2 border-slate-100 rounded-2xl appearance-none focus:ring-0 focus:border-sky-500 focus:bg-white outline-none transition-all cursor-pointer shadow-inner"
-                  >
-                    {rates.map((rate) => (
-                      <option key={`from-${rate.code}`} value={rate.code}>
-                        {rate.code} - {rate.name}
-                      </option>
-                    ))}
-                  </select>
-                  <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none">
-                    <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-                  </div>
-                </div>
-              </div>
-
-              {/* Swap Button */}
-              <div className="flex items-center justify-center pt-8">
-                <button
-                  onClick={handleSwap}
-                  className="w-14 h-14 bg-slate-800 hover:bg-sky-500 text-white rounded-full flex items-center justify-center transition-all duration-300 shadow-lg shadow-slate-800/20 hover:shadow-sky-500/40 hover:-translate-y-1 hover:rotate-180 active:scale-95"
-                  title="Dəyiş"
-                >
-                  <ArrowRightLeft size={20} />
-                </button>
-              </div>
-
-              {/* To Currency */}
-              <div className="flex-1 w-full">
-                <label className="block text-sm font-semibold text-slate-600 mb-3 ml-1 uppercase tracking-wider">Bu valyutaya</label>
-                <div className="relative">
-                  <select
-                    value={toCurrency}
-                    onChange={(e) => setToCurrency(e.target.value)}
-                    className="w-full px-4 py-4 text-lg font-bold text-slate-700 bg-slate-50 border-2 border-slate-100 rounded-2xl appearance-none focus:ring-0 focus:border-sky-500 focus:bg-white outline-none transition-all cursor-pointer shadow-inner"
-                  >
-                    {rates.map((rate) => (
-                      <option key={`to-${rate.code}`} value={rate.code}>
-                        {rate.code} - {rate.name}
-                      </option>
-                    ))}
-                  </select>
-                  <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none">
-                    <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-          {/* Result Card */}
-          <div className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-sky-900 rounded-[2rem] p-8 text-white shadow-2xl overflow-hidden">
-            <div className="absolute top-0 right-0 -mr-16 -mt-16 opacity-10">
-              <Coins size={250} />
-            </div>
-            
-            <div className="relative z-10">
-              <p className="text-sky-300 font-medium text-lg mb-2 opacity-90">{amount} {fromCurrency} bərabərdir</p>
-              <div className="flex items-baseline gap-4 flex-wrap">
-                <h2 className="text-5xl md:text-7xl font-extrabold tracking-tight">
-                  {convertedAmount}
-                </h2>
-                <span className="text-3xl md:text-4xl font-bold text-sky-400">{toCurrency}</span>
-              </div>
-              
-              <div className="mt-8 pt-6 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div className="bg-white/10 backdrop-blur-md rounded-xl px-5 py-3 font-mono text-sm tracking-wide">
-                  1 {fromCurrency} = {(parseFloat(convertedAmount) / (parseFloat(amount) || 1)).toFixed(4)} {toCurrency}
-                </div>
-                <div className="bg-white/10 backdrop-blur-md rounded-xl px-5 py-3 font-mono text-sm tracking-wide">
-                  1 {toCurrency} = {((parseFloat(amount) || 1) / parseFloat(convertedAmount)).toFixed(4)} {fromCurrency}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Popular Rates Sidebar */}
-        <div className="bg-white rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-100 p-8 flex flex-col max-h-[600px]">
-          <h3 className="font-extrabold text-xl text-slate-800 flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center text-emerald-600">
-              <TrendingUp size={20} />
-            </div>
-            Günlük Məzənnələr
-          </h3>
+        {/* Calculator Section */}
+        <div style={{ 
+          backgroundColor: '#ffffff', 
+          borderRadius: '1.5rem', 
+          boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01)', 
+          border: '1px solid #e2e8f0',
+          padding: '2rem',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1.5rem'
+        }}>
           
-          <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar space-y-3">
-            {rates.filter(r => ['USD', 'EUR', 'TRY', 'RUB', 'GBP', 'GEL'].includes(r.code)).map((rate) => {
-               // Normalizing the nominal value (e.g. "100 Rusiya rublu" -> 100)
-               const nominalVal = parseFloat(rate.nominal.replace(/[^\d.-]/g, '') || '1');
-               const oneUnitValue = rate.value / nominalVal;
+          <div>
+            <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#475569', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Məbləğ</label>
+            <input
+              type="number"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              style={{
+                width: '100%', padding: '1rem 1.25rem', fontSize: '1.5rem', fontWeight: 'bold', color: '#0f172a',
+                backgroundColor: '#f8fafc', border: '2px solid #e2e8f0', borderRadius: '1rem',
+                outline: 'none', transition: 'border-color 0.2s', boxSizing: 'border-box'
+              }}
+              onFocus={(e) => e.target.style.borderColor = '#0ea5e9'}
+              onBlur={(e) => e.target.style.borderColor = '#e2e8f0'}
+            />
+          </div>
 
-               return (
-                <div key={rate.code} className="group flex items-center justify-between p-4 bg-slate-50 hover:bg-sky-50 rounded-2xl transition-all duration-300 border border-transparent hover:border-sky-100 cursor-default">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-white shadow-sm border border-slate-100 rounded-xl flex items-center justify-center font-bold text-slate-700 text-lg group-hover:text-sky-600 group-hover:scale-110 transition-all duration-300">
-                      {rate.code}
-                    </div>
-                    <div>
-                      <div className="font-bold text-slate-800 group-hover:text-sky-900 transition-colors">{rate.code}</div>
-                      <div className="text-xs text-slate-500 font-medium truncate max-w-[120px]">{rate.name.replace(/^\d+\s+/, '')}</div>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <div className="font-extrabold text-lg text-slate-800 group-hover:text-sky-600 transition-colors">
-                      {oneUnitValue.toFixed(4)}
-                    </div>
-                    <div className="text-xs font-bold text-slate-400 uppercase tracking-wider">
-                      AZN
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+          <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-end' }}>
+            <div style={{ flex: 1 }}>
+              <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#475569', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Bu valyutadan</label>
+              <select
+                value={fromCurrency}
+                onChange={(e) => setFromCurrency(e.target.value)}
+                style={{
+                  width: '100%', padding: '1rem', fontSize: '1.125rem', fontWeight: 'bold', color: '#334155',
+                  backgroundColor: '#f8fafc', border: '2px solid #e2e8f0', borderRadius: '1rem',
+                  outline: 'none', appearance: 'none', cursor: 'pointer', boxSizing: 'border-box'
+                }}
+              >
+                {rates.map((rate) => (
+                  <option key={`from-${rate.code}`} value={rate.code}>{rate.code} - {rate.name}</option>
+                ))}
+              </select>
+            </div>
+
+            <button
+              onClick={handleSwap}
+              style={{
+                padding: '1rem', backgroundColor: '#0f172a', color: 'white', border: 'none', borderRadius: '1rem',
+                cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                transition: 'transform 0.2s, background-color 0.2s'
+              }}
+              onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#0ea5e9'}
+              onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#0f172a'}
+            >
+              <ArrowRightLeft size={24} />
+            </button>
+
+            <div style={{ flex: 1 }}>
+              <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#475569', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Bu valyutaya</label>
+              <select
+                value={toCurrency}
+                onChange={(e) => setToCurrency(e.target.value)}
+                style={{
+                  width: '100%', padding: '1rem', fontSize: '1.125rem', fontWeight: 'bold', color: '#334155',
+                  backgroundColor: '#f8fafc', border: '2px solid #e2e8f0', borderRadius: '1rem',
+                  outline: 'none', appearance: 'none', cursor: 'pointer', boxSizing: 'border-box'
+                }}
+              >
+                {rates.map((rate) => (
+                  <option key={`to-${rate.code}`} value={rate.code}>{rate.code} - {rate.name}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div style={{
+            marginTop: '1rem',
+            padding: '2rem',
+            background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
+            borderRadius: '1.25rem',
+            color: 'white',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center'
+          }}>
+            <p style={{ color: '#94a3b8', fontSize: '1.125rem', marginBottom: '0.5rem', margin: 0 }}>
+              {amount} {fromCurrency} =
+            </p>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem' }}>
+              <span style={{ fontSize: '3.5rem', fontWeight: '800', lineHeight: '1', color: '#38bdf8' }}>{convertedAmount}</span>
+              <span style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#cbd5e1' }}>{toCurrency}</span>
+            </div>
+            <div style={{ marginTop: '1.5rem', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '1rem', fontSize: '0.875rem', color: '#94a3b8', display: 'flex', gap: '1rem' }}>
+              <span>1 {fromCurrency} = {(parseFloat(convertedAmount) / (parseFloat(amount) || 1)).toFixed(4)} {toCurrency}</span>
+            </div>
           </div>
         </div>
+
+        {/* Full List Section */}
+        <div style={{ 
+          backgroundColor: '#ffffff', 
+          borderRadius: '1.5rem', 
+          boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.05)', 
+          border: '1px solid #e2e8f0',
+          padding: '2rem',
+          display: 'flex',
+          flexDirection: 'column'
+        }}>
+          <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.5rem', margin: '0 0 1.5rem 0' }}>
+            <TrendingUp color="#10b981" size={24} />
+            AZN məzənnələrinin tam siyahısı
+          </h3>
+
+          <div style={{ flex: 1, overflowY: 'auto', maxHeight: '500px', paddingRight: '0.5rem' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+              <thead>
+                <tr>
+                  <th style={{ padding: '1rem 0.5rem', borderBottom: '2px solid #e2e8f0', color: '#64748b', fontSize: '0.875rem', fontWeight: '700' }}>Valyuta</th>
+                  <th style={{ padding: '1rem 0.5rem', borderBottom: '2px solid #e2e8f0', color: '#64748b', fontSize: '0.875rem', fontWeight: '700' }}>Kod</th>
+                  <th style={{ padding: '1rem 0.5rem', borderBottom: '2px solid #e2e8f0', color: '#64748b', fontSize: '0.875rem', fontWeight: '700', textAlign: 'right' }}>Kurs (AZN)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rates.map((rate, index) => {
+                  if(rate.code === 'AZN') return null;
+                  return (
+                    <tr key={index} style={{ borderBottom: '1px solid #f1f5f9', transition: 'background-color 0.2s' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f8fafc'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
+                      <td style={{ padding: '1rem 0.5rem', color: '#334155', fontWeight: '600' }}>{rate.nominal} {rate.name}</td>
+                      <td style={{ padding: '1rem 0.5rem' }}>
+                        <span style={{ backgroundColor: '#e0f2fe', color: '#0284c7', padding: '0.25rem 0.5rem', borderRadius: '0.5rem', fontSize: '0.875rem', fontWeight: '700' }}>{rate.code}</span>
+                      </td>
+                      <td style={{ padding: '1rem 0.5rem', textAlign: 'right', fontWeight: '800', color: '#0f172a' }}>{rate.value.toFixed(4)}</td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
       </div>
     </div>
   );
