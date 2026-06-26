@@ -305,6 +305,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                       backgroundColor: isAnyChildActive ? 'rgba(16, 185, 129, 0.1)' : 'transparent',
                       color: isAnyChildActive ? '#10b981' : '#cbd5e1',
                       fontWeight: isAnyChildActive ? 600 : 500,
+                      fontSize: '0.95rem',
+                      fontFamily: 'inherit',
                       textDecoration: 'none',
                       transition: 'all 0.2s ease',
                     }}
@@ -334,6 +336,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     backgroundColor: (isOpen || isAnyChildActive) ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
                     color: (isOpen || isAnyChildActive) ? '#38bdf8' : '#cbd5e1',
                     fontWeight: (isOpen || isAnyChildActive) ? 600 : 500,
+                    fontSize: '0.95rem',
+                    fontFamily: 'inherit',
                     border: 'none',
                     cursor: 'pointer',
                     transition: 'all 0.2s ease',
