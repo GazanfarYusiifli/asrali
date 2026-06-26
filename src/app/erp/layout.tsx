@@ -203,6 +203,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       ]
     },
     {
+      name: 'Aşralı Şəbəkəsi',
+      icon: <FileCheck size={20} />,
+      roles: ['SUPERADMIN', 'ACCOUNTANT'],
+      path: '/erp/network',
+      subItems: []
+    },
+    {
       name: t('menu_ecommerce'),
       icon: <Globe size={20} />,
       roles: ['SUPERADMIN', 'ACCOUNTANT'],
