@@ -12,38 +12,30 @@ export async function sendNetworkDocument(formData: FormData) {
     throw new Error('Not authenticated');
   }
 
-  // Get sender tenant
-  const { data: senderUser } = await supabase
-    .from('users')
-    .select('tenant_id')
-    .eq('id', user.id)
-    .single();
-
-  if (!senderUser || !senderUser.tenant_id) {
-    throw new Error('Tenant not found');
-  }
-
-  const receiverVoen = formData.get('voen') as string;
+  const receiverUsername = formData.get('username') as string;
   const documentType = formData.get('type') as string;
   const title = formData.get('title') as string;
   const content = formData.get('content') as string;
 
-  if (!receiverVoen || !documentType || !title) {
+  if (!receiverUsername || !documentType || !title) {
     throw new Error('Missing fields');
   }
 
-  // Find receiver tenant by VOEN
-  const { data: receiverTenant } = await supabase
-    .from('tenants')
+  // Remove @ if the user typed it
+  const cleanUsername = receiverUsername.replace('@', '').trim();
+
+  // Find receiver user by username
+  const { data: receiverUser } = await supabase
+    .from('users')
     .select('id')
-    .eq('voen', receiverVoen)
+    .eq('username', cleanUsername)
     .single();
 
-  if (!receiverTenant) {
-    return { error: 'Bu VÖEN ilə sistemdə qeydiyyatdan keçmiş şirkət tapılmadı.' };
+  if (!receiverUser) {
+    return { error: 'Bu istifadəçi adı (@username) ilə sistemdə qeydiyyatdan keçmiş istifadəçi tapılmadı.' };
   }
 
-  if (receiverTenant.id === senderUser.tenant_id) {
+  if (receiverUser.id === user.id) {
     return { error: 'Özünüzə sənəd göndərə bilməzsiniz.' };
   }
 
@@ -51,8 +43,8 @@ export async function sendNetworkDocument(formData: FormData) {
   const { error: insertError } = await supabase
     .from('network_documents')
     .insert({
-      sender_tenant_id: senderUser.tenant_id,
-      receiver_tenant_id: receiverTenant.id,
+      sender_user_id: user.id,
+      receiver_user_id: receiverUser.id,
       document_type: documentType,
       title: title,
       data: { content },
@@ -81,4 +73,32 @@ export async function updateDocumentStatus(documentId: string, status: string) {
   }
 
   revalidatePath('/erp/network');
+}
+
+// Function to update current user's username
+export async function updateMyUsername(formData: FormData) {
+  const supabase = await createClient();
+  
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) {
+    throw new Error('Not authenticated');
+  }
+
+  let newUsername = formData.get('username') as string;
+  if (!newUsername) throw new Error('Username is required');
+
+  newUsername = newUsername.replace(/[^a-zA-Z0-9_.]/g, '').toLowerCase();
+
+  const { error } = await supabase
+    .from('users')
+    .update({ username: newUsername })
+    .eq('id', user.id);
+
+  if (error) {
+    return { error: 'Bu istifadəçi adı artıq məşğuldur və ya xəta baş verdi.' };
+  }
+
+  revalidatePath('/erp/network');
+  revalidatePath('/erp/ayarlar'); // Assuming there might be a settings page
+  return { success: true };
 }

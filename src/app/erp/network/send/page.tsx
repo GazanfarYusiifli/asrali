@@ -1,5 +1,5 @@
 import React from 'react';
-import { Send, ArrowLeft, Building2, FileType, AlignLeft } from 'lucide-react';
+import { Send, ArrowLeft, AtSign, FileType, AlignLeft } from 'lucide-react';
 import Link from 'next/link';
 import { sendNetworkDocument } from '../actions';
 
@@ -18,26 +18,26 @@ export default function SendDocumentPage() {
             </div>
             Sənəd Göndər
           </h1>
-          <p className="text-slate-500 mt-2 font-medium">Aşralı Şəbəkəsindəki digər şirkətə birbaşa sənəd göndərin.</p>
+          <p className="text-slate-500 mt-2 font-medium">İstifadəçi adı (username) vasitəsilə digər hesaba sənəd və ya mesaj göndərin.</p>
         </div>
 
         <form action={sendNetworkDocument} className="space-y-6">
-          {/* Receiver VOEN */}
+          {/* Receiver Username */}
           <div className="group">
-            <label className="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">Qarşı Tərəfin VÖEN-i</label>
+            <label className="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">Qarşı Tərəfin İstifadəçi Adı</label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                <Building2 className="h-5 w-5 text-slate-400 group-focus-within:text-indigo-500 transition-colors" />
+                <AtSign className="h-5 w-5 text-slate-400 group-focus-within:text-indigo-500 transition-colors" />
               </div>
               <input
                 type="text"
-                name="voen"
+                name="username"
                 required
                 className="w-full pl-12 pr-4 py-4 text-lg font-bold text-slate-800 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:ring-0 focus:border-indigo-500 focus:bg-white outline-none transition-all shadow-inner"
-                placeholder="Məsələn: 1234567891"
+                placeholder="Məsələn: eliyev_eli"
               />
             </div>
-            <p className="text-xs text-slate-500 mt-2 ml-1">Sənəd göndərmək istədiyiniz şirkətin VÖEN kodunu daxil edin.</p>
+            <p className="text-xs text-slate-500 mt-2 ml-1">Sənəd göndərmək istədiyiniz şəxsin <strong>@istifadəçi_adı</strong>-nı daxil edin.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

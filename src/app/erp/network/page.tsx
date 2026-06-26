@@ -1,6 +1,6 @@
 import React from 'react';
 import { createClient } from '@/utils/supabase/server';
-import { FileText, Send, CheckCircle, Clock, XCircle, Eye } from 'lucide-react';
+import { FileText, Send, CheckCircle, Clock, XCircle, Eye, AtSign } from 'lucide-react';
 import Link from 'next/link';
 import { updateDocumentStatus } from './actions';
 
@@ -13,26 +13,26 @@ export default async function NetworkPage({ searchParams }: { searchParams: { ta
 
   const { data: currentUser } = await supabase
     .from('users')
-    .select('tenant_id')
+    .select('id, username')
     .eq('id', user.id)
     .single();
 
-  if (!currentUser) return <div>Tenant error</div>;
+  if (!currentUser) return <div>User error</div>;
 
   // Fetch documents
   let query = supabase
     .from('network_documents')
     .select(`
       *,
-      sender:tenants!network_documents_sender_tenant_id_fkey(name, voen),
-      receiver:tenants!network_documents_receiver_tenant_id_fkey(name, voen)
+      sender:users!network_documents_sender_user_id_fkey(full_name, username),
+      receiver:users!network_documents_receiver_user_id_fkey(full_name, username)
     `)
     .order('created_at', { ascending: false });
 
   if (tab === 'incoming') {
-    query = query.eq('receiver_tenant_id', currentUser.tenant_id);
+    query = query.eq('receiver_user_id', currentUser.id);
   } else {
-    query = query.eq('sender_tenant_id', currentUser.tenant_id);
+    query = query.eq('sender_user_id', currentUser.id);
   }
 
   const { data: documents } = await query;
@@ -57,7 +57,10 @@ export default async function NetworkPage({ searchParams }: { searchParams: { ta
             </div>
             Aşralı Şəbəkəsi
           </h1>
-          <p className="text-slate-500 mt-2 font-medium">Digər şirkətlərlə birbaşa sənəd mübadiləsi (B2B)</p>
+          <p className="text-slate-500 mt-2 font-medium">İstifadəçilər arası birbaşa sənəd mübadiləsi (P2P)</p>
+          <div className="mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-50 text-indigo-700 rounded-lg text-sm font-bold border border-indigo-100 shadow-sm">
+            Mənim hesabım: <AtSign size={14} className="ml-1"/> {currentUser.username || 'təyin_edilməyib'}
+          </div>
         </div>
 
         <Link href="/erp/network/send" className="bg-slate-900 hover:bg-indigo-600 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg hover:-translate-y-1">
@@ -104,9 +107,9 @@ export default async function NetworkPage({ searchParams }: { searchParams: { ta
                       <h3 className="font-bold text-lg text-slate-800">{doc.title}</h3>
                       <p className="text-sm text-slate-500 mt-1">
                         {tab === 'incoming' ? (
-                          <>Göndərən: <strong className="text-slate-700">{doc.sender?.name}</strong> (VÖEN: {doc.sender?.voen})</>
+                          <>Göndərən: <strong className="text-slate-700">{doc.sender?.full_name}</strong> <span className="text-indigo-600 bg-indigo-50 px-1.5 py-0.5 rounded ml-1">@{doc.sender?.username}</span></>
                         ) : (
-                          <>Alıcı: <strong className="text-slate-700">{doc.receiver?.name}</strong> (VÖEN: {doc.receiver?.voen})</>
+                          <>Alıcı: <strong className="text-slate-700">{doc.receiver?.full_name}</strong> <span className="text-indigo-600 bg-indigo-50 px-1.5 py-0.5 rounded ml-1">@{doc.receiver?.username}</span></>
                         )}
                       </p>
                     </div>
