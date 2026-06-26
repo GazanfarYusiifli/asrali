@@ -248,8 +248,8 @@ export default function ProductsPage() {
   };
 
   const filteredProducts = products.filter(p => {
-    const matchesSearch = p.ad.toLowerCase().includes(searchTerm.toLowerCase()) || p.kod.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesTags = selectedTags.length === 0 || selectedTags.some(tag => p.etiketler?.includes(tag));
+    const matchesSearch = (p.ad || '').toLowerCase().includes(searchTerm.toLowerCase()) || (p.kod || '').toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesTags = selectedTags.length === 0 || selectedTags.some(tag => Array.isArray(p.etiketler) && p.etiketler.includes(tag));
     const matchesDepo = !selectedDepo || p.depo === selectedDepo;
     return matchesSearch && matchesTags && matchesDepo;
   });
@@ -359,9 +359,9 @@ export default function ProductsPage() {
                   <td style={{ padding: '1rem 1.5rem', fontSize: '0.95rem', fontWeight: 700, color: '#0ea5e9' }}>{item.kod}</td>
                   <td style={{ padding: '1rem 1.5rem' }}>
                     <div style={{ fontSize: '0.95rem', fontWeight: 600, color: '#1e293b' }}>{item.ad}</div>
-                    {item.etiketler && item.etiketler.length > 0 && (
+                    {Array.isArray(item.etiketler) && item.etiketler.length > 0 && (
                       <div style={{ display: 'flex', gap: '0.3rem', marginTop: '0.3rem', flexWrap: 'wrap' }}>
-                        {item.etiketler.map(t => (
+                        {item.etiketler.map((t: string) => (
                           <span key={t} style={{ padding: '0.1rem 0.4rem', backgroundColor: '#f1f5f9', color: '#475569', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 600, border: '1px solid #e2e8f0' }}>{t}</span>
                         ))}
                       </div>
@@ -378,10 +378,10 @@ export default function ProductsPage() {
                     </span>
                   </td>
                   <td style={{ padding: '1rem 1.5rem', fontSize: '0.95rem', fontWeight: 700, color: '#64748b', textAlign: 'right' }}>
-                    {item.alisFiyati.toFixed(2).replace('.', ',')} {item.alisValyuta === 'AZN' ? '₼' : item.alisValyuta}
+                    {(Number(item.alisFiyati) || 0).toFixed(2).replace('.', ',')} {item.alisValyuta === 'AZN' ? '₼' : item.alisValyuta}
                   </td>
                   <td style={{ padding: '1rem 1.5rem', fontSize: '0.95rem', fontWeight: 800, color: '#0f172a', textAlign: 'right' }}>
-                    {item.satisFiyati.toFixed(2).replace('.', ',')} {item.satisValyuta === 'AZN' ? '₼' : item.satisValyuta}
+                    {(Number(item.satisFiyati) || 0).toFixed(2).replace('.', ',')} {item.satisValyuta === 'AZN' ? '₼' : item.satisValyuta}
                   </td>
                   <td style={{ padding: '1rem 1.5rem', color: '#94a3b8', textAlign: 'right', position: 'relative' }}>
                     <button onClick={() => setOpenDropdownId(openDropdownId === item.id ? null : item.id)} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '0.3rem', borderRadius: '6px' }} onMouseOver={e=>e.currentTarget.style.backgroundColor='#e2e8f0'} onMouseOut={e=>e.currentTarget.style.backgroundColor='transparent'}>
