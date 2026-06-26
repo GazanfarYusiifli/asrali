@@ -163,7 +163,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         { name: t('sub_transactions'), path: '/erp/finans/islemler' },
         { name: t('sub_assets'), path: '/erp/finans/aktivler' },
         { name: t('sub_bank_integration'), path: '/erp/finans/entegrasyon' },
-        { name: t('sub_credit_calc'), path: '/erp/finans/kredit' }
+        { name: t('sub_credit_calc'), path: '/erp/finans/kredit' },
+        { name: 'Valyuta Kalkulyatoru', path: '/erp/finans/valyuta' }
       ]
     },
     {
