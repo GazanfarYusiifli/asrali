@@ -14,7 +14,7 @@ export default async function NetworkPage({ searchParams }: { searchParams: { ta
 
   const { data: currentUser, error: userError } = await supabase
     .from('users')
-    .select('id, username')
+    .select('id, email')
     .eq('id', user.id)
     .single();
 
@@ -30,8 +30,8 @@ export default async function NetworkPage({ searchParams }: { searchParams: { ta
     .from('network_documents')
     .select(`
       *,
-      sender:users!network_documents_sender_user_id_fkey(full_name, username),
-      receiver:users!network_documents_receiver_user_id_fkey(full_name, username)
+      sender:users!network_documents_sender_user_id_fkey(full_name, email),
+      receiver:users!network_documents_receiver_user_id_fkey(full_name, email)
     `)
     .order('created_at', { ascending: false });
 
@@ -63,16 +63,8 @@ export default async function NetworkPage({ searchParams }: { searchParams: { ta
             </div>
             <h1 className={styles.title}>Aşralı Şəbəkəsi</h1>
           </div>
-          <p className={styles.subtitle}>İstifadəçilər arası birbaşa sənəd mübadiləsi (P2P)</p>
-          <div className={styles.userBadge}>
-            <AtSign size={14} /> 
-            {currentUser.username || 'təyin_edilməyib'}
-          </div>
+          <p className={styles.subtitle}>İstifadəçilər arası birbaşa sənəd mübadiləsi (P2P). Yalnız Gələn və Göndərilən sənədlərin arxivi.</p>
         </div>
-
-        <Link href="/erp/network/send" className={styles.btnPrimary}>
-          <Send size={18} /> Yeni Sənəd Göndər
-        </Link>
       </div>
 
       <div className={styles.card}>
@@ -112,9 +104,9 @@ export default async function NetworkPage({ searchParams }: { searchParams: { ta
                       <h3 className={styles.docTitle}>{doc.title}</h3>
                       <p className={styles.docSender}>
                         {tab === 'incoming' ? (
-                          <>Göndərən: <strong>{doc.sender?.full_name}</strong> <span className={styles.docUsername}>@{doc.sender?.username}</span></>
+                          <>Göndərən: <strong>{doc.sender?.full_name}</strong> <span className={styles.docUsername}>{doc.sender?.email}</span></>
                         ) : (
-                          <>Alıcı: <strong>{doc.receiver?.full_name}</strong> <span className={styles.docUsername}>@{doc.receiver?.username}</span></>
+                          <>Alıcı: <strong>{doc.receiver?.full_name}</strong> <span className={styles.docUsername}>{doc.receiver?.email}</span></>
                         )}
                       </p>
                     </div>

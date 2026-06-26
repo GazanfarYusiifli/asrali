@@ -8,6 +8,7 @@ import { useI18n } from '../context/I18nContext';
 import LanguageSwitcher from '../components/LanguageSwitcher';
 import VoiceAssistant from '@/components/VoiceAssistant';
 
+import { createClient } from '@/utils/supabase/client';
 import { getAppStorage, setAppStorage, removeAppStorage } from '@/utils/storage';
 import { 
   LayoutDashboard, ShoppingCart, ShoppingBag, TrendingDown, Users, 
@@ -31,19 +32,19 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const [showNotifications, setShowNotifications] = useState(false);
 
   useEffect(() => {
-    const checkExpenses = () => {
+    const checkNotifications = async () => {
       if (typeof window === 'undefined') return;
-      const expenses = JSON.parse(getAppStorage('erp_expenses') || '[]');
+      
       const notifs: any[] = [];
       const today = new Date();
       
+      // 1. Check Expenses
+      const expenses = JSON.parse(getAppStorage('erp_expenses') || '[]');
       expenses.forEach((exp: any) => {
         if (exp.tekrarla && exp.tekrarla !== 'Təkrarlanmır') {
           let nextDate = new Date(exp.tarix);
-          // If the date is invalid, skip
           if (isNaN(nextDate.getTime())) return;
 
-          // Push the nextDate to the future
           while (nextDate < today) {
             if (exp.tekrarla === 'Hər Həftə') nextDate.setDate(nextDate.getDate() + 7);
             else if (exp.tekrarla === 'Hər Ay') nextDate.setMonth(nextDate.getMonth() + 1);
@@ -72,9 +73,33 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           }
         }
       });
+
+      // 2. Check Network Documents
+      if (user?.id) {
+        const supabase = createClient();
+        const { data: networkDocs } = await supabase
+          .from('network_documents')
+          .select('id, title, document_type, sender:users!network_documents_sender_user_id_fkey(full_name)')
+          .eq('receiver_user_id', user.id)
+          .eq('status', 'PENDING');
+          
+        if (networkDocs) {
+          networkDocs.forEach(doc => {
+            notifs.push({
+              id: doc.id,
+              type: 'info',
+              title: 'Yeni Sənəd: ' + doc.document_type,
+              desc: `${doc.sender?.full_name || 'Bilinməyən'} tərəfindən sizə "${doc.title}" göndərildi. Baxmaq üçün klikləyin.`,
+              link: '/erp/network'
+            });
+          });
+        }
+      }
+
       setNotifications(notifs);
     };
-    checkExpenses();
+    
+    checkNotifications();
     // Update active menu based on pathname
     const activeMenu = menuStructure.find(m => 
       m.subItems?.some(sub => pathname === sub.path || pathname.startsWith(sub.path + '/')) || pathname === m.path
@@ -430,8 +455,19 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                       <div style={{ padding: '2rem 1rem', textAlign: 'center', color: '#94a3b8', fontSize: '0.9rem' }}>Yeni bildirim yoxdur.</div>
                     ) : (
                       notifications.map((notif, idx) => (
-                        <div key={idx} style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', display: 'flex', gap: '0.75rem', cursor: 'pointer', transition: 'background-color 0.2s' }} onMouseOver={e => e.currentTarget.style.backgroundColor = '#f8fafc'} onMouseOut={e => e.currentTarget.style.backgroundColor = 'transparent'}>
-                          <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: notif.type === 'danger' ? '#ef4444' : '#f59e0b', marginTop: '6px', flexShrink: 0 }}></div>
+                        <div 
+                          key={idx} 
+                          onClick={() => {
+                            if (notif.link) {
+                              router.push(notif.link);
+                              setShowNotifications(false);
+                            }
+                          }}
+                          style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', display: 'flex', gap: '0.75rem', cursor: notif.link ? 'pointer' : 'default', transition: 'background-color 0.2s' }} 
+                          onMouseOver={e => e.currentTarget.style.backgroundColor = '#f8fafc'} 
+                          onMouseOut={e => e.currentTarget.style.backgroundColor = 'transparent'}
+                        >
+                          <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: notif.type === 'danger' ? '#ef4444' : notif.type === 'info' ? '#3b82f6' : '#f59e0b', marginTop: '6px', flexShrink: 0 }}></div>
                           <div>
                             <div style={{ fontWeight: 700, fontSize: '0.9rem', color: '#1e293b', marginBottom: '0.2rem' }}>{notif.title}</div>
                             <div style={{ fontSize: '0.8rem', color: '#64748b', lineHeight: '1.4' }}>{notif.desc}</div>

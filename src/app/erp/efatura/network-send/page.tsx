@@ -1,14 +1,16 @@
 import React from 'react';
-import { Send, ArrowLeft, AtSign, FileType, AlignLeft, ChevronDown } from 'lucide-react';
+import { Send, ArrowLeft, AtSign, FileType, AlignLeft, ChevronDown, Mail } from 'lucide-react';
 import Link from 'next/link';
-import { sendNetworkDocument } from '../actions';
+import { sendNetworkDocument } from '../../network/actions';
 import styles from './send.module.css';
 
-export default function SendDocumentPage() {
+export default function ContextualSendPage({ searchParams }: { searchParams: { id?: string } }) {
+  const defaultTitle = searchParams.id ? `E-Fatura Sənədi: ${searchParams.id}` : 'E-Fatura';
+
   return (
     <div className={styles.container}>
-      <Link href="/erp/network" className={styles.backLink}>
-        <ArrowLeft size={16} /> Geri Qayıt
+      <Link href="/erp/efatura/giden" className={styles.backLink}>
+        <ArrowLeft size={16} /> Gedən Qaimələrə Qayıt
       </Link>
 
       <div className={styles.card}>
@@ -17,26 +19,28 @@ export default function SendDocumentPage() {
             <div className={styles.iconBox}>
               <Send size={28} />
             </div>
-            <h1 className={styles.title}>Sənəd Göndər</h1>
+            <h1 className={styles.title}>Aşralı Şəbəkəsi ilə Göndər</h1>
           </div>
-          <p className={styles.subtitle}>İstifadəçi adı (username) vasitəsilə digər hesaba sənəd və ya mesaj göndərin.</p>
+          <p className={styles.subtitle}>Sənədi digər istifadəçiyə e-poçt ünvanı vasitəsilə birbaşa sistem daxilində göndərin.</p>
         </div>
 
         <form action={sendNetworkDocument} className={styles.form}>
-          {/* Receiver Username */}
+          <input type="hidden" name="redirectTo" value="/erp/efatura/giden" />
+          
+          {/* Receiver Email */}
           <div className={styles.inputGroup}>
-            <label className={styles.label}>Qarşı Tərəfin İstifadəçi Adı</label>
+            <label className={styles.label}>Qarşı Tərəfin E-poçt Ünvanı (Email)</label>
             <div className={styles.inputWrapper}>
-              <AtSign size={20} className={styles.inputIcon} />
+              <Mail size={20} className={styles.inputIcon} />
               <input
-                type="text"
-                name="username"
+                type="email"
+                name="email"
                 required
                 className={styles.input}
-                placeholder="Məsələn: eliyev_eli"
+                placeholder="Məsələn: sirket@mail.com"
               />
             </div>
-            <p className={styles.helpText}>Sənəd göndərmək istədiyiniz şəxsin <strong>@istifadəçi_adı</strong>-nı daxil edin.</p>
+            <p className={styles.helpText}>Sənəd göndərmək istədiyiniz şəxsin <strong>qeydiyyatda olan e-poçt ünvanını</strong> daxil edin.</p>
           </div>
 
           <div className={styles.grid}>
@@ -68,6 +72,7 @@ export default function SendDocumentPage() {
                   type="text"
                   name="title"
                   required
+                  defaultValue={defaultTitle}
                   className={styles.input}
                   placeholder="Məsələn: İyun 2026 Qaiməsi"
                 />
@@ -77,17 +82,18 @@ export default function SendDocumentPage() {
 
           {/* Content */}
           <div className={styles.inputGroup}>
-            <label className={styles.label}>Açıqlama / Sənədin Mətni</label>
+            <label className={styles.label}>Açıqlama / Sənədin Detalları</label>
             <textarea
               name="content"
               required
               className={styles.textarea}
-              placeholder="Sənədin detalları və ya əlavə məlumat..."
+              placeholder="Qaimə üzrə əlavə qeydlər, ödəniş şərtləri və s..."
+              defaultValue={searchParams.id ? `Salam, bu qaimə sistem tərəfindən Aşralı Şəbəkəsi vasitəsilə sizə yönləndirilmişdir.\nQaimə ID: ${searchParams.id}` : ''}
             ></textarea>
           </div>
 
           <button type="submit" className={styles.submitBtn}>
-            <Send size={22} /> İndi Göndər
+            <Send size={22} /> Sənədi İndi Göndər
           </button>
         </form>
       </div>

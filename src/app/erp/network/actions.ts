@@ -12,27 +12,27 @@ export async function sendNetworkDocument(formData: FormData) {
     throw new Error('Not authenticated');
   }
 
-  const receiverUsername = formData.get('username') as string;
+  const receiverEmail = formData.get('email') as string;
   const documentType = formData.get('type') as string;
   const title = formData.get('title') as string;
   const content = formData.get('content') as string;
+  const redirectTo = formData.get('redirectTo') as string || '/erp/network';
 
-  if (!receiverUsername || !documentType || !title) {
+  if (!receiverEmail || !documentType || !title) {
     throw new Error('Missing fields');
   }
 
-  // Remove @ if the user typed it
-  const cleanUsername = receiverUsername.replace('@', '').trim();
+  const cleanEmail = receiverEmail.trim().toLowerCase();
 
-  // Find receiver user by username
+  // Find receiver user by email
   const { data: receiverUser } = await supabase
     .from('users')
     .select('id')
-    .eq('username', cleanUsername)
+    .eq('email', cleanEmail)
     .single();
 
   if (!receiverUser) {
-    return { error: 'Bu istifadəçi adı (@username) ilə sistemdə qeydiyyatdan keçmiş istifadəçi tapılmadı.' };
+    return { error: 'Bu E-poçt (Email) ünvanı ilə sistemdə qeydiyyatdan keçmiş istifadəçi tapılmadı.' };
   }
 
   if (receiverUser.id === user.id) {
@@ -57,7 +57,7 @@ export async function sendNetworkDocument(formData: FormData) {
   }
 
   revalidatePath('/erp/network');
-  redirect('/erp/network');
+  redirect(redirectTo);
 }
 
 export async function updateDocumentStatus(documentId: string, status: string) {
@@ -73,32 +73,4 @@ export async function updateDocumentStatus(documentId: string, status: string) {
   }
 
   revalidatePath('/erp/network');
-}
-
-// Function to update current user's username
-export async function updateMyUsername(formData: FormData) {
-  const supabase = await createClient();
-  
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) {
-    throw new Error('Not authenticated');
-  }
-
-  let newUsername = formData.get('username') as string;
-  if (!newUsername) throw new Error('Username is required');
-
-  newUsername = newUsername.replace(/[^a-zA-Z0-9_.]/g, '').toLowerCase();
-
-  const { error } = await supabase
-    .from('users')
-    .update({ username: newUsername })
-    .eq('id', user.id);
-
-  if (error) {
-    return { error: 'Bu istifadəçi adı artıq məşğuldur və ya xəta baş verdi.' };
-  }
-
-  revalidatePath('/erp/network');
-  revalidatePath('/erp/ayarlar'); // Assuming there might be a settings page
-  return { success: true };
 }
