@@ -14,7 +14,8 @@ export default function LanguageSwitcher() {
     { code: 'az', label: 'AZ', flag: '🇦🇿' },
     { code: 'en', label: 'EN', flag: '🇬🇧' },
     { code: 'ru', label: 'RU', flag: '🇷🇺' },
-    { code: 'tr', label: 'TR', flag: '🇹🇷' }
+    { code: 'tr', label: 'TR', flag: '🇹🇷' },
+    { code: 'sv', label: 'SV', flag: '🇸🇪' }
   ];
 
   const currentLang = languages.find(l => l.code === language) || languages[0];
