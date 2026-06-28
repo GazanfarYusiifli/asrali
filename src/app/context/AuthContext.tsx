@@ -87,7 +87,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             if (session.user.user_metadata?.registered === true) {
               setUser(session.user);
               localStorage.setItem('app_current_user_id', session.user.id);
-              await loadUserData(session.user.id);
+              await loadUserData(session.user.id, session.user.created_at);
             } else {
               // Same auto-registration logic for state change
               const fullName = session.user.user_metadata?.full_name || session.user.user_metadata?.name || 'İstifadəçi';
@@ -114,7 +114,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
               
               setUser(session.user);
               localStorage.setItem('app_current_user_id', session.user.id);
-              await loadUserData(session.user.id);
+              await loadUserData(session.user.id, session.user.created_at);
               
               if (typeof window !== 'undefined' && window.location.pathname === '/onboarding') {
                 window.location.href = '/erp/dashboard';
@@ -135,7 +135,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     initAuth();
   }, []);
 
-  const loadUserData = async (userId: string) => {
+  const loadUserData = async (userId: string, createdAt?: string) => {
     // Role logic
     const savedRole = localStorage.getItem(`app_role_${userId}`) as Role;
     if (savedRole) {
@@ -177,8 +177,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
     } else {
       // Fallback
-      sub = { status: 'TRIAL', trialStartDate: new Date().toISOString() };
-      daysLeft = 14;
+      sub = { status: 'TRIAL', trialStartDate: createdAt || new Date().toISOString() };
+      const start = new Date(sub.trialStartDate!);
+      const now = new Date();
+      const diffTime = now.getTime() - start.getTime();
+      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+      daysLeft = Math.max(0, 14 - diffDays);
+      if (daysLeft === 0) {
+        sub.status = 'EXPIRED';
+      }
     }
 
     setSubscriptionState(sub);

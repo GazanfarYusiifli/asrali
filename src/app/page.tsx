@@ -6,7 +6,19 @@ import { useI18n } from './context/I18nContext';
 import LanguageSwitcher from './components/LanguageSwitcher';
 
 export default function Home() {
-  const { t } = useI18n();
+  const { t, language } = useI18n();
+  const getPricing = () => {
+    switch (language) {
+      case 'en': return { currency: 'USD', symbol: '$', amount: '29' };
+      case 'ru': return { currency: 'RUB', symbol: '₽', amount: '2600' };
+      case 'tr': return { currency: 'TRY', symbol: '₺', amount: '950' };
+      case 'sv': return { currency: 'SEK', symbol: 'kr', amount: '300' };
+      case 'az': 
+      default: return { currency: 'AZN', symbol: '₼', amount: '49' };
+    }
+  };
+  const pricing = getPricing();
+
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#020617', color: '#e2e8f0', overflowX: 'hidden', fontFamily: '"Inter", system-ui, -apple-system, sans-serif' }}>
       
@@ -278,8 +290,8 @@ export default function Home() {
               <h4 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'white', marginBottom: '0.5rem' }}>PRO PAKET</h4>
               <p style={{ color: '#94a3b8', marginBottom: '2rem' }}>Kiçik və orta bizneslər üçün ideal</p>
               <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'center' }}>
-                <span style={{ fontSize: '1.5rem', fontWeight: 700, color: 'white', marginTop: '0.5rem', marginRight: '4px' }}>₼</span>
-                <span style={{ fontSize: '3.5rem', fontWeight: 900, background: 'linear-gradient(135deg, #10b981, #0ea5e9)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', letterSpacing: '-1px' }}>49</span>
+                <span style={{ fontSize: '1.5rem', fontWeight: 700, color: 'white', marginTop: '0.5rem', marginRight: '4px' }}>{pricing.symbol}</span>
+                <span style={{ fontSize: '3.5rem', fontWeight: 900, background: 'linear-gradient(135deg, #10b981, #0ea5e9)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', letterSpacing: '-1px' }}>{pricing.amount}</span>
               </div>
               <div style={{ color: '#94a3b8', fontWeight: 500, marginBottom: '2.5rem' }}>aylıq ödəniş</div>
               

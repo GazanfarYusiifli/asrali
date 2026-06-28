@@ -3,10 +3,24 @@ import React from 'react';
 import Link from 'next/link';
 import { useAuth } from '../../context/AuthContext';
 import { CheckCircle2, ShieldAlert, Sparkles } from 'lucide-react';
+import { useI18n } from '../../context/I18nContext';
 
 export default function UpgradePage() {
   const { subscription } = useAuth();
+  const { language } = useI18n();
   const isExpired = subscription?.status === 'EXPIRED';
+
+  const getPricing = () => {
+    switch (language) {
+      case 'en': return { currency: 'USD', symbol: '$', amount: '29' };
+      case 'ru': return { currency: 'RUB', symbol: '₽', amount: '2600' };
+      case 'tr': return { currency: 'TRY', symbol: '₺', amount: '950' };
+      case 'sv': return { currency: 'SEK', symbol: 'kr', amount: '300' };
+      case 'az': 
+      default: return { currency: 'AZN', symbol: '₼', amount: '49' };
+    }
+  };
+  const pricing = getPricing();
 
   return (
     <div style={{ minHeight: '100%', padding: '4rem 2rem', backgroundColor: '#f8fafc', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -31,7 +45,7 @@ export default function UpgradePage() {
         <div style={{ backgroundColor: 'white', borderRadius: '24px', padding: '2.5rem', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)', opacity: isExpired ? 0.6 : 1, position: 'relative' }}>
           <h3 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#334155', marginBottom: '0.5rem' }}>Sadə Paket (Sınaq)</h3>
           <p style={{ color: '#64748b', marginBottom: '2rem' }}>Sadə funksiyalarla işləmək üçün</p>
-          <div style={{ fontSize: '3rem', fontWeight: 800, color: '#0f172a', marginBottom: '2rem' }}>0 <span style={{ fontSize: '1.2rem', color: '#94a3b8', fontWeight: 600 }}>AZN / 14 gün</span></div>
+          <div style={{ fontSize: '3rem', fontWeight: 800, color: '#0f172a', marginBottom: '2rem' }}>0 <span style={{ fontSize: '1.2rem', color: '#94a3b8', fontWeight: 600 }}>{pricing.currency} / 14 gün</span></div>
           
           <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 2.5rem 0', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <li style={{ display: 'flex', gap: '0.8rem', alignItems: 'center', color: '#475569' }}><CheckCircle2 size={20} color="#cbd5e1" /> Bütün əsas modullar (məhdudiyyətli)</li>
@@ -53,7 +67,7 @@ export default function UpgradePage() {
 
           <h3 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'white', marginBottom: '0.5rem' }}>PRO Paket</h3>
           <p style={{ color: '#94a3b8', marginBottom: '2rem' }}>Peşəkar idarəetmə üçün</p>
-          <div style={{ fontSize: '3rem', fontWeight: 800, color: 'white', marginBottom: '2rem' }}>49 <span style={{ fontSize: '1.2rem', color: '#64748b', fontWeight: 600 }}>AZN / aylıq</span></div>
+          <div style={{ fontSize: '3rem', fontWeight: 800, color: 'white', marginBottom: '2rem' }}>{pricing.amount} <span style={{ fontSize: '1.2rem', color: '#64748b', fontWeight: 600 }}>{pricing.currency} / aylıq</span></div>
           
           <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 2.5rem 0', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <li style={{ display: 'flex', gap: '0.8rem', alignItems: 'center', color: '#e2e8f0' }}><CheckCircle2 size={20} color="#10b981" /> Məhdudiyyətsiz faktura kəsimi</li>

@@ -1,10 +1,26 @@
 'use client';
 import React, { useState } from 'react';
+import { useAuth } from '../../../context/AuthContext';
+import { useI18n } from '../../../context/I18nContext';
 import { CreditCard, ShieldCheck, ArrowLeft, ExternalLink } from 'lucide-react';
 import Link from 'next/link';
 
 export default function CheckoutPage() {
+  const { user } = useAuth();
+  const { language } = useI18n();
   const [loading, setLoading] = useState(false);
+
+  const getPricing = () => {
+    switch (language) {
+      case 'en': return { currency: 'USD', amount: 29, vat: 5.22, total: 34.22 };
+      case 'ru': return { currency: 'RUB', amount: 2600, vat: 468, total: 3068 };
+      case 'tr': return { currency: 'TRY', amount: 950, vat: 171, total: 1121 };
+      case 'sv': return { currency: 'SEK', amount: 300, vat: 54, total: 354 };
+      case 'az': 
+      default: return { currency: 'AZN', amount: 49.00, vat: 8.82, total: 57.82 };
+    }
+  };
+  const pricing = getPricing();
 
   const handleStripeCheckout = async () => {
     setLoading(true);
@@ -50,16 +66,16 @@ export default function CheckoutPage() {
           
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem', color: '#475569', fontSize: '1.05rem' }}>
             <span>PRO Paket (Aylıq)</span>
-            <span style={{ fontWeight: 600 }}>49.00 AZN</span>
+            <span style={{ fontWeight: 600 }}>{pricing.amount.toFixed(2)} {pricing.currency}</span>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem', color: '#475569', fontSize: '1.05rem' }}>
             <span>ƏDV (18%)</span>
-            <span style={{ fontWeight: 600 }}>8.82 AZN</span>
+            <span style={{ fontWeight: 600 }}>{pricing.vat.toFixed(2)} {pricing.currency}</span>
           </div>
           <div style={{ height: '2px', backgroundColor: '#e2e8f0', margin: '1.5rem 0' }}></div>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
             <span style={{ fontSize: '1.2rem', fontWeight: 700, color: '#1e293b' }}>Yekun Məbləğ:</span>
-            <span style={{ fontSize: '2rem', fontWeight: 800, color: '#10b981' }}>57.82 AZN</span>
+            <span style={{ fontSize: '2rem', fontWeight: 800, color: '#10b981' }}>{pricing.total.toFixed(2)} {pricing.currency}</span>
           </div>
 
           <a 
