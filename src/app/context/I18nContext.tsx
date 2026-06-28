@@ -22,9 +22,13 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
       setLanguageState(savedLang);
     } else {
       // Check browser language
-      const browserLang = navigator.language.split('-')[0] as Language;
-      if (Object.keys(translations).includes(browserLang)) {
-        setLanguageState(browserLang);
+      const browserLangs = navigator.languages || [navigator.language || 'az'];
+      for (const lang of browserLangs) {
+        const baseLang = lang.split('-')[0] as Language;
+        if (Object.keys(translations).includes(baseLang)) {
+          setLanguageState(baseLang);
+          break; // Stop at first matched language
+        }
       }
     }
     setMounted(true);
