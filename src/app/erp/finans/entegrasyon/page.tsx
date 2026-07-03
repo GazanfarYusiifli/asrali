@@ -5,8 +5,8 @@ import { Link2, Building2, CheckCircle2, FileText, PhoneCall, Lock, Crown, Arrow
 export default function BankIntegrationPage() {
   const [processingBank, setProcessingBank] = useState<string | null>(null);
   
-  // Simulated PRO state
-  const isProMode = false;
+  // Simulated PRO state (Temporarily unlocked for all)
+  const isProMode = true;
 
   const handleIntegrate = (bankId: string) => {
     if (!isProMode) return;
