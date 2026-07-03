@@ -1,28 +1,27 @@
 'use client';
 import React from 'react';
-import { Globe, Sparkles } from 'lucide-react';
+import { Brain, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 
-export default function ETicaretProPage() {
+export default function AiPage() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', padding: '2rem', backgroundColor: '#f8fafc', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
       <div style={{ backgroundColor: 'white', padding: '4rem 3rem', borderRadius: '24px', boxShadow: '0 20px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.01)', maxWidth: '600px', width: '100%', textAlign: 'center', border: '1px solid #e2e8f0', position: 'relative', overflow: 'hidden' }}>
         
-        {/* Background Decorative Gradient */}
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '6px', background: 'linear-gradient(90deg, #f59e0b, #fbbf24, #fcd34d)' }}></div>
-        <div style={{ position: 'absolute', top: '-50px', right: '-50px', width: '150px', height: '150px', background: 'radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, transparent 70%)', borderRadius: '50%' }}></div>
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '6px', background: 'linear-gradient(90deg, #8b5cf6, #c084fc, #e879f9)' }}></div>
+        <div style={{ position: 'absolute', top: '-50px', right: '-50px', width: '150px', height: '150px', background: 'radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%)', borderRadius: '50%' }}></div>
 
-        <div style={{ width: '80px', height: '80px', backgroundColor: '#ecfdf5', borderRadius: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 2rem auto', color: '#10b981', boxShadow: '0 10px 15px -3px rgba(16, 185, 129, 0.1)' }}>
-          <Globe size={40} />
+        <div style={{ width: '80px', height: '80px', backgroundColor: '#f5f3ff', borderRadius: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 2rem auto', color: '#8b5cf6', boxShadow: '0 10px 15px -3px rgba(139, 92, 246, 0.1)' }}>
+          <Brain size={40} />
         </div>
         
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
-          <Sparkles size={24} color="#10b981" />
-          <h1 style={{ fontSize: '2rem', color: '#0f172a', margin: 0, fontWeight: 800 }}>E-Ticarət (Sayt) İnteqrasiyası</h1>
+          <Sparkles size={24} color="#8b5cf6" />
+          <h1 style={{ fontSize: '2rem', color: '#0f172a', margin: 0, fontWeight: 800 }}>MİRA AI (Süni İntellekt)</h1>
         </div>
         
         <p style={{ color: '#64748b', fontSize: '1.1rem', lineHeight: '1.6', marginBottom: '2.5rem' }}>
-          E-Ticarət modulu tamamilə yenilənir! Bu xidmət hazırda bütün istifadəçilərimiz üçün <strong>PULSUZDUR</strong>. Yaxın zamanda məhsullarınızı birbaşa öz saytınızda satmaq üçün yeni funksionallıqlar əlavə olunacaq. Tezliklə görüşərik!
+          MİRA AI köməkçisi hazırda təlim keçir. Bu xidmət hazırda bütün istifadəçilərimiz üçün <strong>PULSUZDUR</strong>. Yaxın zamanda məlumatlarınızı analiz etmək və idarəetməni asanlaşdırmaq üçün aktiv olacaq!
         </p>
         
         <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}>

@@ -13,7 +13,7 @@ import { getAppStorage, setAppStorage, removeAppStorage } from '@/utils/storage'
 import { 
   LayoutDashboard, ShoppingCart, ShoppingBag, TrendingDown, Users, 
   CreditCard, Package, Settings, Wrench, FileCheck, Globe, BarChart3, HelpCircle, 
-  ChevronDown, ChevronRight, LogOut, Bell, Wallet, Video
+  ChevronDown, ChevronRight, LogOut, Bell, Wallet, Video, Brain
 } from 'lucide-react';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -235,10 +235,16 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       subItems: []
     },
     {
+      name: 'MİRA AI',
+      icon: <Brain size={20} />,
+      roles: ['SUPERADMIN', 'ACCOUNTANT'],
+      path: '/erp/ai',
+      subItems: []
+    },
+    {
       name: t('menu_ecommerce'),
       icon: <Globe size={20} />,
       roles: ['SUPERADMIN', 'ACCOUNTANT'],
-      isPro: true,
       subItems: [
         { name: t('sub_in_orders'), path: '/erp/eticaret/pro' },
         { name: t('sub_settings'), path: '/erp/eticaret/pro' }
@@ -248,7 +254,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       name: 'E-Konsultasiya',
       icon: <Video size={20} />,
       roles: ['SUPERADMIN', 'ACCOUNTANT'],
-      isPro: true,
       path: 'https://nitrocalls.site',
       subItems: []
     },
