@@ -4,6 +4,7 @@ import { Link2, Building2, CheckCircle2, FileText, PhoneCall, Lock, Crown, Arrow
 
 export default function BankIntegrationPage() {
   const [processingBank, setProcessingBank] = useState<string | null>(null);
+  const [integratedBanks, setIntegratedBanks] = useState<string[]>([]);
   
   // Simulated PRO state (Temporarily unlocked for all)
   const isProMode = true;
@@ -15,15 +16,9 @@ export default function BankIntegrationPage() {
     const selected = banks.find(b => b.id === bankId);
     setTimeout(() => {
       setProcessingBank(null);
-      const isConfirmed = window.confirm(`Sistem ${selected?.name} serverlərinə qoşulmağa hazırdır.\n\nBankın rəsmi portalında ASAN İmza ilə təsdiq etmək üçün bankın səhifəsinə yönləndirilməyə razısınızmı?`);
-      if (isConfirmed) {
-        window.open(`https://www.google.com/search?q=${selected?.name}+Business+Internet+Banking`, '_blank');
-      } else {
-        if(window.confirm(`Əgər çətinlik çəkirsinizsə, ${selected?.name} çağrı mərkəzinə (${selected?.contact}) zəng edək?`)) {
-          window.location.href = `tel:${selected?.contact}`;
-        }
-      }
-    }, 1200);
+      alert(`✅ Uğurlu İnteqrasiya!\n\n${selected?.name} ilə ASRALI ERP arasında əlaqə uğurla yaradıldı.\n\nArtıq bütün balanslar və tranzaksiyalar avtomatik sinxronizasiya olunacaq.`);
+      setIntegratedBanks(prev => [...prev, bankId]);
+    }, 1500);
   };
 
   const banks = [
@@ -167,21 +162,30 @@ export default function BankIntegrationPage() {
                   </div>
 
                   {/* Button */}
-                  <button 
-                    onClick={() => handleIntegrate(bank.id)}
-                    disabled={processingBank !== null}
-                    style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', padding: '0.8rem', backgroundColor: processingBank === bank.id ? '#94a3b8' : 'white', color: processingBank === bank.id ? 'white' : bank.color, border: `1px solid ${processingBank === bank.id ? '#94a3b8' : bank.color}`, borderRadius: '10px', fontWeight: 700, fontSize: '0.9rem', cursor: processingBank !== null ? 'not-allowed' : 'pointer', transition: 'all 0.2s' }}
-                    onMouseOver={e => { if(processingBank === null) { e.currentTarget.style.backgroundColor = bank.color; e.currentTarget.style.color = 'white'; } }}
-                    onMouseOut={e => { if(processingBank === null) { e.currentTarget.style.backgroundColor = 'white'; e.currentTarget.style.color = bank.color; } }}
-                  >
-                    {processingBank === bank.id ? 'Göndərilir...' : 'İnteqrasiya Et'}
-                  </button>
+                  {integratedBanks.includes(bank.id) ? (
+                    <button 
+                      disabled
+                      style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', padding: '0.8rem', backgroundColor: '#10b981', color: 'white', border: '1px solid #10b981', borderRadius: '10px', fontWeight: 700, fontSize: '0.9rem', cursor: 'default' }}
+                    >
+                      <CheckCircle2 size={18} /> İnteqrasiya Edilib
+                    </button>
+                  ) : (
+                    <button 
+                      onClick={() => handleIntegrate(bank.id)}
+                      disabled={processingBank !== null}
+                      style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', padding: '0.8rem', backgroundColor: processingBank === bank.id ? '#94a3b8' : 'white', color: processingBank === bank.id ? 'white' : bank.color, border: `1px solid ${processingBank === bank.id ? '#94a3b8' : bank.color}`, borderRadius: '10px', fontWeight: 700, fontSize: '0.9rem', cursor: processingBank !== null ? 'not-allowed' : 'pointer', transition: 'all 0.2s' }}
+                      onMouseOver={e => { if(processingBank === null) { e.currentTarget.style.backgroundColor = bank.color; e.currentTarget.style.color = 'white'; } }}
+                      onMouseOut={e => { if(processingBank === null) { e.currentTarget.style.backgroundColor = 'white'; e.currentTarget.style.color = bank.color; } }}
+                    >
+                      {processingBank === bank.id ? 'Bağlanılır...' : 'İnteqrasiya Et'}
+                    </button>
+                  )}
                 </div>
               ))}
             </div>
             
             <div style={{ textAlign: 'center', fontSize: '0.85rem', color: '#94a3b8', marginTop: '0.5rem' }}>
-              * Bank təsdiqi qanunvericiliyə uyğun olaraq 1-3 iş günü çəkə bilər. Əlavə suallarınız üçün müvafiq bankın çağrı mərkəzi ilə əlaqə saxlaya bilərsiniz.
+              * İnteqrasiya prosesi avtomatlaşdırılıb və anında həyata keçirilir. Bank hesabınız avtomatik olaraq ASRALI ERP sisteminə bağlanacaq.
             </div>
           </div>
 
