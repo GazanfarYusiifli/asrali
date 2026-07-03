@@ -71,8 +71,11 @@ export default function UpgradePage() {
           
           <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 2.5rem 0', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <li style={{ display: 'flex', gap: '0.8rem', alignItems: 'center', color: '#e2e8f0' }}><CheckCircle2 size={20} color="#10b981" /> Məhdudiyyətsiz faktura kəsimi</li>
+            <li style={{ display: 'flex', gap: '0.8rem', alignItems: 'center', color: '#e2e8f0' }}><CheckCircle2 size={20} color="#10b981" /> CRM İdarəetməsi</li>
+            <li style={{ display: 'flex', gap: '0.8rem', alignItems: 'center', color: '#e2e8f0' }}><CheckCircle2 size={20} color="#10b981" /> Süni İntellekt (MİRA AI)</li>
+            <li style={{ display: 'flex', gap: '0.8rem', alignItems: 'center', color: '#e2e8f0' }}><CheckCircle2 size={20} color="#10b981" /> E-Ticarət (Sayt) İnteqrasiyası</li>
+            <li style={{ display: 'flex', gap: '0.8rem', alignItems: 'center', color: '#e2e8f0' }}><CheckCircle2 size={20} color="#10b981" /> E-Faktura və Bank İnteqrasiyası</li>
             <li style={{ display: 'flex', gap: '0.8rem', alignItems: 'center', color: '#e2e8f0' }}><CheckCircle2 size={20} color="#10b981" /> Limitsiz istifadəçi hesabı</li>
-            <li style={{ display: 'flex', gap: '0.8rem', alignItems: 'center', color: '#e2e8f0' }}><CheckCircle2 size={20} color="#10b981" /> E-Ticarət (Sayt) inteqrasiyası</li>
             <li style={{ display: 'flex', gap: '0.8rem', alignItems: 'center', color: '#e2e8f0' }}><CheckCircle2 size={20} color="#10b981" /> 7/24 Prioritetli Texniki Dəstək</li>
           </ul>
 

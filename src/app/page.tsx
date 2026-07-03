@@ -297,9 +297,11 @@ export default function Home() {
               
               <ul className="pricing-list">
                 <li className="pricing-list-item"><span className="pricing-check">✓</span> Bütün PRO funksionallıqlar</li>
-                <li className="pricing-list-item"><span className="pricing-check">✓</span> E-faktura və Bank inteqrasiyası</li>
-                <li className="pricing-list-item"><span className="pricing-check">✓</span> Qabaqcıl Hesabatlar</li>
-                <li className="pricing-list-item"><span className="pricing-check">✓</span> 5+ İstifadəçi hesabı</li>
+                <li className="pricing-list-item"><span className="pricing-check">✓</span> CRM İdarəetməsi</li>
+                <li className="pricing-list-item"><span className="pricing-check">✓</span> Süni İntellekt (MİRA AI)</li>
+                <li className="pricing-list-item"><span className="pricing-check">✓</span> E-Ticarət (Sayt) İnteqrasiyası</li>
+                <li className="pricing-list-item"><span className="pricing-check">✓</span> E-Faktura və Bank İnteqrasiyası</li>
+                <li className="pricing-list-item"><span className="pricing-check">✓</span> Limitsiz istifadəçi hesabı</li>
                 <li className="pricing-list-item"><span className="pricing-check">✓</span> 7/24 Prioritetli texniki dəstək</li>
               </ul>
 
