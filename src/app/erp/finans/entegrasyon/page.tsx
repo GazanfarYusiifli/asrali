@@ -9,6 +9,15 @@ export default function BankIntegrationPage() {
   // Simulated PRO state (Temporarily unlocked for all)
   const isProMode = true;
 
+  const banks = [
+    { id: 'kapital', name: 'Kapital Bank', color: '#dc2626', initials: 'KB', contact: '*8196', url: 'https://cb.kapitalbank.az/login' },
+    { id: 'abb', name: 'ABB', fullName: 'Azərbaycan Beynəlxalq Bankı', color: '#2563eb', initials: 'ABB', contact: '936', url: 'https://ib.abb-bank.az/' },
+    { id: 'pasha', name: 'PAŞA Bank', color: '#064e3b', initials: 'PB', contact: '*8123', url: 'https://ib.pashabank.az/' },
+    { id: 'unibank', name: 'Unibank', color: '#f97316', initials: 'UB', contact: '117', url: 'https://ib.unibank.az/' },
+    { id: 'leobank', name: 'Leobank', color: '#0f172a', initials: 'LB', contact: '*7777', url: 'https://leobank.az/business' },
+    { id: 'xalq', name: 'Xalq Bank', color: '#475569', initials: 'XB', contact: '138', url: 'https://online.xalqbank.az/' }
+  ];
+
   const handleIntegrate = (bankId: string) => {
     if (!isProMode) return;
     
@@ -16,19 +25,17 @@ export default function BankIntegrationPage() {
     const selected = banks.find(b => b.id === bankId);
     setTimeout(() => {
       setProcessingBank(null);
-      alert(`✅ Uğurlu İnteqrasiya!\n\n${selected?.name} ilə ASRALI ERP arasında əlaqə uğurla yaradıldı.\n\nArtıq bütün balanslar və tranzaksiyalar avtomatik sinxronizasiya olunacaq.`);
-      setIntegratedBanks(prev => [...prev, bankId]);
-    }, 1500);
+      const isConfirmed = window.confirm(`Sistem ${selected?.name} serverlərinə qoşulmağa hazırdır.\n\nTəsdiq prosesini tamamlamaq və ASAN İmza ilə daxil olmaq üçün bankın rəsmi internet bankçılıq (Internet Banking) səhifəsinə yönləndirilməyə razısınızmı?`);
+      if (isConfirmed && selected?.url) {
+        window.open(selected.url, '_blank');
+        setIntegratedBanks(prev => [...prev, bankId]); // Opsional olaraq yönləndirmədən sonra inteqrasiya edilib kimi göstər
+      } else if (!isConfirmed) {
+        if(window.confirm(`Əgər çətinlik çəkirsinizsə, ${selected?.name} çağrı mərkəzinə (${selected?.contact}) zəng edək?`)) {
+          window.location.href = `tel:${selected?.contact}`;
+        }
+      }
+    }, 1200);
   };
-
-  const banks = [
-    { id: 'kapital', name: 'Kapital Bank', color: '#dc2626', initials: 'KB', contact: '*8196' },
-    { id: 'abb', name: 'ABB', fullName: 'Azərbaycan Beynəlxalq Bankı', color: '#2563eb', initials: 'ABB', contact: '936' },
-    { id: 'pasha', name: 'PAŞA Bank', color: '#064e3b', initials: 'PB', contact: '*8123' },
-    { id: 'unibank', name: 'Unibank', color: '#f97316', initials: 'UB', contact: '117' },
-    { id: 'leobank', name: 'Leobank', color: '#0f172a', initials: 'LB', contact: '*7777' },
-    { id: 'xalq', name: 'Xalq Bank', color: '#475569', initials: 'XB', contact: '138' }
-  ];
 
   return (
     <div style={{ position: 'relative', minHeight: '100%', backgroundColor: '#f8fafc', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
@@ -185,7 +192,7 @@ export default function BankIntegrationPage() {
             </div>
             
             <div style={{ textAlign: 'center', fontSize: '0.85rem', color: '#94a3b8', marginTop: '0.5rem' }}>
-              * İnteqrasiya prosesi avtomatlaşdırılıb və anında həyata keçirilir. Bank hesabınız avtomatik olaraq ASRALI ERP sisteminə bağlanacaq.
+              * Bank təsdiqi qanunvericiliyə uyğun olaraq 1-3 iş günü çəkə bilər. Əlavə suallarınız üçün müvafiq bankın çağrı mərkəzi ilə əlaqə saxlaya bilərsiniz.
             </div>
           </div>
 
