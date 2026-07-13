@@ -118,9 +118,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       return;
     }
 
-    if (subscription?.status === 'EXPIRED' && !pathname.startsWith('/erp/upgrade')) {
-      router.push('/erp/upgrade');
-    }
+    // ⚡ FREE ACCESS MODE — EXPIRED yönləndirməsi deaktiv edilib
+    // if (subscription?.status === 'EXPIRED' && !pathname.startsWith('/erp/upgrade')) {
+    //   router.push('/erp/upgrade');
+    // }
   }, [user, loading, subscription?.status, pathname, router]);
 
   const toggleMenu = (menuName: string) => {
@@ -432,11 +433,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               >
                 PRO Paket
               </span>
-            ) : subscription?.status === 'TRIAL' ? (
-              <Link href="/erp/upgrade" style={{ color: '#f59e0b', fontWeight: 700, fontSize: '0.75rem', padding: '0.2rem 0.6rem', backgroundColor: '#fef3c7', borderRadius: '12px', border: '1px solid #fde68a', textDecoration: 'none', cursor: 'pointer', transition: 'all 0.2s' }} onMouseOver={e => e.currentTarget.style.filter = 'brightness(0.95)'} onMouseOut={e => e.currentTarget.style.filter = 'brightness(1)'}>Sadə Paket: {trialDaysLeft} gün qaldı</Link>
-            ) : (
-              <Link href="/erp/upgrade" style={{ color: '#ef4444', fontWeight: 700, fontSize: '0.75rem', padding: '0.2rem 0.6rem', backgroundColor: '#fee2e2', borderRadius: '12px', border: '1px solid #fecaca', textDecoration: 'none', cursor: 'pointer', transition: 'all 0.2s' }} onMouseOver={e => e.currentTarget.style.filter = 'brightness(0.95)'} onMouseOut={e => e.currentTarget.style.filter = 'brightness(1)'}>Müddət Bitib</Link>
-            )}
+              <span
+                style={{ cursor: 'default', color: '#10b981', fontWeight: 700, fontSize: '0.75rem', padding: '0.2rem 0.6rem', backgroundColor: '#d1fae5', borderRadius: '12px', border: '1px solid #a7f3d0' }}
+              >
+                PRO Paket
+              </span>
           </div>
           <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
             <LanguageSwitcher />

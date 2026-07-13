@@ -144,49 +144,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setRoleState('SUPERADMIN');
     }
 
-    // Fetch subscription from database
-    const { data: subData, error } = await supabase
-      .from('subscriptions')
-      .select('*')
-      .eq('user_id', userId)
-      .single();
-
-    let sub: Subscription;
-    let daysLeft = 0;
-
-    if (subData) {
-      const isExpired = subData.status === 'expired' || subData.status === 'cancelled';
-      const statusStr = isExpired ? 'EXPIRED' : (subData.plan === 'trial' ? 'TRIAL' : 'PRO');
-      
-      sub = {
-        status: statusStr as SubStatus,
-        trialStartDate: subData.trial_start
-      };
-
-      if (subData.plan === 'trial' && subData.trial_start) {
-        const start = new Date(subData.trial_start);
-        const now = new Date();
-        const diffTime = now.getTime() - start.getTime();
-        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-        
-        daysLeft = Math.max(0, 14 - diffDays);
-        
-        if (daysLeft === 0 && subData.status !== 'expired') {
-          sub.status = 'EXPIRED';
-        }
-      }
-    } else {
-      // Fallback
-      sub = { status: 'TRIAL', trialStartDate: createdAt || new Date().toISOString() };
-      const start = new Date(sub.trialStartDate!);
-      const now = new Date();
-      const diffTime = now.getTime() - start.getTime();
-      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-      daysLeft = Math.max(0, 14 - diffDays);
-      if (daysLeft === 0) {
-        sub.status = 'EXPIRED';
-      }
-    }
+    // ⚡ FREE ACCESS MODE — bütün istifadəçilər üçün ödənişsiz giriş aktiv edilib
+    // Sahibi tərəfindən deaktiv edilənə qədər heç bir istifadəçidən ödəniş tələb olunmur
+    const sub: Subscription = { status: 'PRO', trialStartDate: null };
+    const daysLeft = 999;
 
     setSubscriptionState(sub);
     setTrialDaysLeft(daysLeft);
