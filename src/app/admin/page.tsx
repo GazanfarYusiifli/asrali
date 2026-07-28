@@ -3,33 +3,10 @@ import React, { useState } from 'react';
 import { 
   Users, CheckCircle2, XCircle, Search, LogOut, 
   Shield, UserCheck, UserX, Crown,
-  Mail, Calendar, Activity, RefreshCw, Eye, EyeOff, UserPlus, Trash2
+  Mail, Calendar, Activity, RefreshCw, Eye, EyeOff, Trash2
 } from 'lucide-react';
 
 const ADMIN_PASSWORD = '123';
-
-const randomNames = [
-  { name: 'Anar', surname: 'Hüseynov' },
-  { name: 'Leyla', surname: 'Əliyeva' },
-  { name: 'Nicat', surname: 'Quliyev' },
-  { name: 'Sevinc', surname: 'Mustafayeva' },
-  { name: 'Elnur', surname: 'Babayev' },
-  { name: 'Günel', surname: 'Həsənova' },
-  { name: 'Tural', surname: 'Süleymanov' },
-  { name: 'Könül', surname: 'Nəsirov' },
-  { name: 'Rauf', surname: 'Əhmədov' },
-  { name: 'Xədicə', surname: 'Manafova' },
-  { name: 'Orxan', surname: 'İsmayılov' },
-  { name: 'Nərmin', surname: 'Əsgərova' },
-  { name: 'Fərid', surname: 'Hüseynli' },
-  { name: 'Aytən', surname: 'Qasımova' },
-  { name: 'Kamran', surname: 'Məmmədov' },
-  { name: 'Şəbnəm', surname: 'Rzayeva' },
-  { name: 'Vüsal', surname: 'Aliyev' },
-  { name: 'Lalə', surname: 'Əlizadə' },
-];
-
-const domains = ['gmail.com', 'mail.ru', 'yahoo.com', 'outlook.com', 'hotmail.com', 'icloud.com'];
 
 type User = {
   id: number;
@@ -44,33 +21,19 @@ type User = {
 };
 
 const initialUsers: User[] = [
-  { id: 1, name: 'Gazanfar', surname: 'Yusifli', email: 'yusifliqezenfer90@gmail.com', plan: 'PRO', active: true, joined: '2026-06-18', lastLogin: '2026-07-28', country: 'AZ' },
+  { id: 1,  name: 'Gazanfar',      surname: 'Yusifli',     email: 'yusifliqezenfer90@gmail.com',    plan: 'PRO',   active: true,  joined: '2026-06-18', lastLogin: '2026-07-28', country: 'AZ' },
+  { id: 2,  name: 'Streamx',       surname: 'World',        email: 'streamxworld1@gmail.com',        plan: 'PRO',   active: true,  joined: '2026-06-21', lastLogin: '2026-07-28', country: 'AZ' },
+  { id: 3,  name: 'Fuad',          surname: 'Yusifov',      email: 'fuad.yusifov@gmail.com',         plan: 'TRIAL', active: false, joined: '2026-06-19', lastLogin: '2026-07-22', country: 'AZ' },
+  { id: 4,  name: 'Mehriban',      surname: 'İbrahimova',   email: 'mehriban.ibrahimova@mail.ru',    plan: 'TRIAL', active: false, joined: '2026-06-22', lastLogin: '2026-07-18', country: 'AZ' },
+  { id: 5,  name: 'Rahman',        surname: 'Tagıyev',      email: 'rahman.tagiyev@gmail.com',       plan: 'TRIAL', active: false, joined: '2026-06-25', lastLogin: '2026-07-10', country: 'AZ' },
+  { id: 6,  name: 'Birmilyonyaprak', surname: 'Shop',       email: 'birmilyonyaprak@gmail.com',      plan: 'TRIAL', active: false, joined: '2026-06-20', lastLogin: '2026-07-15', country: 'AZ' },
+  { id: 7,  name: 'Leyla',         surname: 'Əliyeva',      email: 'leyla.aliyeva@gmail.com',        plan: 'TRIAL', active: false, joined: '2026-07-05', lastLogin: '2026-07-20', country: 'AZ' },
+  { id: 8,  name: 'Nicat',         surname: 'Quliyev',      email: 'nicat.quliyev@yahoo.com',        plan: 'TRIAL', active: false, joined: '2026-07-10', lastLogin: '2026-07-16', country: 'AZ' },
+  { id: 9,  name: 'Sevinc',        surname: 'Mustafayeva',  email: 'sevinc.mustafayeva@mail.ru',     plan: 'TRIAL', active: false, joined: '2026-07-14', lastLogin: '2026-07-21', country: 'AZ' },
+  { id: 10, name: 'Elnur',         surname: 'Babayev',      email: 'elnur.babayev@gmail.com',        plan: 'TRIAL', active: false, joined: '2026-07-16', lastLogin: '2026-07-19', country: 'AZ' },
+  { id: 11, name: 'Günel',         surname: 'Həsənova',     email: 'gunel.hasanova@gmail.com',       plan: 'TRIAL', active: false, joined: '2026-07-20', lastLogin: '2026-07-25', country: 'AZ' },
+  { id: 12, name: 'Tural',         surname: 'Süleymanov',   email: 'tural.suleymanov@outlook.com',   plan: 'TRIAL', active: false, joined: '2026-07-22', lastLogin: '2026-07-24', country: 'AZ' },
 ];
-
-let nextId = 2;
-
-function generateRandomUser(): User {
-  const person = randomNames[Math.floor(Math.random() * randomNames.length)];
-  const domain = domains[Math.floor(Math.random() * domains.length)];
-  const email = `${person.name.toLowerCase().replace(/ə/g,'e').replace(/ı/g,'i').replace(/ö/g,'o').replace(/ü/g,'u').replace(/ş/g,'s').replace(/ç/g,'c').replace(/ğ/g,'g')}.${person.surname.toLowerCase().replace(/ə/g,'e').replace(/ı/g,'i').replace(/ö/g,'o').replace(/ü/g,'u').replace(/ş/g,'s').replace(/ç/g,'c').replace(/ğ/g,'g')}@${domain}`;
-  const plans = ['TRIAL', 'TRIAL', 'TRIAL', 'PRO'];
-  const today = new Date();
-  const joinedDaysAgo = Math.floor(Math.random() * 40);
-  const joined = new Date(today.getTime() - joinedDaysAgo * 86400000).toISOString().split('T')[0];
-  const lastLoginDaysAgo = Math.floor(Math.random() * joinedDaysAgo);
-  const lastLogin = new Date(today.getTime() - lastLoginDaysAgo * 86400000).toISOString().split('T')[0];
-  return {
-    id: nextId++,
-    name: person.name,
-    surname: person.surname,
-    email,
-    plan: plans[Math.floor(Math.random() * plans.length)],
-    active: Math.random() > 0.35,
-    joined,
-    lastLogin,
-    country: 'AZ',
-  };
-}
 
 export default function AdminPanel() {
   const [authed, setAuthed] = useState(false);
@@ -81,7 +44,7 @@ export default function AdminPanel() {
   const [filter, setFilter] = useState<'all' | 'active' | 'inactive' | 'pro'>('all');
   const [users, setUsers] = useState<User[]>(initialUsers);
   const [lastRefresh, setLastRefresh] = useState(new Date());
-  const [addCount, setAddCount] = useState(1);
+
 
   const handleLogin = () => {
     if (password === ADMIN_PASSWORD) {
@@ -102,14 +65,7 @@ export default function AdminPanel() {
     }
   };
 
-  const addRandomUsers = () => {
-    const newUsers: User[] = [];
-    for (let i = 0; i < addCount; i++) {
-      newUsers.push(generateRandomUser());
-    }
-    setUsers(prev => [...prev, ...newUsers]);
-    setLastRefresh(new Date());
-  };
+
 
   const filtered = users.filter(u => {
     const matchSearch = search === '' || 
@@ -235,22 +191,6 @@ export default function AdminPanel() {
 
         {/* Add User + Filters + Search */}
         <div style={{ backgroundColor: '#1e293b', borderRadius: '16px', padding: '1.5rem', border: '1px solid #334155', marginBottom: '1.5rem', display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
-          {/* Add random users */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: '#0f172a', borderRadius: '10px', padding: '0.4rem 0.75rem', border: '1px solid #334155' }}>
-            <span style={{ color: '#64748b', fontSize: '0.85rem' }}>Sayı:</span>
-            <input
-              type="number"
-              min={1}
-              max={20}
-              value={addCount}
-              onChange={e => setAddCount(Math.max(1, Math.min(20, parseInt(e.target.value) || 1)))}
-              style={{ width: '50px', backgroundColor: 'transparent', border: 'none', color: 'white', fontSize: '0.9rem', outline: 'none', textAlign: 'center' }}
-            />
-          </div>
-          <button onClick={addRandomUsers}
-            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.65rem 1.2rem', background: 'linear-gradient(135deg, #10b981, #059669)', color: 'white', border: 'none', borderRadius: '10px', fontWeight: 700, fontSize: '0.875rem', cursor: 'pointer', boxShadow: '0 4px 10px rgba(16,185,129,0.3)' }}>
-            <UserPlus size={16} /> Yeni İstifadəçi Əlavə Et
-          </button>
 
           {/* Search */}
           <div style={{ position: 'relative', flex: 1, minWidth: '180px' }}>
