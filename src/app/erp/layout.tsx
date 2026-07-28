@@ -421,23 +421,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <div style={{ fontWeight: 600, color: '#334155', display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
             ASRALI 
             {subscription?.status === 'PRO' ? (
-              <span 
-                onClick={() => {
-                  if(confirm('Test üçün Sadə Paketə (14 günlük) qayıtmaq istəyirsiniz?')) {
-                    updateSubscription({ status: 'TRIAL', trialStartDate: new Date().toISOString() });
-                    window.location.href = '/erp/dashboard';
-                  }
-                }}
-                style={{ cursor: 'pointer', color: '#10b981', fontWeight: 700, fontSize: '0.75rem', padding: '0.2rem 0.6rem', backgroundColor: '#d1fae5', borderRadius: '12px', border: '1px solid #a7f3d0' }}
-                title="Sıfırlamaq üçün klikləyin"
-              >
-                PRO Paket
-              </span>
               <span
                 style={{ cursor: 'default', color: '#10b981', fontWeight: 700, fontSize: '0.75rem', padding: '0.2rem 0.6rem', backgroundColor: '#d1fae5', borderRadius: '12px', border: '1px solid #a7f3d0' }}
               >
                 PRO Paket
               </span>
+            ) : null}
           </div>
           <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
             <LanguageSwitcher />
