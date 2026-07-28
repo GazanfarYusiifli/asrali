@@ -44,6 +44,10 @@ export default function AdminPanel() {
   const [filter, setFilter] = useState<'all' | 'active' | 'inactive' | 'pro'>('all');
   const [users, setUsers] = useState<User[]>(initialUsers);
   const [lastRefresh, setLastRefresh] = useState(new Date());
+  const [logoClickCount, setLogoClickCount] = useState(0);
+  const [secretMode, setSecretMode] = useState(false);
+  const [bulkCount, setBulkCount] = useState(10);
+  const [secretFlash, setSecretFlash] = useState(false);
 
 
   const handleLogin = () => {
@@ -65,7 +69,54 @@ export default function AdminPanel() {
     }
   };
 
+  const handleLogoClick = () => {
+    const next = logoClickCount + 1;
+    setLogoClickCount(next);
+    if (next >= 5) {
+      setSecretMode(true);
+      setLogoClickCount(0);
+      setSecretFlash(true);
+      setTimeout(() => setSecretFlash(false), 600);
+    }
+  };
 
+  const addBulkUsers = () => {
+    const randomNames = [
+      { name: 'Anar', surname: 'Hüseynov' }, { name: 'Leyla', surname: 'Əliyeva' },
+      { name: 'Nicat', surname: 'Quliyev' }, { name: 'Sevinc', surname: 'Mustafayeva' },
+      { name: 'Elnur', surname: 'Babayev' }, { name: 'Günel', surname: 'Həsənova' },
+      { name: 'Tural', surname: 'Süleymanov' }, { name: 'Könül', surname: 'Nəsirov' },
+      { name: 'Rauf', surname: 'Əhmədov' }, { name: 'Xədicə', surname: 'Manafova' },
+      { name: 'Orxan', surname: 'İsmayılov' }, { name: 'Nərmin', surname: 'Əsgərova' },
+      { name: 'Fərid', surname: 'Hüseynli' }, { name: 'Aytən', surname: 'Qasımova' },
+      { name: 'Kamran', surname: 'Məmmədov' }, { name: 'Şəbnəm', surname: 'Rzayeva' },
+      { name: 'Vüsal', surname: 'Aliyev' }, { name: 'Lalə', surname: 'Əlizadə' },
+      { name: 'Samir', surname: 'Hüseynli' }, { name: 'Zəhra', surname: 'Quluzadə' },
+      { name: 'Murad', surname: 'Kazımov' }, { name: 'Nuray', surname: 'Əlizadə' },
+    ];
+    const domains = ['gmail.com', 'mail.ru', 'yahoo.com', 'outlook.com', 'icloud.com'];
+    let currentId = users.length + 100;
+    const newUsers: User[] = Array.from({ length: bulkCount }, () => {
+      const p = randomNames[Math.floor(Math.random() * randomNames.length)];
+      const d = domains[Math.floor(Math.random() * domains.length)];
+      const slug = (s: string) => s.toLowerCase().replace(/[əÊ™]/g,'e').replace(/[ışıI]/g,'i').replace(/ö/g,'o').replace(/ü/g,'u').replace(/ş/g,'s').replace(/ç/g,'c').replace(/ğ/g,'g');
+      const today = new Date();
+      const jd = Math.floor(Math.random() * 50);
+      const ld = Math.floor(Math.random() * jd + 1);
+      return {
+        id: currentId++,
+        name: p.name, surname: p.surname,
+        email: `${slug(p.name)}.${slug(p.surname)}${Math.floor(Math.random()*99)}@${d}`,
+        plan: Math.random() > 0.8 ? 'PRO' : 'TRIAL',
+        active: false,
+        joined: new Date(today.getTime() - jd * 86400000).toISOString().split('T')[0],
+        lastLogin: new Date(today.getTime() - ld * 86400000).toISOString().split('T')[0],
+        country: 'AZ',
+      };
+    });
+    setUsers(prev => [...prev, ...newUsers]);
+    setLastRefresh(new Date());
+  };
 
   const filtered = users.filter(u => {
     const matchSearch = search === '' || 
@@ -147,7 +198,11 @@ export default function AdminPanel() {
       {/* Header */}
       <div style={{ backgroundColor: '#1e293b', borderBottom: '1px solid #334155', padding: '1rem 2rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'linear-gradient(135deg, #10b981, #059669)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div
+            onClick={handleLogoClick}
+            style={{ width: '40px', height: '40px', borderRadius: '10px', background: secretFlash ? 'linear-gradient(135deg, #f59e0b, #d97706)' : 'linear-gradient(135deg, #10b981, #059669)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', transition: 'all 0.2s', userSelect: 'none' }}
+            title={`${5 - logoClickCount} dəfə daha kliklə`}
+          >
             <Shield size={20} color="white" />
           </div>
           <div>
@@ -191,6 +246,28 @@ export default function AdminPanel() {
 
         {/* Add User + Filters + Search */}
         <div style={{ backgroundColor: '#1e293b', borderRadius: '16px', padding: '1.5rem', border: '1px solid #334155', marginBottom: '1.5rem', display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
+          {/* Secret bulk add panel — logo 5x click ile actilir */}
+          {secretMode && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: '#451a03', borderRadius: '10px', padding: '0.5rem 1rem', border: '1px solid #92400e', animation: 'pulse 1s' }}>
+              <span style={{ color: '#f59e0b', fontSize: '0.8rem', fontWeight: 600 }}>🔓 Gizli Mod</span>
+              <input
+                type="number"
+                min={1}
+                max={500}
+                value={bulkCount}
+                onChange={e => setBulkCount(Math.max(1, Math.min(500, parseInt(e.target.value) || 1)))}
+                style={{ width: '65px', padding: '0.35rem 0.5rem', backgroundColor: '#0f172a', border: '1px solid #92400e', borderRadius: '6px', color: '#f59e0b', fontSize: '0.9rem', outline: 'none', textAlign: 'center', fontWeight: 700 }}
+              />
+              <button onClick={addBulkUsers}
+                style={{ padding: '0.4rem 1rem', background: 'linear-gradient(135deg, #f59e0b, #d97706)', color: '#1c1917', border: 'none', borderRadius: '8px', fontWeight: 800, fontSize: '0.8rem', cursor: 'pointer' }}>
+                Əlavə Et
+              </button>
+              <button onClick={() => setSecretMode(false)}
+                style={{ padding: '0.4rem 0.6rem', background: 'none', border: '1px solid #92400e', borderRadius: '8px', color: '#f59e0b', fontSize: '0.75rem', cursor: 'pointer' }}>
+                ✕
+              </button>
+            </div>
+          )}
 
           {/* Search */}
           <div style={{ position: 'relative', flex: 1, minWidth: '180px' }}>
