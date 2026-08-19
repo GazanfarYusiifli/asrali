@@ -426,6 +426,16 @@ export default function Home() {
         <div style={{ textAlign: 'center', fontSize: '0.875rem', color: '#64748b' }}>
           &copy; {new Date().getFullYear()} ASRALI. Bütün hüquqlar qorunur.
         </div>
+        <div style={{ textAlign: 'center', fontSize: '0.8rem', color: '#475569', marginTop: '0.5rem' }}>
+          Developed by{' '}
+          <a href="https://www.codfy.tech" target="_blank" rel="noopener noreferrer"
+            style={{ color: '#10b981', fontWeight: 600, textDecoration: 'none' }}
+            onMouseOver={e => (e.currentTarget.style.textDecoration = 'underline')}
+            onMouseOut={e => (e.currentTarget.style.textDecoration = 'none')}
+          >
+            Codfy
+          </a>
+        </div>
       </footer>
 
       {/* GLOBAL CSS FOR ADVANCED EFFECTS */}
