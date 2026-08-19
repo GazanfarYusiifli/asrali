@@ -365,6 +365,20 @@ export default function AdminPanel() {
             </table>
           </div>
         </div>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div style={{ textAlign: 'center', padding: '1.5rem', borderTop: '1px solid #1e293b', color: '#334155', fontSize: '0.8rem' }}>
+        Developed by{' '}
+        <a href="https://www.codfy.tech" target="_blank" rel="noopener noreferrer"
+          style={{ color: '#10b981', fontWeight: 600, textDecoration: 'none' }}
+          onMouseOver={e => e.currentTarget.style.textDecoration = 'underline'}
+          onMouseOut={e => e.currentTarget.style.textDecoration = 'none'}
+        >
+          Codfy
+        </a>
+        {' '}· {new Date().getFullYear()}
       </div>
     </div>
   );
