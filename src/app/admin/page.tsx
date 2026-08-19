@@ -365,7 +365,6 @@ export default function AdminPanel() {
             </table>
           </div>
         </div>
-        </div>
       </div>
 
       {/* Footer */}
