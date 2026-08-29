@@ -3,10 +3,30 @@ import React, { useState } from 'react';
 import { 
   Users, CheckCircle2, XCircle, Search, LogOut, 
   Shield, UserCheck, UserX, Crown,
-  Mail, Calendar, Activity, RefreshCw, Eye, EyeOff, Trash2
+  Mail, Calendar, Activity, RefreshCw, Eye, EyeOff, Trash2, Clock, BarChart2
 } from 'lucide-react';
 
 const ADMIN_PASSWORD = '123';
+
+// Sabit aktivlik məlumatları — həmişə eyni 12 istifadəçi
+// Kişi: Gazanfar Yusifli, Fuad Yusifov, Rahman Tagıyev, Nicat Quliyev, Elnur Babayev, Tural Süleymanov
+// Qadın: Mehriban İbrahimova, Leyla Əliyeva, Sevinc Mustafayeva, Günel Həsənova, Nərmin Əsgərova, Aytən Qasımova
+const activityUsers = [
+  { id: 1,  name: 'Gazanfar',  surname: 'Yusifli',     gender: 'm', email: 'yusifliqezenfer90@gmail.com',  plan: 'PRO',   logins: 2, activeMin: 68, sessions: [{ time: '09:14', dur: 38 }, { time: '16:42', dur: 30 }] },
+  { id: 2,  name: 'Fuad',      surname: 'Yusifov',     gender: 'm', email: 'fuad.yusifov@gmail.com',       plan: 'TRIAL', logins: 2, activeMin: 52, sessions: [{ time: '08:30', dur: 27 }, { time: '14:55', dur: 25 }] },
+  { id: 3,  name: 'Rahman',    surname: 'Tagıyev',     gender: 'm', email: 'rahman.tagiyev@gmail.com',     plan: 'TRIAL', logins: 2, activeMin: 41, sessions: [{ time: '10:05', dur: 18 }, { time: '18:20', dur: 23 }] },
+  { id: 4,  name: 'Nicat',     surname: 'Quliyev',     gender: 'm', email: 'nicat.quliyev@yahoo.com',      plan: 'TRIAL', logins: 2, activeMin: 59, sessions: [{ time: '11:00', dur: 32 }, { time: '17:30', dur: 27 }] },
+  { id: 5,  name: 'Elnur',     surname: 'Babayev',     gender: 'm', email: 'elnur.babayev@gmail.com',      plan: 'TRIAL', logins: 2, activeMin: 45, sessions: [{ time: '07:50', dur: 22 }, { time: '15:10', dur: 23 }] },
+  { id: 6,  name: 'Tural',     surname: 'Süleymanov',  gender: 'm', email: 'tural.suleymanov@outlook.com', plan: 'TRIAL', logins: 2, activeMin: 38, sessions: [{ time: '12:15', dur: 20 }, { time: '19:05', dur: 18 }] },
+  { id: 7,  name: 'Mehriban',  surname: 'İbrahimova',  gender: 'f', email: 'mehriban.ibrahimova@mail.ru',  plan: 'TRIAL', logins: 2, activeMin: 62, sessions: [{ time: '09:40', dur: 35 }, { time: '16:00', dur: 27 }] },
+  { id: 8,  name: 'Leyla',     surname: 'Əliyeva',     gender: 'f', email: 'leyla.aliyeva@gmail.com',      plan: 'TRIAL', logins: 2, activeMin: 47, sessions: [{ time: '08:55', dur: 25 }, { time: '13:30', dur: 22 }] },
+  { id: 9,  name: 'Sevinc',    surname: 'Mustafayeva', gender: 'f', email: 'sevinc.mustafayeva@mail.ru',   plan: 'TRIAL', logins: 2, activeMin: 55, sessions: [{ time: '10:30', dur: 30 }, { time: '17:45', dur: 25 }] },
+  { id: 10, name: 'Günel',     surname: 'Həsənova',    gender: 'f', email: 'gunel.hasanova@gmail.com',     plan: 'TRIAL', logins: 2, activeMin: 43, sessions: [{ time: '11:20', dur: 21 }, { time: '15:50', dur: 22 }] },
+  { id: 11, name: 'Nərmin',    surname: 'Əsgərova',    gender: 'f', email: 'nermin.esgerova@gmail.com',    plan: 'TRIAL', logins: 2, activeMin: 49, sessions: [{ time: '09:00', dur: 26 }, { time: '14:20', dur: 23 }] },
+  { id: 12, name: 'Aytən',     surname: 'Qasımova',    gender: 'f', email: 'ayten.qasimova@mail.ru',       plan: 'TRIAL', logins: 2, activeMin: 36, sessions: [{ time: '13:00', dur: 18 }, { time: '18:40', dur: 18 }] },
+];
+
+const totalActiveMin = activityUsers.reduce((s, u) => s + u.activeMin, 0);
 
 type User = {
   id: number;
@@ -48,6 +68,8 @@ export default function AdminPanel() {
   const [secretMode, setSecretMode] = useState(false);
   const [bulkCount, setBulkCount] = useState(10);
   const [secretFlash, setSecretFlash] = useState(false);
+  const [activeTab, setActiveTab] = useState<'users' | 'activity'>('users');
+
 
 
   const handleLogin = () => {
@@ -244,6 +266,21 @@ export default function AdminPanel() {
           ))}
         </div>
 
+        {/* Tab Navigation */}
+        <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem' }}>
+          {[
+            { key: 'users', label: 'İstifadəçilər', icon: <Users size={16} /> },
+            { key: 'activity', label: 'Aktivlik', icon: <BarChart2 size={16} /> },
+          ].map(tab => (
+            <button key={tab.key} onClick={() => setActiveTab(tab.key as any)}
+              style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.65rem 1.25rem', borderRadius: '10px', border: activeTab === tab.key ? '1px solid #10b981' : '1px solid #334155', backgroundColor: activeTab === tab.key ? '#064e3b' : '#1e293b', color: activeTab === tab.key ? '#10b981' : '#94a3b8', fontWeight: 700, fontSize: '0.875rem', cursor: 'pointer', transition: 'all 0.2s' }}>
+              {tab.icon} {tab.label}
+            </button>
+          ))}
+        </div>
+
+        {/* ============ USERS TAB ============ */}
+        {activeTab === 'users' && <>
         {/* Add User + Filters + Search */}
         <div style={{ backgroundColor: '#1e293b', borderRadius: '16px', padding: '1.5rem', border: '1px solid #334155', marginBottom: '1.5rem', display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
           {/* Secret bulk add panel — logo 5x click ile actilir */}
@@ -365,6 +402,108 @@ export default function AdminPanel() {
             </table>
           </div>
         </div>
+        </> }
+
+        {/* ============ ACTIVITY TAB ============ */}
+        {activeTab === 'activity' && (
+          <div>
+            {/* Activity Summary Cards */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1rem', marginBottom: '1.5rem' }}>
+              {[
+                { label: 'Gündəlik Giriş', value: `${activityUsers.length * 2}`, sub: 'ümumi session', icon: <Activity size={22} />, color: '#3b82f6', bg: '#1e3a5f' },
+                { label: 'Orta Giriş/Nəfər', value: '2', sub: 'dəfə/gün', icon: <Users size={22} />, color: '#10b981', bg: '#064e3b' },
+                { label: 'Ümumi Aktiv Vaxt', value: `${Math.floor(totalActiveMin / 60)}s ${totalActiveMin % 60}dk`, sub: 'bu gün', icon: <Clock size={22} />, color: '#f59e0b', bg: '#451a03' },
+                { label: 'Orta Aktiv/Nəfər', value: `${Math.round(totalActiveMin / activityUsers.length)} dəq`, sub: 'hər istifadəçi', icon: <BarChart2 size={22} />, color: '#a78bfa', bg: '#2e1065' },
+              ].map(c => (
+                <div key={c.label} style={{ backgroundColor: '#1e293b', borderRadius: '14px', padding: '1.25rem', border: '1px solid #334155', display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+                  <div style={{ width: '46px', height: '46px', borderRadius: '10px', backgroundColor: c.bg, color: c.color, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{c.icon}</div>
+                  <div>
+                    <div style={{ fontSize: '1.4rem', fontWeight: 800, color: c.color, lineHeight: 1 }}>{c.value}</div>
+                    <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '0.2rem' }}>{c.label}</div>
+                    <div style={{ fontSize: '0.68rem', color: '#475569' }}>{c.sub}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Activity Table */}
+            <div style={{ backgroundColor: '#1e293b', borderRadius: '16px', border: '1px solid #334155', overflow: 'hidden' }}>
+              <div style={{ padding: '1.25rem 1.5rem', borderBottom: '1px solid #334155', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <h2 style={{ margin: 0, fontSize: '1rem', fontWeight: 700 }}>Bu Günün Aktivliyi</h2>
+                <span style={{ color: '#64748b', fontSize: '0.8rem' }}>{new Date().toLocaleDateString('az-AZ', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+              </div>
+              <div style={{ overflowX: 'auto' }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                  <thead>
+                    <tr style={{ backgroundColor: '#0f172a' }}>
+                      {['#', 'İstifadəçi', 'Cins', 'Plan', 'Giriş sayı', '1-ci Giriş', '2-ci Giriş', 'Aktiv Vaxt', 'Aktivlik'].map(h => (
+                        <th key={h} style={{ padding: '0.85rem 1rem', textAlign: 'left', fontSize: '0.72rem', fontWeight: 600, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', whiteSpace: 'nowrap' }}>{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {activityUsers.map((u, idx) => {
+                      const pct = Math.round((u.activeMin / 90) * 100);
+                      return (
+                        <tr key={u.id} style={{ borderTop: '1px solid #334155' }}
+                          onMouseOver={e => (e.currentTarget.style.backgroundColor = '#1a2640')}
+                          onMouseOut={e => (e.currentTarget.style.backgroundColor = 'transparent')}>
+                          <td style={{ padding: '0.9rem 1rem', color: '#475569', fontSize: '0.8rem' }}>{idx + 1}</td>
+                          <td style={{ padding: '0.9rem 1rem' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                              <div style={{ width: '34px', height: '34px', borderRadius: '9px', background: u.gender === 'm' ? 'linear-gradient(135deg,#3b82f6,#1d4ed8)' : 'linear-gradient(135deg,#ec4899,#be185d)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '0.75rem', flexShrink: 0 }}>
+                                {u.name[0]}{u.surname[0]}
+                              </div>
+                              <div>
+                                <div style={{ fontWeight: 600, fontSize: '0.85rem', whiteSpace: 'nowrap' }}>{u.name} {u.surname}</div>
+                                <div style={{ color: '#64748b', fontSize: '0.7rem' }}>{u.email}</div>
+                              </div>
+                            </div>
+                          </td>
+                          <td style={{ padding: '0.9rem 1rem' }}>
+                            <span style={{ fontSize: '1.1rem' }}>{u.gender === 'm' ? '👨' : '👩'}</span>
+                          </td>
+                          <td style={{ padding: '0.9rem 1rem' }}>
+                            <span style={{ padding: '0.2rem 0.6rem', borderRadius: '20px', fontSize: '0.7rem', fontWeight: 700, backgroundColor: u.plan === 'PRO' ? '#451a03' : '#1e3a5f', color: u.plan === 'PRO' ? '#f59e0b' : '#60a5fa' }}>
+                              {u.plan === 'PRO' ? '👑 PRO' : 'TRIAL'}
+                            </span>
+                          </td>
+                          <td style={{ padding: '0.9rem 1rem', textAlign: 'center' }}>
+                            <span style={{ backgroundColor: '#064e3b', color: '#10b981', padding: '0.25rem 0.7rem', borderRadius: '20px', fontSize: '0.8rem', fontWeight: 700 }}>
+                              {u.logins} dəfə
+                            </span>
+                          </td>
+                          <td style={{ padding: '0.9rem 1rem' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', color: '#94a3b8', fontSize: '0.8rem', whiteSpace: 'nowrap' }}>
+                              <Clock size={12} /> {u.sessions[0].time} <span style={{ color: '#475569', fontSize: '0.7rem' }}>({u.sessions[0].dur} dəq)</span>
+                            </div>
+                          </td>
+                          <td style={{ padding: '0.9rem 1rem' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', color: '#94a3b8', fontSize: '0.8rem', whiteSpace: 'nowrap' }}>
+                              <Clock size={12} /> {u.sessions[1].time} <span style={{ color: '#475569', fontSize: '0.7rem' }}>({u.sessions[1].dur} dəq)</span>
+                            </div>
+                          </td>
+                          <td style={{ padding: '0.9rem 1rem' }}>
+                            <span style={{ color: '#f59e0b', fontWeight: 700, fontSize: '0.85rem' }}>
+                              {u.activeMin >= 60 ? `${Math.floor(u.activeMin/60)}s ${u.activeMin%60}dq` : `${u.activeMin} dəq`}
+                            </span>
+                          </td>
+                          <td style={{ padding: '0.9rem 1rem', minWidth: '100px' }}>
+                            <div style={{ backgroundColor: '#0f172a', borderRadius: '6px', height: '6px', overflow: 'hidden' }}>
+                              <div style={{ width: `${Math.min(100, pct)}%`, height: '100%', background: pct > 66 ? 'linear-gradient(90deg,#10b981,#059669)' : pct > 33 ? 'linear-gradient(90deg,#f59e0b,#d97706)' : 'linear-gradient(90deg,#ef4444,#dc2626)', borderRadius: '6px', transition: 'width 0.5s' }} />
+                            </div>
+                            <div style={{ color: '#475569', fontSize: '0.65rem', marginTop: '0.2rem' }}>{pct}%</div>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        )}
+
       </div>
 
       {/* Footer */}
