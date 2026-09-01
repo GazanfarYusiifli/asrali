@@ -1,6 +1,8 @@
 'use client';
 
 import Link from 'next/link';
+import FeedbackForm from './components/FeedbackForm';
+
 import Image from 'next/image';
 import { useI18n } from './context/I18nContext';
 import LanguageSwitcher from './components/LanguageSwitcher';
@@ -366,6 +368,19 @@ export default function Home() {
         </div>
       </section>
 
+      {/* FEEDBACK SECTION */}
+      <section id="feedback" style={{ padding: '8rem 5%', backgroundColor: '#0f172a', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+        <div style={{ maxWidth: '700px', margin: '0 auto' }} className="reveal">
+          <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
+            <h2 className="section-subtitle">Geri Bildirim</h2>
+            <h3 className="section-title" style={{ color: 'white' }}>Fikirləriniz Bizim Üçün Dəyərlidir</h3>
+            <p className="section-desc">Təklif, şikayət və ya rəyinizi bizimlə paylaşın — hər bir mesaj diqqətlə oxunur.</p>
+          </div>
+
+          <FeedbackForm />
+        </div>
+      </section>
+
       {/* CTA FOOTER */}
       <section style={{ padding: '6rem 5%', background: 'linear-gradient(135deg, #0ea5e9, #10b981)', color: 'white', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', top: '-50%', left: '-20%', width: '100%', height: '200%', background: 'radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%)', transform: 'rotate(30deg)', pointerEvents: 'none' }}></div>
@@ -379,6 +394,7 @@ export default function Home() {
           </Link>
         </div>
       </section>
+
 
       {/* FOOTER */}
       <footer style={{ backgroundColor: '#020617', color: '#94a3b8', padding: '5rem 5% 2rem', position: 'relative', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
