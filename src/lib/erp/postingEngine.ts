@@ -1,7 +1,10 @@
 import { createClient } from '@supabase/supabase-js';
 
 // Supabase client instance (mock setup for the architecture)
-const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://gyklrvsnldpduwrngkjg.supabase.co',
+  process.env.SUPABASE_SERVICE_ROLE_KEY || 'sb_publishable_B1v_7FSA0PS2kNnN7g23Xg_PvBE43aN'
+);
 
 export type DocumentType = 'PurchaseInvoice' | 'SalesInvoice' | 'CashReceipt' | 'CashPayment' | 'Payroll';
 
