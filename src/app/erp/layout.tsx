@@ -420,6 +420,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         }}>
           <div style={{ fontWeight: 600, color: '#334155', display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
             ASRALI 
+            <span
+              style={{ cursor: 'default', color: '#0369a1', fontWeight: 700, fontSize: '0.72rem', padding: '0.2rem 0.55rem', backgroundColor: '#e0f2fe', borderRadius: '12px', border: '1px solid #bae6fd' }}
+              title="Yenilənmiş versiya aktivdir"
+            >
+              LexAZ V.3.0.1
+            </span>
             {subscription?.status === 'PRO' ? (
               <span
                 style={{ cursor: 'default', color: '#10b981', fontWeight: 700, fontSize: '0.75rem', padding: '0.2rem 0.6rem', backgroundColor: '#d1fae5', borderRadius: '12px', border: '1px solid #a7f3d0' }}

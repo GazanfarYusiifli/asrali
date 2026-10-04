@@ -24,9 +24,43 @@ export default function Home() {
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#020617', color: '#e2e8f0', overflowX: 'hidden', fontFamily: '"Inter", system-ui, -apple-system, sans-serif' }}>
       
+      {/* TOP ANNOUNCEMENT BANNER */}
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        height: '38px',
+        zIndex: 110,
+        background: 'linear-gradient(90deg, #059669 0%, #0d9488 50%, #0284c7 100%)',
+        color: '#ffffff',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '0.65rem',
+        fontSize: '0.82rem',
+        fontWeight: 600,
+        padding: '0 1rem',
+        boxShadow: '0 2px 10px rgba(0,0,0,0.35)',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.15)',
+        letterSpacing: '0.2px'
+      }}>
+        <span style={{
+          backgroundColor: 'rgba(255, 255, 255, 0.22)',
+          padding: '0.15rem 0.55rem',
+          borderRadius: '9999px',
+          fontSize: '0.72rem',
+          fontWeight: 800,
+          letterSpacing: '0.5px'
+        }}>
+          LexAZ V.3.0.1
+        </span>
+        <span>Yenilənmiş versiya aktivdir</span>
+      </div>
+
       {/* HEADER / NAVBAR */}
       <header style={{ 
-        position: 'fixed', top: 0, left: 0, right: 0, 
+        position: 'fixed', top: '38px', left: 0, right: 0, 
         padding: '1rem 5%', 
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
         backgroundColor: 'rgba(2, 6, 23, 0.8)',
