@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { Varela } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const varela = Varela({
-  weight: "400",
-  subsets: ["latin"],
+const varela = localFont({
+  src: "../../public/fonts/Varela-Regular.ttf",
+  variable: "--font-varela",
+  display: "swap",
 });
 
 export const metadata: Metadata = {

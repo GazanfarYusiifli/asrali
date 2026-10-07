@@ -1,4 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Varela&display=swap');
+@font-face {
+  font-family: 'Varela';
+  src: url('/fonts/Varela-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   --font-sans: 'Varela', sans-serif;
