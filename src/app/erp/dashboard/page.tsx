@@ -5,7 +5,8 @@ import { useAuth } from '../../context/AuthContext';
 import { 
   Sparkles, Calendar, ArrowUpRight, ArrowDownRight, 
   Wallet, Building2, CreditCard, Receipt, HandCoins, 
-  Banknote, TrendingUp, History, Info, ShieldCheck, CheckCircle2
+  Banknote, TrendingUp, History, Info, ShieldCheck, CheckCircle2,
+  Zap, Infinity as InfinityIcon
 } from 'lucide-react';
 import { getAppStorage, setAppStorage } from '@/utils/storage';
 import { createClient } from '@/utils/supabase/client';
@@ -127,111 +128,211 @@ export default function DashboardPage() {
       </div>
 
       {/* Main Stats Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))', gap: '1.25rem' }}>
         
         {/* Receivables Widget */}
-        <div style={{ background: 'white', borderRadius: '16px', padding: '1.5rem', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)', transition: 'transform 0.2s', cursor: 'default' }} onMouseOver={e => e.currentTarget.style.transform = 'translateY(-2px)'} onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-            <div style={{ color: '#64748b', fontWeight: 600, fontSize: '0.9rem' }}>{t('dash_receivables')}</div>
-            <div style={{ background: '#dcfce7', padding: '0.4rem', borderRadius: '8px' }}>
-              <ArrowUpRight size={20} color="#16a34a" />
+        <div style={{ 
+          background: 'white', 
+          borderRadius: '20px', 
+          padding: '1.6rem', 
+          border: '1px solid #edf2f7', 
+          boxShadow: '0 4px 20px -4px rgba(16, 185, 129, 0.08), 0 2px 6px -1px rgba(0,0,0,0.02)', 
+          transition: 'all 0.25s ease', 
+          cursor: 'default',
+          position: 'relative',
+          overflow: 'hidden'
+        }} onMouseOver={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 28px -6px rgba(16, 185, 129, 0.15)'; }} onMouseOut={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 20px -4px rgba(16, 185, 129, 0.08)'; }}>
+          <div style={{ position: 'absolute', top: 0, right: 0, width: '120px', height: '120px', background: 'radial-gradient(circle, rgba(16,185,129,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
+          
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.2rem' }}>
+            <div>
+              <div style={{ color: '#64748b', fontWeight: 600, fontSize: '0.85rem', letterSpacing: '-0.01em' }}>{t('dash_receivables')}</div>
+              <div style={{ fontSize: '0.75rem', color: '#10b981', fontWeight: 700, marginTop: '0.15rem' }}>Gözlənilən daxilolmalar</div>
+            </div>
+            <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#16a34a', boxShadow: '0 2px 8px rgba(22, 163, 74, 0.15)' }}>
+              <ArrowUpRight size={20} />
             </div>
           </div>
-          <div style={{ fontSize: '2rem', fontWeight: 800, color: '#16a34a', marginBottom: '1.5rem' }}>{stats.receivables.total.toLocaleString('az-AZ')} ₼</div>
           
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+          <div style={{ fontSize: '2.25rem', fontWeight: 800, color: '#0f172a', letterSpacing: '-0.03em', marginBottom: '1.5rem', lineHeight: 1 }}>
+            {stats.receivables.total.toLocaleString('az-AZ')} <span style={{ fontSize: '1.4rem', color: '#16a34a', fontWeight: 700 }}>₼</span>
+          </div>
+          
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem', background: '#f8fafc', padding: '1rem', borderRadius: '14px', border: '1px solid #f1f5f9' }}>
             {[
-              { label: t('dash_planned_collection'), val: `${stats.receivables.planned.toLocaleString('az-AZ')} ₼`, icon: <Calendar size={14} /> },
-              { label: t('dash_installments'), val: `${stats.receivables.installments.toLocaleString('az-AZ')} ₼`, icon: <History size={14} /> },
-              { label: t('dash_check'), val: `${stats.receivables.checks.toLocaleString('az-AZ')} ₼`, icon: <Receipt size={14} /> },
-              { label: t('dash_promissory_note'), val: `${stats.receivables.notes.toLocaleString('az-AZ')} ₼`, icon: <Banknote size={14} /> }
+              { label: t('dash_planned_collection'), val: `${stats.receivables.planned.toLocaleString('az-AZ')} ₼`, icon: <Calendar size={14} color="#10b981" /> },
+              { label: t('dash_installments'), val: `${stats.receivables.installments.toLocaleString('az-AZ')} ₼`, icon: <History size={14} color="#059669" /> },
+              { label: t('dash_check'), val: `${stats.receivables.checks.toLocaleString('az-AZ')} ₼`, icon: <Receipt size={14} color="#047857" /> },
+              { label: t('dash_promissory_note'), val: `${stats.receivables.notes.toLocaleString('az-AZ')} ₼`, icon: <Banknote size={14} color="#065f46" /> }
             ].map((item, idx) => (
-              <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.85rem', borderBottom: idx !== 3 ? '1px dashed #e2e8f0' : 'none', paddingBottom: idx !== 3 ? '0.5rem' : 0 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#64748b' }}>
+              <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.82rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', color: '#64748b', fontWeight: 500 }}>
                   {item.icon} {item.label}
                 </div>
-                <div style={{ fontWeight: 600, color: '#334155' }}>{item.val}</div>
+                <div style={{ fontWeight: 700, color: '#1e293b' }}>{item.val}</div>
               </div>
             ))}
           </div>
         </div>
 
         {/* Payables Widget */}
-        <div style={{ background: 'white', borderRadius: '16px', padding: '1.5rem', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)', transition: 'transform 0.2s', cursor: 'default' }} onMouseOver={e => e.currentTarget.style.transform = 'translateY(-2px)'} onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-            <div style={{ color: '#64748b', fontWeight: 600, fontSize: '0.9rem' }}>{t('dash_payables')}</div>
-            <div style={{ background: '#fee2e2', padding: '0.4rem', borderRadius: '8px' }}>
-              <ArrowDownRight size={20} color="#dc2626" />
+        <div style={{ 
+          background: 'white', 
+          borderRadius: '20px', 
+          padding: '1.6rem', 
+          border: '1px solid #edf2f7', 
+          boxShadow: '0 4px 20px -4px rgba(239, 68, 68, 0.08), 0 2px 6px -1px rgba(0,0,0,0.02)', 
+          transition: 'all 0.25s ease', 
+          cursor: 'default',
+          position: 'relative',
+          overflow: 'hidden'
+        }} onMouseOver={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 28px -6px rgba(239, 68, 68, 0.15)'; }} onMouseOut={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 20px -4px rgba(239, 68, 68, 0.08)'; }}>
+          <div style={{ position: 'absolute', top: 0, right: 0, width: '120px', height: '120px', background: 'radial-gradient(circle, rgba(239,68,68,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
+
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.2rem' }}>
+            <div>
+              <div style={{ color: '#64748b', fontWeight: 600, fontSize: '0.85rem', letterSpacing: '-0.01em' }}>{t('dash_payables')}</div>
+              <div style={{ fontSize: '0.75rem', color: '#ef4444', fontWeight: 700, marginTop: '0.15rem' }}>Ödəniləcək məbləğ</div>
+            </div>
+            <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'linear-gradient(135deg, #fee2e2 0%, #fecaca 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#dc2626', boxShadow: '0 2px 8px rgba(220, 38, 38, 0.15)' }}>
+              <ArrowDownRight size={20} />
             </div>
           </div>
-          <div style={{ fontSize: '2rem', fontWeight: 800, color: '#dc2626', marginBottom: '1.5rem' }}>{stats.payables.total.toLocaleString('az-AZ')} ₼</div>
           
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+          <div style={{ fontSize: '2.25rem', fontWeight: 800, color: '#0f172a', letterSpacing: '-0.03em', marginBottom: '1.5rem', lineHeight: 1 }}>
+            {stats.payables.total.toLocaleString('az-AZ')} <span style={{ fontSize: '1.4rem', color: '#dc2626', fontWeight: 700 }}>₼</span>
+          </div>
+          
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem', background: '#f8fafc', padding: '1rem', borderRadius: '14px', border: '1px solid #f1f5f9' }}>
             {[
-              { label: t('dash_current_debt'), val: `${stats.payables.current.toLocaleString('az-AZ')} ₼`, icon: <HandCoins size={14} /> },
-              { label: t('dash_planned_payment'), val: `${stats.payables.planned.toLocaleString('az-AZ')} ₼`, icon: <Calendar size={14} /> },
-              { label: t('dash_credit_cards'), val: `${stats.payables.creditCards.toLocaleString('az-AZ')} ₼`, icon: <CreditCard size={14} /> },
-              { label: t('dash_check'), val: `${stats.payables.checks.toLocaleString('az-AZ')} ₼`, icon: <Receipt size={14} /> },
-              { label: t('dash_promissory_note'), val: `${stats.payables.notes.toLocaleString('az-AZ')} ₼`, icon: <Banknote size={14} /> }
+              { label: t('dash_current_debt'), val: `${stats.payables.current.toLocaleString('az-AZ')} ₼`, icon: <HandCoins size={14} color="#ef4444" /> },
+              { label: t('dash_planned_payment'), val: `${stats.payables.planned.toLocaleString('az-AZ')} ₼`, icon: <Calendar size={14} color="#dc2626" /> },
+              { label: t('dash_credit_cards'), val: `${stats.payables.creditCards.toLocaleString('az-AZ')} ₼`, icon: <CreditCard size={14} color="#b91c1c" /> },
+              { label: t('dash_check'), val: `${stats.payables.checks.toLocaleString('az-AZ')} ₼`, icon: <Receipt size={14} color="#991b1b" /> },
+              { label: t('dash_promissory_note'), val: `${stats.payables.notes.toLocaleString('az-AZ')} ₼`, icon: <Banknote size={14} color="#7f1d1d" /> }
             ].map((item, idx) => (
-              <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.85rem', borderBottom: idx !== 4 ? '1px dashed #e2e8f0' : 'none', paddingBottom: idx !== 4 ? '0.5rem' : 0 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#64748b' }}>
+              <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.82rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', color: '#64748b', fontWeight: 500 }}>
                   {item.icon} {item.label}
                 </div>
-                <div style={{ fontWeight: 600, color: '#334155' }}>{item.val}</div>
+                <div style={{ fontWeight: 700, color: '#1e293b' }}>{item.val}</div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* VAT & Profit */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-          <div style={{ flex: 1, background: 'white', borderRadius: '16px', padding: '1.5rem', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', justifyContent: 'center', transition: 'transform 0.2s', cursor: 'default' }} onMouseOver={e => e.currentTarget.style.transform = 'translateY(-2px)'} onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'}>
-             <div style={{ color: '#64748b', fontWeight: 600, fontSize: '0.9rem', marginBottom: '0.5rem' }}>{t('dash_vat_status')}</div>
-             <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#3b82f6' }}>{stats.vat.toLocaleString('az-AZ')} ₼ (B)</div>
+        {/* VAT & Profit Column */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+          
+          {/* VAT Card */}
+          <div style={{ 
+            flex: 1, 
+            background: 'white', 
+            borderRadius: '20px', 
+            padding: '1.5rem', 
+            border: '1px solid #edf2f7', 
+            boxShadow: '0 4px 20px -4px rgba(59, 130, 246, 0.08), 0 2px 6px -1px rgba(0,0,0,0.02)', 
+            display: 'flex', 
+            flexDirection: 'column', 
+            justifyContent: 'space-between', 
+            transition: 'all 0.25s ease', 
+            cursor: 'default',
+            position: 'relative',
+            overflow: 'hidden'
+          }} onMouseOver={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 28px -6px rgba(59, 130, 246, 0.15)'; }} onMouseOut={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 20px -4px rgba(59, 130, 246, 0.08)'; }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div style={{ color: '#64748b', fontWeight: 600, fontSize: '0.85rem' }}>{t('dash_vat_status')}</div>
+              <span style={{ fontSize: '0.72rem', fontWeight: 700, color: '#2563eb', backgroundColor: '#eff6ff', padding: '0.2rem 0.6rem', borderRadius: '12px', border: '1px solid #dbeafe' }}>
+                Bəyannamə (B)
+              </span>
+            </div>
+            <div style={{ marginTop: '0.75rem' }}>
+              <div style={{ fontSize: '2rem', fontWeight: 800, color: '#1e3a8a', letterSpacing: '-0.03em', lineHeight: 1 }}>
+                {stats.vat.toLocaleString('az-AZ')} <span style={{ fontSize: '1.3rem', color: '#3b82f6', fontWeight: 700 }}>₼</span>
+              </div>
+              <div style={{ fontSize: '0.75rem', color: '#94a3b8', marginTop: '0.35rem' }}>Cari dövr üzrə ƏDV balansı</div>
+            </div>
           </div>
-          <div style={{ flex: 1, background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', color: 'white', borderRadius: '16px', padding: '1.5rem', boxShadow: '0 10px 15px -3px rgba(16,185,129,0.3)', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', overflow: 'hidden', transition: 'transform 0.2s', cursor: 'default' }} onMouseOver={e => e.currentTarget.style.transform = 'translateY(-2px)'} onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'}>
-             <TrendingUp size={80} color="rgba(255,255,255,0.15)" style={{ position: 'absolute', right: '-10px', bottom: '-10px' }} />
-             <div style={{ fontWeight: 600, fontSize: '0.9rem', marginBottom: '0.5rem', opacity: 0.9 }}>{t('dash_monthly_profit')}</div>
-             <div style={{ fontSize: '2rem', fontWeight: 800 }}>{stats.profit.toLocaleString('az-AZ')} ₼</div>
+
+          {/* Profit Card */}
+          <div style={{ 
+            flex: 1, 
+            background: 'linear-gradient(135deg, #059669 0%, #10b981 50%, #14b8a6 100%)', 
+            color: 'white', 
+            borderRadius: '20px', 
+            padding: '1.5rem', 
+            boxShadow: '0 10px 25px -4px rgba(16, 185, 129, 0.35)', 
+            display: 'flex', 
+            flexDirection: 'column', 
+            justifyContent: 'space-between', 
+            position: 'relative', 
+            overflow: 'hidden', 
+            transition: 'all 0.25s ease', 
+            cursor: 'default' 
+          }} onMouseOver={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 14px 30px -4px rgba(16, 185, 129, 0.45)'; }} onMouseOut={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 10px 25px -4px rgba(16, 185, 129, 0.35)'; }}>
+            <TrendingUp size={90} color="rgba(255,255,255,0.14)" style={{ position: 'absolute', right: '-12px', bottom: '-12px', pointerEvents: 'none' }} />
+            
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', zIndex: 1 }}>
+              <div style={{ fontWeight: 600, fontSize: '0.85rem', opacity: 0.95 }}>{t('dash_monthly_profit')}</div>
+              <span style={{ fontSize: '0.72rem', fontWeight: 700, color: 'white', backgroundColor: 'rgba(255,255,255,0.22)', padding: '0.2rem 0.6rem', borderRadius: '12px', backdropFilter: 'blur(5px)' }}>
+                Xalis Gəlir
+              </span>
+            </div>
+            
+            <div style={{ marginTop: '0.75rem', zIndex: 1 }}>
+              <div style={{ fontSize: '2.25rem', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1 }}>
+                {stats.profit.toLocaleString('az-AZ')} <span style={{ fontSize: '1.4rem', opacity: 0.9 }}>₼</span>
+              </div>
+              <div style={{ fontSize: '0.75rem', opacity: 0.85, marginTop: '0.35rem' }}>Aktiv ayın mənfəət göstəricisi</div>
+            </div>
           </div>
+
         </div>
         
       </div>
 
       {/* Lower Section (Assets & Transactions) */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '1.5rem', marginTop: '0.5rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '1.25rem', marginTop: '0.25rem' }}>
         
         {/* Assets (Varlıklar) */}
-        <div style={{ background: 'white', borderRadius: '16px', border: '1px solid #e2e8f0', overflow: 'hidden', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)' }}>
-          <div style={{ padding: '1.25rem 1.5rem', borderBottom: '1px solid #e2e8f0', background: '#f8fafc' }}>
-            <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#1e293b', margin: 0 }}>{t('dash_assets')}</h3>
+        <div style={{ background: 'white', borderRadius: '20px', border: '1px solid #edf2f7', overflow: 'hidden', boxShadow: '0 4px 20px -4px rgba(0,0,0,0.03)' }}>
+          <div style={{ padding: '1.25rem 1.6rem', borderBottom: '1px solid #f1f5f9', background: 'linear-gradient(180deg, #f8fafc 0%, #ffffff 100%)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+              <div style={{ width: '30px', height: '30px', borderRadius: '8px', background: '#eff6ff', color: '#3b82f6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Wallet size={16} />
+              </div>
+              <h3 style={{ fontSize: '0.98rem', fontWeight: 700, color: '#0f172a', margin: 0 }}>{t('dash_assets')}</h3>
+            </div>
+            <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#64748b' }}>Maliyyə balansları</span>
           </div>
-          <div style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+          
+          <div style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             
             <div>
-              <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#94a3b8', marginBottom: '0.75rem', letterSpacing: '0.5px' }}>{t('dash_cash_registers')}</div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#f1f5f9', padding: '0.75rem 1rem', borderRadius: '8px' }}>
-                <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#334155', display: 'flex', alignItems: 'center', gap: '0.5rem' }}><Wallet size={16} color="#64748b"/> {t('dash_main_cash')}</span>
-                <span style={{ fontSize: '0.9rem', fontWeight: 700, color: '#0f172a' }}>{stats.assets.mainCash.toLocaleString('az-AZ')} ₼</span>
+              <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#94a3b8', marginBottom: '0.5rem', letterSpacing: '0.5px', textTransform: 'uppercase' }}>{t('dash_cash_registers')}</div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)', padding: '0.85rem 1.1rem', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                <span style={{ fontSize: '0.88rem', fontWeight: 600, color: '#334155', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <Building2 size={16} color="#64748b"/> {t('dash_main_cash')}
+                </span>
+                <span style={{ fontSize: '1.05rem', fontWeight: 800, color: '#0f172a' }}>{stats.assets.mainCash.toLocaleString('az-AZ')} ₼</span>
               </div>
             </div>
 
             <div>
-              <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#94a3b8', marginBottom: '0.75rem', letterSpacing: '0.5px' }}>{t('dash_bank_accounts')}</div>
-              <div style={{ background: '#f8fafc', padding: '1rem', borderRadius: '8px', border: '1px dashed #cbd5e1', textAlign: 'center', fontSize: '0.8rem', color: '#94a3b8' }}>
+              <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#94a3b8', marginBottom: '0.5rem', letterSpacing: '0.5px', textTransform: 'uppercase' }}>{t('dash_bank_accounts')}</div>
+              <div style={{ background: '#f8fafc', padding: '0.9rem', borderRadius: '12px', border: '1px dashed #cbd5e1', textAlign: 'center', fontSize: '0.82rem', color: '#94a3b8' }}>
                 Kayıt bulunamadı.
               </div>
             </div>
             
-            <div style={{ display: 'flex', gap: '1rem' }}>
-               <div style={{ flex: 1 }}>
-                 <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#94a3b8', marginBottom: '0.75rem', letterSpacing: '0.5px' }}>{t('dash_credit_cards')}</div>
-                 <div style={{ fontSize: '1rem', fontWeight: 700, color: '#334155' }}>{stats.assets.creditCards.toLocaleString('az-AZ')} ₼</div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.85rem' }}>
+               <div style={{ background: '#f8fafc', padding: '0.85rem 1rem', borderRadius: '12px', border: '1px solid #f1f5f9' }}>
+                 <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#94a3b8', marginBottom: '0.35rem', textTransform: 'uppercase' }}>{t('dash_credit_cards')}</div>
+                 <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0f172a' }}>{stats.assets.creditCards.toLocaleString('az-AZ')} ₼</div>
                </div>
-               <div style={{ flex: 1 }}>
-                 <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#94a3b8', marginBottom: '0.75rem', letterSpacing: '0.5px' }}>{t('dash_pos_accounts')}</div>
-                 <div style={{ fontSize: '1rem', fontWeight: 700, color: '#334155' }}>{stats.assets.pos.toLocaleString('az-AZ')} ₼</div>
+               <div style={{ background: '#f8fafc', padding: '0.85rem 1rem', borderRadius: '12px', border: '1px solid #f1f5f9' }}>
+                 <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#94a3b8', marginBottom: '0.35rem', textTransform: 'uppercase' }}>{t('dash_pos_accounts')}</div>
+                 <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0f172a' }}>{stats.assets.pos.toLocaleString('az-AZ')} ₼</div>
                </div>
             </div>
 
@@ -239,16 +340,23 @@ export default function DashboardPage() {
         </div>
 
         {/* Transactions Table & Subscription */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
           
-          <div style={{ background: 'white', borderRadius: '16px', border: '1px solid #e2e8f0', flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)' }}>
-            <div style={{ padding: '1.25rem 1.5rem', borderBottom: '1px solid #e2e8f0', background: '#f8fafc' }}>
-              <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#1e293b', margin: 0 }}>{t('dash_recent_transactions')}</h3>
+          <div style={{ background: 'white', borderRadius: '20px', border: '1px solid #edf2f7', flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', boxShadow: '0 4px 20px -4px rgba(0,0,0,0.03)' }}>
+            <div style={{ padding: '1.25rem 1.6rem', borderBottom: '1px solid #f1f5f9', background: 'linear-gradient(180deg, #f8fafc 0%, #ffffff 100%)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                <div style={{ width: '30px', height: '30px', borderRadius: '8px', background: '#f0fdf4', color: '#16a34a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <History size={16} />
+                </div>
+                <h3 style={{ fontSize: '0.98rem', fontWeight: 700, color: '#0f172a', margin: 0 }}>{t('dash_recent_transactions')}</h3>
+              </div>
+              <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#64748b' }}>Son hərəkətlər</span>
             </div>
-            <div style={{ flex: 1, padding: '1.5rem', overflowX: 'auto' }}>
+            
+            <div style={{ flex: 1, padding: '1.25rem 1.6rem', overflowX: 'auto' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '350px' }}>
                 <thead>
-                  <tr style={{ color: '#64748b', fontSize: '0.85rem', fontWeight: 600, borderBottom: '2px solid #e2e8f0' }}>
+                  <tr style={{ color: '#94a3b8', fontSize: '0.78rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px', borderBottom: '1px solid #f1f5f9' }}>
                     <th style={{ paddingBottom: '0.75rem', paddingRight: '1rem' }}>{t('dash_date')}</th>
                     <th style={{ paddingBottom: '0.75rem', paddingRight: '1rem' }}>{t('dash_customer')}</th>
                     <th style={{ paddingBottom: '0.75rem', paddingRight: '1rem' }}>{t('dash_transaction')}</th>
@@ -258,12 +366,14 @@ export default function DashboardPage() {
                 </thead>
                 <tbody>
                   {stats.recentTransactions.map((tx, idx) => (
-                    <tr key={idx} style={{ borderBottom: '1px solid #f1f5f9' }}>
-                      <td style={{ padding: '1rem 1rem 1rem 0', fontSize: '0.85rem', color: '#334155' }}>{tx.date}</td>
-                      <td style={{ padding: '1rem 1rem 1rem 0', fontSize: '0.85rem', fontWeight: 600, color: '#0f172a' }}>{tx.customer}</td>
-                      <td style={{ padding: '1rem 1rem 1rem 0', fontSize: '0.85rem', color: '#334155' }}>{tx.action}</td>
-                      <td style={{ padding: '1rem 1rem 1rem 0', fontSize: '0.85rem', color: '#dc2626', fontWeight: 600 }}>{tx.debt !== '-' ? `${tx.debt} ₼` : '-'}</td>
-                      <td style={{ padding: '1rem 0', fontSize: '0.85rem', color: '#16a34a', fontWeight: 600 }}>{tx.credit !== '-' ? `${tx.credit} ₼` : '-'}</td>
+                    <tr key={idx} style={{ borderBottom: '1px solid #f8fafc', transition: 'background 0.15s' }} onMouseOver={e => e.currentTarget.style.backgroundColor = '#f8fafc'} onMouseOut={e => e.currentTarget.style.backgroundColor = 'transparent'}>
+                      <td style={{ padding: '0.9rem 1rem 0.9rem 0', fontSize: '0.82rem', color: '#64748b' }}>{tx.date}</td>
+                      <td style={{ padding: '0.9rem 1rem 0.9rem 0', fontSize: '0.85rem', fontWeight: 600, color: '#0f172a' }}>{tx.customer}</td>
+                      <td style={{ padding: '0.9rem 1rem 0.9rem 0', fontSize: '0.82rem', color: '#64748b' }}>
+                        <span style={{ backgroundColor: '#f1f5f9', padding: '0.2rem 0.55rem', borderRadius: '6px', fontWeight: 600, color: '#334155' }}>{tx.action}</span>
+                      </td>
+                      <td style={{ padding: '0.9rem 1rem 0.9rem 0', fontSize: '0.85rem', color: '#dc2626', fontWeight: 700 }}>{tx.debt !== '-' ? `${tx.debt} ₼` : '-'}</td>
+                      <td style={{ padding: '0.9rem 0', fontSize: '0.85rem', color: '#16a34a', fontWeight: 700 }}>{tx.credit !== '-' ? `${tx.credit} ₼` : '-'}</td>
                     </tr>
                   ))}
                   {stats.recentTransactions.length === 0 && (
@@ -276,72 +386,86 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          {/* Subscription Card - Ultra-Modern Apple Style */}
+          {/* Subscription Card - Ultra-Modern Apple Glass Design */}
           <div style={{ 
-            background: 'white', 
-            borderRadius: '16px', 
-            border: '1px solid #e2e8f0', 
-            padding: '1.25rem 1.5rem', 
-            boxShadow: '0 1px 3px rgba(0,0,0,0.03)',
+            background: 'linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%)', 
+            borderRadius: '20px', 
+            border: '1px solid #bbf7d0', 
+            padding: '1.35rem 1.6rem', 
+            boxShadow: '0 8px 24px -4px rgba(16, 185, 129, 0.12), 0 2px 6px -1px rgba(0,0,0,0.02)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            gap: '1rem',
-            flexWrap: 'wrap'
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+            gap: '1.25rem',
+            flexWrap: 'wrap',
+            position: 'relative',
+            overflow: 'hidden',
+            transition: 'all 0.25s ease'
+          }} onMouseOver={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 12px 30px -4px rgba(16, 185, 129, 0.18)'; }} onMouseOut={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 8px 24px -4px rgba(16, 185, 129, 0.12)'; }}>
+            
+            <div style={{ position: 'absolute', top: '-20px', right: '-20px', width: '100px', height: '100px', background: 'radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%)', borderRadius: '50%', pointerEvents: 'none' }} />
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', zIndex: 1 }}>
               <div style={{ 
-                width: '38px', 
-                height: '38px', 
-                borderRadius: '10px', 
-                backgroundColor: '#f0fdf4', 
+                width: '46px', 
+                height: '46px', 
+                borderRadius: '14px', 
+                background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', 
                 display: 'flex', 
                 alignItems: 'center', 
                 justifyContent: 'center',
-                color: '#16a34a',
-                border: '1px solid #bbf7d0'
+                color: 'white',
+                boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)'
               }}>
-                <ShieldCheck size={20} />
+                <ShieldCheck size={24} />
               </div>
               <div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <h3 style={{ fontSize: '0.92rem', fontWeight: 700, color: '#0f172a', margin: 0 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                  <h3 style={{ fontSize: '1rem', fontWeight: 800, color: '#0f172a', margin: 0, letterSpacing: '-0.01em' }}>
                     {t('dash_subscription_info')}
                   </h3>
                   <span style={{ 
                     fontSize: '0.7rem', 
-                    fontWeight: 700, 
-                    color: '#15803d', 
-                    backgroundColor: '#dcfce7', 
-                    padding: '0.15rem 0.5rem', 
-                    borderRadius: '20px' 
+                    fontWeight: 800, 
+                    color: '#059669', 
+                    backgroundColor: '#d1fae5', 
+                    padding: '0.2rem 0.65rem', 
+                    borderRadius: '20px',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.35rem',
+                    border: '1px solid #a7f3d0'
                   }}>
+                    <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#10b981', boxShadow: '0 0 6px #10b981' }} />
                     Aktiv
                   </span>
                 </div>
-                <div style={{ fontSize: '0.78rem', color: '#64748b', marginTop: '0.15rem' }}>
-                  PRO Paketi · Limitsiz Giriş
+                <div style={{ fontSize: '0.8rem', color: '#475569', marginTop: '0.25rem', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                  <Zap size={13} color="#10b981" /> PRO Paketi · Tam Funksional Giriş
                 </div>
               </div>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', zIndex: 1 }}>
               <div style={{ textAlign: 'right' }}>
-                <div style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 500 }}>Paket Statusu</div>
-                <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#0f172a' }}>Limitsiz Müddət</div>
+                <div style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Paket Statusu</div>
+                <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#059669', display: 'flex', alignItems: 'center', gap: '0.35rem', justifyContent: 'flex-end', marginTop: '0.15rem' }}>
+                  <InfinityIcon size={18} color="#10b981" /> Limitsiz Müddət
+                </div>
               </div>
               <div style={{ 
-                width: '36px', 
-                height: '36px', 
-                borderRadius: '50%', 
-                backgroundColor: '#f8fafc', 
-                border: '1px solid #e2e8f0', 
+                width: '40px', 
+                height: '40px', 
+                borderRadius: '12px', 
+                backgroundColor: 'white', 
+                border: '1px solid #bbf7d0', 
                 display: 'flex', 
                 alignItems: 'center', 
                 justifyContent: 'center',
-                color: '#16a34a'
+                color: '#10b981',
+                boxShadow: '0 2px 6px rgba(16, 185, 129, 0.1)'
               }}>
-                <CheckCircle2 size={18} />
+                <CheckCircle2 size={20} />
               </div>
             </div>
           </div>
