@@ -51,8 +51,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="az" className={montserrat.className}>
-      <body>
+    <html lang="az">
+      <body style={{ WebkitFontSmoothing: 'antialiased', MozOsxFontSmoothing: 'grayscale' }}>
         <I18nProvider>
           <AuthProvider>
             {children}

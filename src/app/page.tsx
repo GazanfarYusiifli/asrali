@@ -22,7 +22,7 @@ export default function Home() {
   const pricing = getPricing();
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#020617', color: '#e2e8f0', overflowX: 'hidden', fontFamily: '"Montserrat", sans-serif' }}>
+    <div style={{ minHeight: '100vh', backgroundColor: '#020617', color: '#e2e8f0', overflowX: 'hidden', fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif' }}>
       
       {/* TOP ANNOUNCEMENT BANNER */}
       <div style={{
