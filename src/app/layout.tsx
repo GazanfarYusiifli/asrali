@@ -2,11 +2,35 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
-const bebasNeue = localFont({
-  src: "../../public/fonts/bebas/BebasNeue-Regular.ttf",
-  variable: "--font-bebas",
-  weight: "400",
-  style: "normal",
+const montserrat = localFont({
+  src: [
+    {
+      path: "../../public/fonts/montserrat/static/Montserrat-Regular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/montserrat/static/Montserrat-Medium.ttf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/montserrat/static/Montserrat-SemiBold.ttf",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/montserrat/static/Montserrat-Bold.ttf",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/montserrat/static/Montserrat-ExtraBold.ttf",
+      weight: "800",
+      style: "normal",
+    },
+  ],
+  variable: "--font-montserrat",
   display: "swap",
 });
 
@@ -27,7 +51,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="az" className={bebasNeue.className}>
+    <html lang="az" className={montserrat.className}>
       <body>
         <I18nProvider>
           <AuthProvider>
