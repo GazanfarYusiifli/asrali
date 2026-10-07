@@ -22,7 +22,7 @@ export default function Home() {
   const pricing = getPricing();
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#020617', color: '#e2e8f0', overflowX: 'hidden', fontFamily: '"Quicksand", "Varela", sans-serif' }}>
+    <div style={{ minHeight: '100vh', backgroundColor: '#020617', color: '#e2e8f0', overflowX: 'hidden', fontFamily: '"Bebas Neue", "Quicksand", sans-serif' }}>
       
       {/* TOP ANNOUNCEMENT BANNER */}
       <div style={{

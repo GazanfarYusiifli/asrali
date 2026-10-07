@@ -2,30 +2,11 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
-const quicksand = localFont({
-  src: [
-    {
-      path: "../../public/fonts/quicksand/static/Quicksand-Regular.ttf",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "../../public/fonts/quicksand/static/Quicksand-Medium.ttf",
-      weight: "500",
-      style: "normal",
-    },
-    {
-      path: "../../public/fonts/quicksand/static/Quicksand-SemiBold.ttf",
-      weight: "600",
-      style: "normal",
-    },
-    {
-      path: "../../public/fonts/quicksand/static/Quicksand-Bold.ttf",
-      weight: "700",
-      style: "normal",
-    },
-  ],
-  variable: "--font-quicksand",
+const bebasNeue = localFont({
+  src: "../../public/fonts/bebas/BebasNeue-Regular.ttf",
+  variable: "--font-bebas",
+  weight: "400",
+  style: "normal",
   display: "swap",
 });
 
@@ -46,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="az" className={quicksand.className}>
+    <html lang="az" className={bebasNeue.className}>
       <body>
         <I18nProvider>
           <AuthProvider>
