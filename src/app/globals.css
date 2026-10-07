@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&family=Varela&display=swap');
 
 :root {
   --font-sans: 'Inter', sans-serif;
@@ -58,4 +58,10 @@ a {
   html {
     color-scheme: dark;
   }
+}
+
+.varela-regular {
+  font-family: "Varela", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
