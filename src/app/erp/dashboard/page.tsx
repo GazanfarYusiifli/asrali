@@ -113,63 +113,16 @@ export default function DashboardPage() {
   return (
     <div style={{ padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', maxWidth: '1400px', margin: '0 auto' }}>
       
-      {/* AI Assistant Banner */}
-      <div style={{ 
-        background: 'linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%)',
-        borderRadius: '12px',
-        padding: '1rem 1.5rem',
-        color: 'white',
-        display: 'flex',
-        alignItems: 'center',
-        gap: '1rem',
-        boxShadow: '0 4px 15px rgba(139, 92, 246, 0.2)'
-      }}>
-        <div style={{ background: 'rgba(255,255,255,0.2)', padding: '0.5rem', borderRadius: '50%' }}>
-          <Sparkles size={24} color="white" />
-        </div>
-        <span style={{ fontWeight: 500, fontSize: '0.95rem' }}>
-          {t('dash_ai_banner')}
-        </span>
-      </div>
-
       {/* Header Info */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '1rem' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#64748b', marginBottom: '0.25rem' }}>
-            <Calendar size={16} />
-            <span style={{ fontSize: '0.9rem', fontWeight: 500 }}>{formattedDate}</span>
+            <Calendar size={15} />
+            <span style={{ fontSize: '0.85rem', fontWeight: 500 }}>{formattedDate}</span>
           </div>
-          <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>
+          <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#1e293b', margin: 0, letterSpacing: '-0.02em' }}>
             {t('menu_dashboard')}
           </h1>
-        </div>
-        
-        {/* Trial Days Alert - Modern Minimalist */}
-        <div style={{ 
-          background: 'rgba(255, 255, 255, 0.8)',
-          backdropFilter: 'blur(10px)',
-          border: '1px solid #e2e8f0',
-          color: '#334155',
-          padding: '0.6rem 1.1rem',
-          borderRadius: '12px',
-          fontSize: '0.85rem',
-          fontWeight: 600,
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.6rem',
-          boxShadow: '0 1px 3px rgba(0,0,0,0.03)'
-        }}>
-          <span style={{ 
-            display: 'inline-flex', 
-            alignItems: 'center', 
-            justifyContent: 'center', 
-            width: '8px', 
-            height: '8px', 
-            borderRadius: '50%', 
-            backgroundColor: '#10b981',
-            boxShadow: '0 0 0 3px rgba(16, 185, 129, 0.2)'
-          }} />
-          <span>{t('dash_usage_left').replace('{days}', (trialDaysLeft || 14).toString())}</span>
         </div>
       </div>
 
@@ -323,72 +276,72 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          {/* Subscription Card - Modern & Minimalist */}
+          {/* Subscription Card - Ultra-Modern Apple Style */}
           <div style={{ 
-            background: 'linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)', 
+            background: 'white', 
             borderRadius: '16px', 
             border: '1px solid #e2e8f0', 
             padding: '1.25rem 1.5rem', 
-            boxShadow: '0 1px 3px rgba(0,0,0,0.02)',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.03)',
             display: 'flex',
-            flexDirection: 'column',
-            gap: '1rem'
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '1rem',
+            flexWrap: 'wrap'
           }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                <div style={{ 
-                  width: '32px', 
-                  height: '32px', 
-                  borderRadius: '10px', 
-                  backgroundColor: '#ecfdf5', 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  justifyContent: 'center',
-                  color: '#059669',
-                  border: '1px solid #a7f3d0'
-                }}>
-                  <ShieldCheck size={18} />
-                </div>
-                <div>
-                  <h3 style={{ fontSize: '0.9rem', fontWeight: 700, color: '#0f172a', margin: 0 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+              <div style={{ 
+                width: '38px', 
+                height: '38px', 
+                borderRadius: '10px', 
+                backgroundColor: '#f0fdf4', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                color: '#16a34a',
+                border: '1px solid #bbf7d0'
+              }}>
+                <ShieldCheck size={20} />
+              </div>
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <h3 style={{ fontSize: '0.92rem', fontWeight: 700, color: '#0f172a', margin: 0 }}>
                     {t('dash_subscription_info')}
                   </h3>
-                  <span style={{ fontSize: '0.72rem', color: '#64748b' }}>
-                    PRO Limitsiz Giriş
+                  <span style={{ 
+                    fontSize: '0.7rem', 
+                    fontWeight: 700, 
+                    color: '#15803d', 
+                    backgroundColor: '#dcfce7', 
+                    padding: '0.15rem 0.5rem', 
+                    borderRadius: '20px' 
+                  }}>
+                    Aktiv
                   </span>
                 </div>
-              </div>
-
-              <div style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.35rem',
-                backgroundColor: '#f1f5f9',
-                padding: '0.25rem 0.65rem',
-                borderRadius: '20px',
-                fontSize: '0.75rem',
-                fontWeight: 700,
-                color: '#0f172a'
-              }}>
-                <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#10b981' }} />
-                {trialDaysLeft} gün aktiv
+                <div style={{ fontSize: '0.78rem', color: '#64748b', marginTop: '0.15rem' }}>
+                  PRO Paketi · Limitsiz Giriş
+                </div>
               </div>
             </div>
 
-            {/* Minimalist Progress Track */}
-            <div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#94a3b8', marginBottom: '0.4rem', fontWeight: 500 }}>
-                <span>1 gün</span>
-                <span style={{ color: '#059669', fontWeight: 600 }}>Limitsiz Plan</span>
-                <span>365+ gün</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <div style={{ textAlign: 'right' }}>
+                <div style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 500 }}>Paket Statusu</div>
+                <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#0f172a' }}>Limitsiz Müddət</div>
               </div>
-              <div style={{ width: '100%', height: '6px', background: '#e2e8f0', borderRadius: '999px', overflow: 'hidden' }}>
-                <div style={{ 
-                  width: '100%', 
-                  height: '100%', 
-                  background: 'linear-gradient(90deg, #10b981 0%, #34d399 100%)', 
-                  borderRadius: '999px' 
-                }} />
+              <div style={{ 
+                width: '36px', 
+                height: '36px', 
+                borderRadius: '50%', 
+                backgroundColor: '#f8fafc', 
+                border: '1px solid #e2e8f0', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                color: '#16a34a'
+              }}>
+                <CheckCircle2 size={18} />
               </div>
             </div>
           </div>
