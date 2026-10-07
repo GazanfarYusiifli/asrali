@@ -5,7 +5,7 @@ import { useAuth } from '../../context/AuthContext';
 import { 
   Sparkles, Calendar, ArrowUpRight, ArrowDownRight, 
   Wallet, Building2, CreditCard, Receipt, HandCoins, 
-  Banknote, TrendingUp, History, Info
+  Banknote, TrendingUp, History, Info, ShieldCheck, CheckCircle2
 } from 'lucide-react';
 import { getAppStorage, setAppStorage } from '@/utils/storage';
 import { createClient } from '@/utils/supabase/client';
@@ -144,21 +144,32 @@ export default function DashboardPage() {
           </h1>
         </div>
         
-        {/* Trial Days Alert */}
+        {/* Trial Days Alert - Modern Minimalist */}
         <div style={{ 
-          background: '#fffbeb',
-          border: '1px solid #fde68a',
-          color: '#d97706',
-          padding: '0.75rem 1.25rem',
-          borderRadius: '10px',
+          background: 'rgba(255, 255, 255, 0.8)',
+          backdropFilter: 'blur(10px)',
+          border: '1px solid #e2e8f0',
+          color: '#334155',
+          padding: '0.6rem 1.1rem',
+          borderRadius: '12px',
           fontSize: '0.85rem',
           fontWeight: 600,
           display: 'flex',
           alignItems: 'center',
-          gap: '0.5rem'
+          gap: '0.6rem',
+          boxShadow: '0 1px 3px rgba(0,0,0,0.03)'
         }}>
-          <Info size={18} />
-          {t('dash_usage_left').replace('{days}', (trialDaysLeft || 14).toString())}
+          <span style={{ 
+            display: 'inline-flex', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            width: '8px', 
+            height: '8px', 
+            borderRadius: '50%', 
+            backgroundColor: '#10b981',
+            boxShadow: '0 0 0 3px rgba(16, 185, 129, 0.2)'
+          }} />
+          <span>{t('dash_usage_left').replace('{days}', (trialDaysLeft || 14).toString())}</span>
         </div>
       </div>
 
@@ -312,17 +323,74 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          {/* Subscription Progress */}
-          <div style={{ background: 'white', borderRadius: '16px', border: '1px solid #e2e8f0', padding: '1.5rem', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)' }}>
-             <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#1e293b', margin: '0 0 1rem 0' }}>{t('dash_subscription_info')}</h3>
-             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontSize: '0.85rem', fontWeight: 600 }}>
-               <span style={{ color: '#64748b' }}>1 {t('dash_days_left')}</span>
-               <span style={{ color: '#d97706' }}>{trialDaysLeft} {t('dash_days_left')}</span>
-               <span style={{ color: '#64748b' }}>365 {t('dash_days_left')}</span>
-             </div>
-             <div style={{ width: '100%', height: '8px', background: '#e2e8f0', borderRadius: '4px', overflow: 'hidden' }}>
-                <div style={{ width: `${Math.max(1, ((trialDaysLeft || 14) / 365) * 100)}%`, height: '100%', background: 'linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%)', borderRadius: '4px' }}></div>
-             </div>
+          {/* Subscription Card - Modern & Minimalist */}
+          <div style={{ 
+            background: 'linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)', 
+            borderRadius: '16px', 
+            border: '1px solid #e2e8f0', 
+            padding: '1.25rem 1.5rem', 
+            boxShadow: '0 1px 3px rgba(0,0,0,0.02)',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1rem'
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                <div style={{ 
+                  width: '32px', 
+                  height: '32px', 
+                  borderRadius: '10px', 
+                  backgroundColor: '#ecfdf5', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  color: '#059669',
+                  border: '1px solid #a7f3d0'
+                }}>
+                  <ShieldCheck size={18} />
+                </div>
+                <div>
+                  <h3 style={{ fontSize: '0.9rem', fontWeight: 700, color: '#0f172a', margin: 0 }}>
+                    {t('dash_subscription_info')}
+                  </h3>
+                  <span style={{ fontSize: '0.72rem', color: '#64748b' }}>
+                    PRO Limitsiz Giriş
+                  </span>
+                </div>
+              </div>
+
+              <div style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.35rem',
+                backgroundColor: '#f1f5f9',
+                padding: '0.25rem 0.65rem',
+                borderRadius: '20px',
+                fontSize: '0.75rem',
+                fontWeight: 700,
+                color: '#0f172a'
+              }}>
+                <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#10b981' }} />
+                {trialDaysLeft} gün aktiv
+              </div>
+            </div>
+
+            {/* Minimalist Progress Track */}
+            <div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#94a3b8', marginBottom: '0.4rem', fontWeight: 500 }}>
+                <span>1 gün</span>
+                <span style={{ color: '#059669', fontWeight: 600 }}>Limitsiz Plan</span>
+                <span>365+ gün</span>
+              </div>
+              <div style={{ width: '100%', height: '6px', background: '#e2e8f0', borderRadius: '999px', overflow: 'hidden' }}>
+                <div style={{ 
+                  width: '100%', 
+                  height: '100%', 
+                  background: 'linear-gradient(90deg, #10b981 0%, #34d399 100%)', 
+                  borderRadius: '999px' 
+                }} />
+              </div>
+            </div>
           </div>
 
         </div>
