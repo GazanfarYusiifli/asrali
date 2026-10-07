@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Varela } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
+const varela = Varela({
+  weight: "400",
   subsets: ["latin"],
 });
 
@@ -23,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="az" className={inter.className}>
+    <html lang="az" className={varela.className}>
       <body>
         <I18nProvider>
           <AuthProvider>
