@@ -2,9 +2,30 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
-const varela = localFont({
-  src: "../../public/fonts/Varela-Regular.ttf",
-  variable: "--font-varela",
+const quicksand = localFont({
+  src: [
+    {
+      path: "../../public/fonts/quicksand/static/Quicksand-Regular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/quicksand/static/Quicksand-Medium.ttf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/quicksand/static/Quicksand-SemiBold.ttf",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/quicksand/static/Quicksand-Bold.ttf",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-quicksand",
   display: "swap",
 });
 
@@ -25,7 +46,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="az" className={varela.className}>
+    <html lang="az" className={quicksand.className}>
       <body>
         <I18nProvider>
           <AuthProvider>

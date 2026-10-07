@@ -1,4 +1,36 @@
 @font-face {
+  font-family: 'Quicksand';
+  src: url('/fonts/quicksand/static/Quicksand-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Quicksand';
+  src: url('/fonts/quicksand/static/Quicksand-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Quicksand';
+  src: url('/fonts/quicksand/static/Quicksand-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Quicksand';
+  src: url('/fonts/quicksand/static/Quicksand-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
   font-family: 'Varela';
   src: url('/fonts/Varela-Regular.ttf') format('truetype');
   font-weight: 400;
@@ -7,8 +39,8 @@
 }
 
 :root {
-  --font-sans: 'Varela', sans-serif;
-  --font-display: 'Varela', sans-serif;
+  --font-sans: 'Quicksand', 'Varela', sans-serif;
+  --font-display: 'Quicksand', 'Varela', sans-serif;
   
   --bg-color: #f8fafc;
   --text-primary: #0f172a;
@@ -56,11 +88,11 @@
 }
 
 html, body, button, input, select, textarea {
-  font-family: 'Varela', sans-serif !important;
+  font-family: 'Quicksand', 'Varela', sans-serif !important;
 }
 
 body {
-  font-family: 'Varela', sans-serif !important;
+  font-family: 'Quicksand', 'Varela', sans-serif !important;
   background-color: var(--bg-color);
   color: var(--text-primary);
 }
@@ -74,6 +106,10 @@ a {
   html {
     color-scheme: dark;
   }
+}
+
+.quicksand {
+  font-family: "Quicksand", sans-serif;
 }
 
 .varela-regular {
