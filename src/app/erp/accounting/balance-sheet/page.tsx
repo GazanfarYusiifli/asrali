@@ -1,127 +1,145 @@
-'use client'
-import React, { useState, useEffect } from 'react';
-import { getPostings, getBalanceActive, getBalancePassive, getTurnover } from '../../utils/accounting';
+'use client';
 
-export default function BalanceSheetPage() {
-  const [metrics, setMetrics] = useState({
-    assets: { cash: 0, bank: 0, inventory: 0, receivables: 0, total: 0 },
-    liabilities: { payables: 0, total: 0 },
-    equity: { retainedEarnings: 0, total: 0 }
-  });
+import React, { useState } from 'react';
+import { Search, Plus, Filter, FileDown, Scale } from 'lucide-react';
+import PageHeaderBanner from '@/components/PageHeaderBanner';
 
-  useEffect(() => {
-    const postings = getPostings();
-    
-    // AKTİVLƏR (Assets)
-    const cash = getBalanceActive(postings, '221');
-    const bank = getBalanceActive(postings, '223');
-    const inventory = getBalanceActive(postings, '201') + getBalanceActive(postings, '205');
-    const receivables = getBalanceActive(postings, '211');
-    const totalAssets = cash + bank + inventory + receivables;
-
-    // PASSİVLƏR (Liabilities)
-    const payables = getBalancePassive(postings, '531');
-    const totalLiabilities = payables;
-
-    // KAPİTAL VƏ MƏNFƏƏT (Equity)
-    const totalIncome = getTurnover(postings, '60', 'ct') + getTurnover(postings, '61', 'ct');
-    const totalExpense = getTurnover(postings, '70', 'dt') + getTurnover(postings, '71', 'dt');
-    const retainedEarnings = totalIncome - totalExpense; // Bölüşdürülməmiş mənfəət
-    const totalEquity = retainedEarnings; // (Əslində nizamnamə kapitalı da olmalıdır)
-
-    setMetrics({
-      assets: { cash, bank, inventory, receivables, total: totalAssets },
-      liabilities: { payables, total: totalLiabilities },
-      equity: { retainedEarnings, total: totalEquity }
-    });
-  }, []);
+export default function Page() {
+  const [data, setData] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   return (
-    <div style={{ padding: '2rem', maxWidth: '1000px', margin: '0 auto' }}>
-      <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-        <h1 style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-color)', marginBottom: '0.5rem' }}>Mühasibat Balansı (Forma №1)</h1>
-        <p style={{ color: 'var(--text-secondary)' }}>Müəssisənin aktivləri, öhdəlikləri və kapitalı haqqında yekun hesabat.</p>
-      </div>
+    <div style={{ padding: '2rem', maxWidth: '1600px', margin: '0 auto' }}>
+      <PageHeaderBanner
+        title="Mühasibat Balansı"
+        description="Müəssisənin aktivləri, öhdəlikləri və kapitalının balansı."
+        icon={Scale}
+        theme="indigo"
+        badge="Maliyyə Hesabatı"
+        primaryAction={{
+          label: "Yeni Əlavə Et",
+          onClick: () => alert("Yeni qeyd pəncərəsi açılır..."),
+          icon: Plus
+        }}
+        secondaryAction={{
+          label: "Eksport",
+          onClick: () => alert("Məlumatlar eksport edilir..."),
+          icon: FileDown
+        }}
+      />
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
-        {/* AKTİVLƏR */}
-        <div style={{ backgroundColor: 'var(--surface-color)', border: '1px solid var(--border-color)', borderRadius: '16px', overflow: 'hidden' }}>
-          <div style={{ backgroundColor: 'var(--bg-color)', padding: '1rem 1.5rem', borderBottom: '1px solid var(--border-color)', fontWeight: 700, fontSize: '1.2rem', color: '#3b82f6' }}>
-            AKTİVLƏR (Assets)
+      <div style={{ 
+        backgroundColor: '#ffffff', 
+        borderRadius: '16px', 
+        border: '1px solid rgba(226, 232, 240, 0.8)', 
+        overflow: 'hidden', 
+        boxShadow: '0 10px 30px -5px rgba(15, 23, 42, 0.04)' 
+      }}>
+        <div style={{ 
+          padding: '1.15rem 1.75rem', 
+          borderBottom: '1px solid #f1f5f9', 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center', 
+          backgroundColor: '#fafbfc',
+          gap: '1rem',
+          flexWrap: 'wrap'
+        }}>
+          <div style={{ position: 'relative', width: '380px', maxWidth: '100%' }}>
+            <Search size={17} style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
+            <input 
+              type="text" 
+              placeholder="Axtarış üçün daxil edin..." 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              style={{ 
+                width: '100%', 
+                padding: '0.65rem 1rem 0.65rem 2.6rem', 
+                borderRadius: '10px', 
+                border: '1px solid #e2e8f0', 
+                outline: 'none', 
+                fontSize: '0.88rem', 
+                color: '#0f172a',
+                backgroundColor: '#ffffff',
+                transition: 'all 0.2s ease',
+                boxShadow: '0 1px 2px rgba(0,0,0,0.02)'
+              }}
+              onFocus={(e) => { e.currentTarget.style.borderColor = '#3b82f6'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.12)'; }}
+              onBlur={(e) => { e.currentTarget.style.borderColor = '#e2e8f0'; e.currentTarget.style.boxShadow = 'none'; }}
+            />
           </div>
-          <div style={{ padding: '1.5rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem', paddingBottom: '0.5rem', borderBottom: '1px dashed var(--border-color)' }}>
-              <span>201 - Material ehtiyatları (Anbar)</span>
-              <strong>{metrics.assets.inventory.toLocaleString('az-AZ')} ₼</strong>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem', paddingBottom: '0.5rem', borderBottom: '1px dashed var(--border-color)' }}>
-              <span>211 - Debitor borclar (Alacaqlar)</span>
-              <strong>{metrics.assets.receivables.toLocaleString('az-AZ')} ₼</strong>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem', paddingBottom: '0.5rem', borderBottom: '1px dashed var(--border-color)' }}>
-              <span>221 - Kassa (Nağd)</span>
-              <strong>{metrics.assets.cash.toLocaleString('az-AZ')} ₼</strong>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem', paddingBottom: '0.5rem', borderBottom: '1px dashed var(--border-color)' }}>
-              <span>223 - Bank hesabları (Nağdsız)</span>
-              <strong>{metrics.assets.bank.toLocaleString('az-AZ')} ₼</strong>
-            </div>
-          </div>
-          <div style={{ backgroundColor: 'rgba(59,130,246,0.1)', padding: '1.5rem', display: 'flex', justifyContent: 'space-between', fontWeight: 800, fontSize: '1.2rem', color: '#1e40af' }}>
-            <span>CƏMİ AKTİVLƏR</span>
-            <span>{metrics.assets.total.toLocaleString('az-AZ')} ₼</span>
-          </div>
+
+          <button style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '0.5rem', 
+            padding: '0.6rem 1.15rem', 
+            backgroundColor: '#ffffff', 
+            border: '1px solid #e2e8f0', 
+            borderRadius: '10px', 
+            color: '#475569', 
+            fontSize: '0.88rem', 
+            fontWeight: 600, 
+            cursor: 'pointer',
+            transition: 'all 0.15s ease'
+          }}>
+            <Filter size={15} style={{ color: '#64748b' }} />
+            Filtrlər
+          </button>
         </div>
 
-        {/* PASSİVLƏR VƏ KAPİTAL */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-          
-          <div style={{ backgroundColor: 'var(--surface-color)', border: '1px solid var(--border-color)', borderRadius: '16px', overflow: 'hidden' }}>
-            <div style={{ backgroundColor: 'var(--bg-color)', padding: '1rem 1.5rem', borderBottom: '1px solid var(--border-color)', fontWeight: 700, fontSize: '1.2rem', color: '#f59e0b' }}>
-              ÖHDƏLİKLƏR (Liabilities)
-            </div>
-            <div style={{ padding: '1.5rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem', paddingBottom: '0.5rem', borderBottom: '1px dashed var(--border-color)' }}>
-                <span>531 - Kreditor borclar (Malsatanlar)</span>
-                <strong>{metrics.liabilities.payables.toLocaleString('az-AZ')} ₼</strong>
-              </div>
-            </div>
-            <div style={{ backgroundColor: 'rgba(245,158,11,0.1)', padding: '1.5rem', display: 'flex', justifyContent: 'space-between', fontWeight: 800, fontSize: '1.1rem', color: '#b45309' }}>
-              <span>CƏMİ ÖHDƏLİKLƏR</span>
-              <span>{metrics.liabilities.total.toLocaleString('az-AZ')} ₼</span>
-            </div>
-          </div>
-
-          <div style={{ backgroundColor: 'var(--surface-color)', border: '1px solid var(--border-color)', borderRadius: '16px', overflow: 'hidden' }}>
-            <div style={{ backgroundColor: 'var(--bg-color)', padding: '1rem 1.5rem', borderBottom: '1px solid var(--border-color)', fontWeight: 700, fontSize: '1.2rem', color: '#8b5cf6' }}>
-              KAPİTAL (Equity)
-            </div>
-            <div style={{ padding: '1.5rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem', paddingBottom: '0.5rem', borderBottom: '1px dashed var(--border-color)' }}>
-                <span>801 - Bölüşdürülməmiş Mənfəət</span>
-                <strong>{metrics.equity.retainedEarnings.toLocaleString('az-AZ')} ₼</strong>
-              </div>
-            </div>
-            <div style={{ backgroundColor: 'rgba(139,92,246,0.1)', padding: '1.5rem', display: 'flex', justifyContent: 'space-between', fontWeight: 800, fontSize: '1.1rem', color: '#5b21b6' }}>
-              <span>CƏMİ KAPİTAL</span>
-              <span>{metrics.equity.total.toLocaleString('az-AZ')} ₼</span>
-            </div>
-          </div>
-
-          {/* PASSIVLER CEMI */}
-          <div style={{ backgroundColor: 'rgba(16,185,129,0.1)', border: '1px solid #10b981', borderRadius: '16px', padding: '1.5rem', display: 'flex', justifyContent: 'space-between', fontWeight: 800, fontSize: '1.2rem', color: '#047857' }}>
-            <span>CƏMİ PASSİVLƏR (Öhdəlik + Kapital)</span>
-            <span>{(metrics.liabilities.total + metrics.equity.total).toLocaleString('az-AZ')} ₼</span>
-          </div>
-
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: 0, textAlign: 'left' }}>
+            <thead>
+              <tr style={{ backgroundColor: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>
+                <th style={{ padding: '0.9rem 1.5rem', fontSize: '0.78rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid #e2e8f0' }}>Sənəd No / Kod</th>
+                <th style={{ padding: '0.9rem 1.5rem', fontSize: '0.78rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid #e2e8f0' }}>Təsvir / Ad</th>
+                <th style={{ padding: '0.9rem 1.5rem', fontSize: '0.78rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid #e2e8f0' }}>Tarix / Kateqoriya</th>
+                <th style={{ padding: '0.9rem 1.5rem', fontSize: '0.78rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid #e2e8f0' }}>Status</th>
+                <th style={{ padding: '0.9rem 1.5rem', fontSize: '0.78rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', textAlign: 'right', borderBottom: '1px solid #e2e8f0' }}>Əməliyyat</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td colSpan={5} style={{ padding: '3.5rem 2rem' }}>
+                  <div style={{ 
+                    maxWidth: '680px', 
+                    margin: '0 auto', 
+                    padding: '2.5rem 2rem', 
+                    borderRadius: '16px', 
+                    background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.02) 0%, rgba(241, 245, 249, 0.6) 100%)',
+                    border: '1px dashed #cbd5e1',
+                    textAlign: 'center',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '0.85rem'
+                  }}>
+                    <div style={{ 
+                      width: '56px', 
+                      height: '56px', 
+                      borderRadius: '16px', 
+                      background: '#f1f5f9', 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center', 
+                      color: '#475569',
+                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)'
+                    }}>
+                      <Scale size={28} />
+                    </div>
+                    <div style={{ fontWeight: 800, color: '#1e293b', fontSize: '1.15rem', letterSpacing: '-0.01em' }}>
+                      Heç bir sənəd və ya qeyd tapılmadı
+                    </div>
+                    <p style={{ margin: 0, color: '#64748b', fontSize: '0.88rem', maxWidth: '420px', lineHeight: 1.5 }}>
+                      Bu bölmədə hələ ki qeydə alınmış sənəd yoxdur. "Yeni Əlavə Et" düyməsi ilə daxil edə bilərsiniz.
+                    </p>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-      </div>
-      
-      {/* Balans Check */}
-      <div style={{ marginTop: '2rem', textAlign: 'center', fontWeight: 700, color: metrics.assets.total === (metrics.liabilities.total + metrics.equity.total) ? '#10b981' : '#ef4444' }}>
-        {metrics.assets.total === (metrics.liabilities.total + metrics.equity.total) 
-          ? '✅ Balans Bərabərdir (Aktivlər = Passivlər + Kapital)' 
-          : '❌ Balans Bərabər Deyil (Mühasibat xətası var)'}
       </div>
     </div>
   );

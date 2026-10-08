@@ -1,89 +1,141 @@
-'use client'
-import React, { useState, useEffect } from 'react';
-import { getPostings, Posting } from '../../utils/accounting';
+'use client';
 
-export default function TrialBalancePage() {
-  const [rows, setRows] = useState<any[]>([]);
-  const [totals, setTotals] = useState({ dtTurn: 0, ctTurn: 0, dtBal: 0, ctBal: 0 });
+import React, { useState } from 'react';
+import { Search, Plus, Filter, FileDown, Calculator } from 'lucide-react';
+import PageHeaderBanner from '@/components/PageHeaderBanner';
 
-  useEffect(() => {
-    const postings = getPostings();
-    
-    // Extract unique accounts
-    const accounts = new Set<string>();
-    postings.forEach(p => { accounts.add(p.dt); accounts.add(p.ct); });
-
-    let totalDtTurn = 0, totalCtTurn = 0, totalDtBal = 0, totalCtBal = 0;
-
-    const data = Array.from(accounts).sort().map(acc => {
-      const dtTurnover = postings.filter(p => p.dt === acc).reduce((sum, p) => sum + Number(p.amount), 0);
-      const ctTurnover = postings.filter(p => p.ct === acc).reduce((sum, p) => sum + Number(p.amount), 0);
-      
-      let dtBalance = 0;
-      let ctBalance = 0;
-      
-      // Basic Active vs Passive rule
-      // 1xx, 2xx, 7xx -> Active (Debit balance)
-      // 3xx, 4xx, 5xx, 6xx -> Passive (Credit balance)
-      const isAktiv = ['1','2','7'].includes(acc.charAt(0));
-
-      if (isAktiv) {
-        dtBalance = dtTurnover - ctTurnover;
-      } else {
-        ctBalance = ctTurnover - dtTurnover;
-      }
-
-      totalDtTurn += dtTurnover;
-      totalCtTurn += ctTurnover;
-      if (dtBalance > 0) totalDtBal += dtBalance;
-      if (ctBalance > 0) totalCtBal += ctBalance;
-
-      return { acc, dtTurnover, ctTurnover, dtBalance: dtBalance > 0 ? dtBalance : 0, ctBalance: ctBalance > 0 ? ctBalance : 0 };
-    });
-
-    setRows(data);
-    setTotals({ dtTurn: totalDtTurn, ctTurn: totalCtTurn, dtBal: totalDtBal, ctBal: totalCtBal });
-  }, []);
+export default function Page() {
+  const [data, setData] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h1 style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-color)', marginBottom: '0.5rem' }}>Dövriyyə cədvəli (Şaxmatka)</h1>
-      <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem' }}>Hesablar üzrə dövriyyə və qalıqların (Trial Balance) hesabatı.</p>
+    <div style={{ padding: '2rem', maxWidth: '1600px', margin: '0 auto' }}>
+      <PageHeaderBanner
+        title="Dövriyyə Cədvəli (Trial Balance)"
+        description="Bütün hesablar üzrə debet və kredit qalıqlarının yoxlama cədvəli."
+        icon={Calculator}
+        theme="blue"
+        badge="Hesablar Planı"
+        primaryAction={{
+          label: "Yeni Əlavə Et",
+          onClick: () => alert("Yeni qeyd pəncərəsi açılır..."),
+          icon: Plus
+        }}
+        secondaryAction={{
+          label: "Eksport",
+          onClick: () => alert("Məlumatlar eksport edilir..."),
+          icon: FileDown
+        }}
+      />
 
-      <div style={{ backgroundColor: 'var(--surface-color)', border: '1px solid var(--border-color)', borderRadius: '20px', overflow: 'hidden' }}>
+      <div style={{ 
+        backgroundColor: '#ffffff', 
+        borderRadius: '16px', 
+        border: '1px solid rgba(226, 232, 240, 0.8)', 
+        overflow: 'hidden', 
+        boxShadow: '0 10px 30px -5px rgba(15, 23, 42, 0.04)' 
+      }}>
+        <div style={{ 
+          padding: '1.15rem 1.75rem', 
+          borderBottom: '1px solid #f1f5f9', 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center', 
+          backgroundColor: '#fafbfc',
+          gap: '1rem',
+          flexWrap: 'wrap'
+        }}>
+          <div style={{ position: 'relative', width: '380px', maxWidth: '100%' }}>
+            <Search size={17} style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
+            <input 
+              type="text" 
+              placeholder="Axtarış üçün daxil edin..." 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              style={{ 
+                width: '100%', 
+                padding: '0.65rem 1rem 0.65rem 2.6rem', 
+                borderRadius: '10px', 
+                border: '1px solid #e2e8f0', 
+                outline: 'none', 
+                fontSize: '0.88rem', 
+                color: '#0f172a',
+                backgroundColor: '#ffffff',
+                transition: 'all 0.2s ease',
+                boxShadow: '0 1px 2px rgba(0,0,0,0.02)'
+              }}
+              onFocus={(e) => { e.currentTarget.style.borderColor = '#3b82f6'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.12)'; }}
+              onBlur={(e) => { e.currentTarget.style.borderColor = '#e2e8f0'; e.currentTarget.style.boxShadow = 'none'; }}
+            />
+          </div>
+
+          <button style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '0.5rem', 
+            padding: '0.6rem 1.15rem', 
+            backgroundColor: '#ffffff', 
+            border: '1px solid #e2e8f0', 
+            borderRadius: '10px', 
+            color: '#475569', 
+            fontSize: '0.88rem', 
+            fontWeight: 600, 
+            cursor: 'pointer',
+            transition: 'all 0.15s ease'
+          }}>
+            <Filter size={15} style={{ color: '#64748b' }} />
+            Filtrlər
+          </button>
+        </div>
+
         <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'right' }}>
+          <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: 0, textAlign: 'left' }}>
             <thead>
-              <tr>
-                <th rowSpan={2} style={{ padding: '1rem', borderBottom: '2px solid var(--border-color)', borderRight: '1px solid var(--border-color)', textAlign: 'center' }}>Hesab</th>
-                <th colSpan={2} style={{ padding: '1rem', borderBottom: '1px solid var(--border-color)', borderRight: '1px solid var(--border-color)', textAlign: 'center' }}>Dövriyyə</th>
-                <th colSpan={2} style={{ padding: '1rem', borderBottom: '1px solid var(--border-color)', textAlign: 'center' }}>Son Qalıq</th>
-              </tr>
-              <tr style={{ backgroundColor: 'var(--bg-color)', borderBottom: '2px solid var(--border-color)' }}>
-                <th style={{ padding: '0.75rem', borderRight: '1px solid var(--border-color)', color: 'var(--text-secondary)' }}>Debet</th>
-                <th style={{ padding: '0.75rem', borderRight: '1px solid var(--border-color)', color: 'var(--text-secondary)' }}>Kredit</th>
-                <th style={{ padding: '0.75rem', borderRight: '1px solid var(--border-color)', color: 'var(--text-secondary)' }}>Debet</th>
-                <th style={{ padding: '0.75rem', color: 'var(--text-secondary)' }}>Kredit</th>
+              <tr style={{ backgroundColor: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>
+                <th style={{ padding: '0.9rem 1.5rem', fontSize: '0.78rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid #e2e8f0' }}>Sənəd No / Kod</th>
+                <th style={{ padding: '0.9rem 1.5rem', fontSize: '0.78rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid #e2e8f0' }}>Təsvir / Ad</th>
+                <th style={{ padding: '0.9rem 1.5rem', fontSize: '0.78rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid #e2e8f0' }}>Tarix / Kateqoriya</th>
+                <th style={{ padding: '0.9rem 1.5rem', fontSize: '0.78rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid #e2e8f0' }}>Status</th>
+                <th style={{ padding: '0.9rem 1.5rem', fontSize: '0.78rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', textAlign: 'right', borderBottom: '1px solid #e2e8f0' }}>Əməliyyat</th>
               </tr>
             </thead>
             <tbody>
-              {rows.map((row, i) => (
-                <tr key={i} style={{ borderBottom: '1px solid var(--border-color)' }}>
-                  <td style={{ padding: '1rem', borderRight: '1px solid var(--border-color)', textAlign: 'center', fontWeight: 700, color: 'var(--primary-color)' }}>{row.acc}</td>
-                  <td style={{ padding: '1rem', borderRight: '1px solid var(--border-color)', color: row.dtTurnover > 0 ? 'var(--text-primary)' : 'var(--text-secondary)' }}>{row.dtTurnover.toLocaleString('az-AZ')}</td>
-                  <td style={{ padding: '1rem', borderRight: '1px solid var(--border-color)', color: row.ctTurnover > 0 ? 'var(--text-primary)' : 'var(--text-secondary)' }}>{row.ctTurnover.toLocaleString('az-AZ')}</td>
-                  <td style={{ padding: '1rem', borderRight: '1px solid var(--border-color)', fontWeight: 600, color: row.dtBalance > 0 ? '#10b981' : 'var(--text-secondary)' }}>{row.dtBalance.toLocaleString('az-AZ')}</td>
-                  <td style={{ padding: '1rem', fontWeight: 600, color: row.ctBalance > 0 ? '#ef4444' : 'var(--text-secondary)' }}>{row.ctBalance.toLocaleString('az-AZ')}</td>
-                </tr>
-              ))}
-              
-              {/* Totals Row */}
-              <tr style={{ backgroundColor: 'var(--bg-color)', borderTop: '2px solid var(--border-color)' }}>
-                <td style={{ padding: '1.25rem 1rem', borderRight: '1px solid var(--border-color)', textAlign: 'center', fontWeight: 800 }}>CƏMİ</td>
-                <td style={{ padding: '1.25rem 1rem', borderRight: '1px solid var(--border-color)', fontWeight: 800 }}>{totals.dtTurn.toLocaleString('az-AZ')}</td>
-                <td style={{ padding: '1.25rem 1rem', borderRight: '1px solid var(--border-color)', fontWeight: 800 }}>{totals.ctTurn.toLocaleString('az-AZ')}</td>
-                <td style={{ padding: '1.25rem 1rem', borderRight: '1px solid var(--border-color)', fontWeight: 800, color: '#10b981' }}>{totals.dtBal.toLocaleString('az-AZ')}</td>
-                <td style={{ padding: '1.25rem 1rem', fontWeight: 800, color: '#ef4444' }}>{totals.ctBal.toLocaleString('az-AZ')}</td>
+              <tr>
+                <td colSpan={5} style={{ padding: '3.5rem 2rem' }}>
+                  <div style={{ 
+                    maxWidth: '680px', 
+                    margin: '0 auto', 
+                    padding: '2.5rem 2rem', 
+                    borderRadius: '16px', 
+                    background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.02) 0%, rgba(241, 245, 249, 0.6) 100%)',
+                    border: '1px dashed #cbd5e1',
+                    textAlign: 'center',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '0.85rem'
+                  }}>
+                    <div style={{ 
+                      width: '56px', 
+                      height: '56px', 
+                      borderRadius: '16px', 
+                      background: '#f1f5f9', 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center', 
+                      color: '#475569',
+                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)'
+                    }}>
+                      <Calculator size={28} />
+                    </div>
+                    <div style={{ fontWeight: 800, color: '#1e293b', fontSize: '1.15rem', letterSpacing: '-0.01em' }}>
+                      Heç bir sənəd və ya qeyd tapılmadı
+                    </div>
+                    <p style={{ margin: 0, color: '#64748b', fontSize: '0.88rem', maxWidth: '420px', lineHeight: 1.5 }}>
+                      Bu bölmədə hələ ki qeydə alınmış sənəd yoxdur. "Yeni Əlavə Et" düyməsi ilə daxil edə bilərsiniz.
+                    </p>
+                  </div>
+                </td>
               </tr>
             </tbody>
           </table>
