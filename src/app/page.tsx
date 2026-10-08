@@ -28,9 +28,6 @@ import {
   Clock,
   HelpCircle,
   Star,
-  Activity,
-  Database,
-  Cloud,
   CheckCircle2
 } from 'lucide-react';
 import { useState } from 'react';
@@ -59,22 +56,22 @@ export default function Home() {
     {
       num: '10+',
       title: 'Maliyyə & Resurs Modulları',
-      desc: 'Satış, alış, anbar, kassa, bank, əməkdaşlar və e-qaimə tək nüvədə.'
+      desc: 'Satış, alış, anbar, kassa, bank, əməkdaşlar və e-qaimə tək mərkəzdə.'
     },
     {
-      num: '1 Mərkəz',
-      title: 'Vahid İdarəetmə Paneli',
-      desc: 'Bütün filial və şöbələrin gəlir-xərc dövriyyəsinə real-vaxt canlı nəzarət.'
+      num: '1 Panel',
+      title: 'Vahid İdarəetmə Nəzarəti',
+      desc: 'Bütün filial və əməliyyatların gəlir-xərc dinamikasına canlı nəzarət.'
     },
     {
       num: '24/7',
       title: 'Kəsintisiz Bulud Çıxışı',
-      desc: 'İstənilən cihazdan dərhal daxil olun — quraşdırma və server xərci yoxdur.'
+      desc: 'İstənilən cihazdan dərhal daxil olun — quraşdırma və server tələb olunmur.'
     },
     {
       num: '99.9%',
-      title: 'SLA Məlumat Zəmanəti',
-      desc: 'Hər şirkət üçün tam izolyasiya olunmuş baza və avtomatik gündəlik ehtiyat nüsxə.'
+      title: 'SLA Məlumat Təhlükəsizliyi',
+      desc: 'Hər şirkət üçün tam təcrid olunmuş baza və avtomatik gündəlik nüsxələmə.'
     }
   ];
 
@@ -82,48 +79,48 @@ export default function Home() {
     { 
       icon: BarChart3, 
       color: '#059669', 
-      bg: '#ecfdf5', 
-      border: '#a7f3d0',
+      bg: 'rgba(5, 150, 105, 0.08)', 
+      border: 'rgba(5, 150, 105, 0.22)',
       title: 'Müştəri və Satış İdarəetməsi', 
       desc: 'Müştəri bazası, borc xülasələri, cari hesab qalığı və real-vaxt ödəniş tarixçəsi tək idarəetmə panelində.' 
     },
     { 
       icon: FileText, 
       color: '#0284c7', 
-      bg: '#f0f9ff', 
-      border: '#bae6fd',
+      bg: 'rgba(2, 132, 199, 0.08)', 
+      border: 'rgba(2, 132, 199, 0.22)',
       title: 'Avtomatlaşdırılmış Müqavilələr', 
       desc: 'Şablon əsaslı müqavilə yaratmaq, avtomatik nömrələmə, çap, QR təsdiqi və ani PDF ixrac funksiyaları.' 
     },
     { 
       icon: TrendingUp, 
       color: '#059669', 
-      bg: '#ecfdf5', 
-      border: '#a7f3d0',
+      bg: 'rgba(5, 150, 105, 0.08)', 
+      border: 'rgba(5, 150, 105, 0.22)',
       title: 'Maliyyə & Balans Analitikası', 
       desc: 'Gəlir-xərc nisbətləri, debitor-kreditor borc hesabatları, kassa və bank çıxarışları dəqiq göstəricilərlə.' 
     },
     { 
       icon: Package, 
       color: '#7c3aed', 
-      bg: '#f5f3ff', 
-      border: '#ddd6fe',
+      bg: 'rgba(124, 58, 237, 0.08)', 
+      border: 'rgba(124, 58, 237, 0.22)',
       title: 'İnventar & Stok İdarəetməsi', 
       desc: 'Çoxanbarlı stok izləmə, barkod, kritik limit xəbərdarlıqları, anbarlararası transfer və sayım prosesləri.' 
     },
     { 
       icon: Users, 
       color: '#d97706', 
-      bg: '#fffbeb', 
-      border: '#fde68a',
+      bg: 'rgba(217, 119, 6, 0.08)', 
+      border: 'rgba(217, 119, 6, 0.22)',
       title: 'Əməkdaş və HR Uçotu', 
       desc: 'Əməkdaş məlumatları, vəzifələr, davamiyyət və məzuniyyətlər, toplu maaş hesablanması və bonus uçotu.' 
     },
     { 
       icon: ShieldCheck, 
       color: '#0891b2', 
-      bg: '#ecfeff', 
-      border: '#a5f3fc',
+      bg: 'rgba(8, 145, 178, 0.08)', 
+      border: 'rgba(8, 145, 178, 0.22)',
       title: 'Təhlükəsiz Bulud İnfrastrukturu', 
       desc: 'Hər biznes üçün ayrıca izolyasiya olunmuş verilənlər bazası, gündəlik nüsxələmə və güclü icazə idarəsi.' 
     }
@@ -149,7 +146,7 @@ export default function Home() {
   ];
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#fafafa', color: '#09090b', overflowX: 'hidden', fontFamily: 'inherit' }}>
+    <div className="hex-root-container">
       
       {/* HEADER / NAVBAR */}
       <header className="site-header">
@@ -158,7 +155,7 @@ export default function Home() {
             <div className="brand-logo-hex">
               A
             </div>
-            <span style={{ fontSize: '1.35rem', fontWeight: 800, letterSpacing: '-0.5px', color: '#09090b' }}>
+            <span style={{ fontSize: '1.35rem', fontWeight: 800, letterSpacing: '-0.5px', color: '#14141c' }}>
               ASRALI <span style={{ color: '#059669', fontWeight: 900 }}>ERP</span>
             </span>
           </Link>
@@ -184,10 +181,15 @@ export default function Home() {
         </div>
       </header>
 
-      {/* HERO SECTION */}
+      {/* HERO SECTION WITH AUTHENTIC HEX.TECH BACKDROP */}
       <section className="hero-section">
-        {/* Subtle Engineering Grid Background */}
-        <div className="hero-grid-bg" />
+        {/* Hex.tech Ambient Gradient Mesh & Dot Grid */}
+        <div className="hex-hero-backdrop">
+          <div className="hex-radial-spot hex-spot-violet" />
+          <div className="hex-radial-spot hex-spot-rose" />
+          <div className="hex-radial-spot hex-spot-emerald" />
+          <div className="hex-cartesian-grid" />
+        </div>
 
         <div className="hero-content">
           <h1 className="hero-title">
@@ -220,14 +222,14 @@ export default function Home() {
                 <Star size={14} fill="#f59e0b" />
                 <Star size={14} fill="#f59e0b" />
               </div>
-              <span style={{ fontWeight: 800, color: '#09090b', fontSize: '0.85rem' }}>5.0 / 5.0</span>
+              <span style={{ fontWeight: 800, color: '#14141c', fontSize: '0.85rem' }}>5.0 / 5.0</span>
             </div>
             <div className="proof-divider" />
-            <span style={{ color: '#52525b', fontSize: '0.85rem', fontWeight: 500 }}>14 gün pulsuz sınaq • Kredit kartı tələb olunmur</span>
+            <span style={{ color: '#59535f', fontSize: '0.85rem', fontWeight: 500 }}>14 gün pulsuz sınaq • Kredit kartı tələb olunmur</span>
           </div>
         </div>
 
-        {/* LARGE DASHBOARD PREVIEW MOCKUP (HEX.TECH EXPANSIVE HERO) */}
+        {/* EXPANSIVE HERO MOCKUP (HEX.TECH STYLE) */}
         <div className="mockup-container">
           <div className="mockup-frame">
             <div className="mockup-header-bar">
@@ -258,7 +260,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* METRICS STRIP (HEX.TECH MODULAR DESIGN) */}
+      {/* METRICS STRIP (HEX.TECH MODULAR 4-COLUMN) */}
       <section className="metrics-section">
         <div className="metrics-card">
           {metricsData.map((m, idx) => (
@@ -316,7 +318,7 @@ export default function Home() {
       </section>
 
       {/* HOW IT WORKS (3 ADDIMDA BAŞLAYIN) */}
-      <section id="is-prinsipi" className="section-container step-bg-pattern">
+      <section id="is-prinsipi" className="section-container">
         <div className="section-header">
           <div className="section-pill">Sürətli Başlanğıc</div>
           <h2 className="section-heading">Biznesinizi İdarə Etməyə 3 Addımda Başlayın</h2>
@@ -402,7 +404,7 @@ export default function Home() {
       </section>
 
       {/* PRICING (Qiymətləndirmə) */}
-      <section id="qiymetler" className="section-container pricing-bg">
+      <section id="qiymetler" className="section-container">
         <div className="section-header">
           <div className="section-pill">Şəffaf Qiymətlər</div>
           <h2 className="section-heading">Sizə Uyğun Paketi Seçin</h2>
@@ -519,13 +521,13 @@ export default function Home() {
               >
                 <div className="faq-question">
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
-                    <HelpCircle size={18} style={{ color: isOpen ? '#059669' : '#a1a1aa' }} />
+                    <HelpCircle size={18} style={{ color: isOpen ? '#059669' : '#888290' }} />
                     <span>{faq.q}</span>
                   </div>
                   <ChevronRight 
                     size={18} 
                     style={{ 
-                      color: isOpen ? '#059669' : '#a1a1aa', 
+                      color: isOpen ? '#059669' : '#888290', 
                       transform: isOpen ? 'rotate(90deg)' : 'rotate(0deg)',
                       transition: 'transform 0.25s ease'
                     }} 
@@ -587,7 +589,7 @@ export default function Home() {
               <div className="brand-logo-hex" style={{ width: '34px', height: '34px', fontSize: '1rem' }}>
                 A
               </div>
-              <span style={{ fontSize: '1.35rem', fontWeight: 800, letterSpacing: '-0.5px', color: '#09090b' }}>
+              <span style={{ fontSize: '1.35rem', fontWeight: 800, letterSpacing: '-0.5px', color: '#14141c' }}>
                 ASRALI <span style={{ color: '#059669' }}>ERP</span>
               </span>
             </div>
@@ -644,26 +646,40 @@ export default function Home() {
         </div>
       </footer>
 
-      {/* GLOBAL CSS STYLING - HEX.TECH HIGH-END LIGHT SAAS AESTHETIC */}
+      {/* GLOBAL CSS STYLING - AUTHENTIC HEX.TECH WARM-OPAL & CARTESIAN GRID AESTHETIC */}
       <style dangerouslySetInnerHTML={{__html: `
         /* Reset & Base */
         html { scroll-behavior: smooth; }
         
         .text-emerald { color: #059669; }
 
+        /* The authentic Hex.tech Opal warm canvas background */
+        .hex-root-container {
+          min-height: 100vh;
+          background-color: #f7f5f6;
+          background-image: 
+            radial-gradient(at 0% 0%, rgba(245, 192, 192, 0.22) 0px, transparent 50%),
+            radial-gradient(at 100% 0%, rgba(164, 119, 178, 0.16) 0px, transparent 50%),
+            radial-gradient(at 50% 30%, rgba(92, 177, 152, 0.12) 0px, transparent 65%),
+            radial-gradient(at 100% 100%, rgba(245, 192, 192, 0.15) 0px, transparent 50%);
+          color: #14141c;
+          overflow-x: hidden;
+          font-family: inherit;
+        }
+
         .brand-logo-hex {
           width: 38px;
           height: 38px;
           border-radius: 10px;
-          background: #09090b;
+          background: #14141c;
           display: flex;
           align-items: center;
           justify-content: center;
           font-weight: 900;
           color: white;
           font-size: 1.15rem;
-          border: 1px solid rgba(0, 0, 0, 0.1);
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          border: 1px solid rgba(0, 0, 0, 0.15);
+          box-shadow: 0 2px 8px rgba(20, 20, 28, 0.12);
         }
 
         /* HEADER */
@@ -675,11 +691,11 @@ export default function Home() {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          background: rgba(250, 250, 250, 0.85);
+          background: rgba(247, 245, 246, 0.82);
           backdrop-filter: blur(16px);
           -webkit-backdrop-filter: blur(16px);
           z-index: 100;
-          border-bottom: 1px solid #e4e4e7;
+          border-bottom: 1px solid #e9e5e8;
         }
 
         .desktop-nav {
@@ -689,18 +705,18 @@ export default function Home() {
         }
 
         .nav-link {
-          color: #52525b;
+          color: #59535f;
           font-weight: 500;
           text-decoration: none;
           font-size: 0.92rem;
           transition: color 0.15s ease;
         }
         .nav-link:hover {
-          color: #09090b;
+          color: #14141c;
         }
 
         .nav-btn-secondary {
-          color: #27272a;
+          color: #2b252c;
           font-weight: 600;
           font-size: 0.9rem;
           text-decoration: none;
@@ -709,8 +725,8 @@ export default function Home() {
           transition: all 0.15s;
         }
         .nav-btn-secondary:hover {
-          color: #09090b;
-          background: #f4f4f5;
+          color: #14141c;
+          background: rgba(0, 0, 0, 0.04);
         }
 
         .nav-btn-primary {
@@ -718,17 +734,17 @@ export default function Home() {
           align-items: center;
           gap: 0.45rem;
           padding: 0.55rem 1.25rem;
-          background: #09090b;
+          background: #14141c;
           color: white;
           border-radius: 9px;
           font-weight: 600;
           font-size: 0.9rem;
           text-decoration: none;
           transition: all 0.2s ease;
-          border: 1px solid #27272a;
+          border: 1px solid #2b252c;
         }
         .nav-btn-primary:hover {
-          background: #18181b;
+          background: #252128;
           transform: translateY(-1px);
         }
 
@@ -741,20 +757,52 @@ export default function Home() {
           flex-direction: column;
           align-items: center;
           text-align: center;
-          background: #fafafa;
         }
 
-        /* Hex.tech style engineering dot grid */
-        .hero-grid-bg {
+        /* Hex.tech Cartesian Blueprint & Radial Spots */
+        .hex-hero-backdrop {
           position: absolute;
-          top: 0; left: 0; right: 0; bottom: 0;
-          background-image: radial-gradient(#d4d4d8 1px, transparent 1px);
-          background-size: 32px 32px;
-          opacity: 0.5;
+          inset: 0;
           pointer-events: none;
           z-index: 0;
-          mask-image: radial-gradient(ellipse at 50% 30%, #000 30%, transparent 80%);
-          -webkit-mask-image: radial-gradient(ellipse at 50% 30%, #000 30%, transparent 80%);
+          overflow: hidden;
+        }
+        .hex-radial-spot {
+          position: absolute;
+          border-radius: 50%;
+          filter: blur(85px);
+          opacity: 0.65;
+        }
+        .hex-spot-violet {
+          top: -10%;
+          left: 20%;
+          width: 50vw;
+          height: 45vw;
+          background: radial-gradient(circle, rgba(164, 119, 178, 0.25) 0%, transparent 70%);
+        }
+        .hex-spot-rose {
+          top: 15%;
+          right: -10%;
+          width: 45vw;
+          height: 40vw;
+          background: radial-gradient(circle, rgba(245, 192, 192, 0.3) 0%, transparent 70%);
+        }
+        .hex-spot-emerald {
+          top: 30%;
+          left: -5%;
+          width: 45vw;
+          height: 40vw;
+          background: radial-gradient(circle, rgba(92, 177, 152, 0.2) 0%, transparent 70%);
+        }
+        .hex-cartesian-grid {
+          position: absolute;
+          inset: 0;
+          background-size: 32px 32px;
+          background-image: 
+            linear-gradient(to right, rgba(43, 37, 44, 0.05) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(43, 37, 44, 0.05) 1px, transparent 1px);
+          mask-image: radial-gradient(ellipse at 50% 35%, #000 35%, transparent 80%);
+          -webkit-mask-image: radial-gradient(ellipse at 50% 35%, #000 35%, transparent 80%);
         }
 
         .hero-content {
@@ -769,7 +817,7 @@ export default function Home() {
           font-weight: 800;
           line-height: 1.08;
           letter-spacing: -2px;
-          color: #09090b;
+          color: #14141c;
           margin-bottom: 1.6rem;
         }
 
@@ -779,7 +827,7 @@ export default function Home() {
 
         .hero-subtitle {
           font-size: clamp(1.05rem, 1.8vw, 1.25rem);
-          color: #52525b;
+          color: #59535f;
           max-width: 780px;
           margin: 0 auto 2.5rem;
           line-height: 1.65;
@@ -821,18 +869,18 @@ export default function Home() {
           gap: 0.6rem;
           padding: 0.95rem 2.2rem;
           background: #ffffff;
-          color: #09090b;
+          color: #14141c;
           border-radius: 10px;
           font-weight: 600;
           font-size: 1.02rem;
           text-decoration: none;
-          border: 1px solid #e4e4e7;
+          border: 1px solid #e9e5e8;
           box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
           transition: all 0.2s ease;
         }
         .btn-light-secondary:hover {
-          background: #f4f4f5;
-          border-color: #d4d4d8;
+          background: #fbf9fa;
+          border-color: #dbd7da;
           transform: translateY(-2px);
         }
 
@@ -841,10 +889,11 @@ export default function Home() {
           align-items: center;
           gap: 1.15rem;
           padding: 0.6rem 1.4rem;
-          background: #ffffff;
-          border: 1px solid #e4e4e7;
+          background: rgba(255, 255, 255, 0.9);
+          border: 1px solid #e9e5e8;
           border-radius: 9999px;
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+          backdrop-filter: blur(8px);
         }
         .proof-rating {
           display: flex;
@@ -854,7 +903,7 @@ export default function Home() {
         .proof-divider {
           width: 1px;
           height: 16px;
-          background: #e4e4e7;
+          background: #e9e5e8;
         }
 
         /* EXPANSIVE HERO MOCKUP (HEX.TECH STYLE) */
@@ -869,32 +918,32 @@ export default function Home() {
 
         .mockup-frame {
           border-radius: 16px;
-          border: 1px solid #e4e4e7;
+          border: 1px solid #dbd7da;
           background: #ffffff;
-          box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.07), 0 0 1px rgba(0,0,0,0.1);
+          box-shadow: 0 25px 60px -15px rgba(20, 20, 28, 0.09), 0 0 1px rgba(0,0,0,0.1);
           overflow: hidden;
           transition: all 0.4s ease;
         }
         .mockup-frame:hover {
-          box-shadow: 0 35px 80px -15px rgba(0, 0, 0, 0.12);
-          border-color: #d4d4d8;
+          box-shadow: 0 35px 80px -15px rgba(20, 20, 28, 0.14);
+          border-color: #c9c5c8;
         }
 
         .mockup-header-bar {
-          background: #fcfcfc;
+          background: #faf8f9;
           padding: 0.75rem 1.25rem;
           display: flex;
           align-items: center;
           justify-content: space-between;
-          border-bottom: 1px solid #f4f4f5;
+          border-bottom: 1px solid #e9e5e8;
         }
 
         .mockup-url-pill {
           background: #ffffff;
-          border: 1px solid #e4e4e7;
+          border: 1px solid #e9e5e8;
           border-radius: 6px;
           padding: 0.25rem 1.25rem;
-          color: #71717a;
+          color: #786065;
           font-size: 0.78rem;
           font-family: monospace;
         }
@@ -919,7 +968,7 @@ export default function Home() {
         }
         .metric-box {
           background: #ffffff;
-          border: 1px solid #e4e4e7;
+          border: 1px solid #e9e5e8;
           border-radius: 16px;
           padding: 2.25rem 2rem;
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
@@ -942,11 +991,11 @@ export default function Home() {
         .metric-title {
           font-size: 1.1rem;
           font-weight: 800;
-          color: #09090b;
+          color: #14141c;
           margin-bottom: 0.45rem;
         }
         .metric-desc {
-          color: #71717a;
+          color: #59535f;
           font-size: 0.9rem;
           line-height: 1.55;
         }
@@ -954,11 +1003,12 @@ export default function Home() {
         /* VALUE TICKER */
         .ticker-section {
           padding: 1.5rem 0;
-          background: #ffffff;
-          border-top: 1px solid #e4e4e7;
-          border-bottom: 1px solid #e4e4e7;
+          background: rgba(255, 255, 255, 0.75);
+          border-top: 1px solid #e9e5e8;
+          border-bottom: 1px solid #e9e5e8;
           overflow: hidden;
           white-space: nowrap;
+          backdrop-filter: blur(8px);
         }
         .ticker-wrapper {
           display: flex;
@@ -978,7 +1028,7 @@ export default function Home() {
           align-items: center;
           gap: 0.65rem;
           margin-right: 4.5rem;
-          color: #27272a;
+          color: #2b252c;
           font-size: 0.92rem;
           font-weight: 600;
           letter-spacing: 0.2px;
@@ -1011,13 +1061,13 @@ export default function Home() {
         .section-heading {
           font-size: clamp(2.2rem, 4vw, 3.2rem);
           font-weight: 800;
-          color: #09090b;
+          color: #14141c;
           letter-spacing: -1.2px;
           margin-bottom: 1rem;
         }
         .section-subtext {
           font-size: 1.1rem;
-          color: #71717a;
+          color: #59535f;
           max-width: 650px;
           margin: 0 auto;
           line-height: 1.65;
@@ -1031,13 +1081,13 @@ export default function Home() {
         }
         .feature-card {
           background: #ffffff;
-          border: 1px solid #e4e4e7;
+          border: 1px solid #e9e5e8;
           border-radius: 16px;
           padding: 2.25rem;
           position: relative;
           overflow: hidden;
           transition: all 0.25s ease;
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+          box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
         }
         .feature-card:hover {
           border-color: #a7f3d0;
@@ -1057,12 +1107,12 @@ export default function Home() {
         .feature-title {
           font-size: 1.2rem;
           font-weight: 800;
-          color: #09090b;
+          color: #14141c;
           margin-bottom: 0.75rem;
           line-height: 1.35;
         }
         .feature-desc {
-          color: #71717a;
+          color: #59535f;
           line-height: 1.65;
           font-size: 0.92rem;
         }
@@ -1087,11 +1137,12 @@ export default function Home() {
         }
         .step-card {
           background: #ffffff;
-          border: 1px solid #e4e4e7;
+          border: 1px solid #e9e5e8;
           border-radius: 16px;
           padding: 2.25rem;
           transition: all 0.25s ease;
           position: relative;
+          box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
         }
         .step-card:hover {
           transform: translateY(-4px);
@@ -1123,11 +1174,11 @@ export default function Home() {
         .step-title {
           font-size: 1.25rem;
           font-weight: 800;
-          color: #09090b;
+          color: #14141c;
           margin-bottom: 0.75rem;
         }
         .step-desc {
-          color: #71717a;
+          color: #59535f;
           line-height: 1.65;
           font-size: 0.92rem;
         }
@@ -1140,10 +1191,11 @@ export default function Home() {
         }
         .org-card {
           background: #ffffff;
-          border: 1px solid #e4e4e7;
+          border: 1px solid #e9e5e8;
           border-radius: 16px;
           padding: 2rem;
           transition: all 0.25s;
+          box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
         }
         .org-card:hover {
           transform: translateY(-4px);
@@ -1164,11 +1216,11 @@ export default function Home() {
         .org-title {
           font-size: 1.15rem;
           font-weight: 800;
-          color: #09090b;
+          color: #14141c;
           margin-bottom: 0.65rem;
         }
         .org-desc {
-          color: #71717a;
+          color: #59535f;
           font-size: 0.9rem;
           line-height: 1.6;
         }
@@ -1182,17 +1234,18 @@ export default function Home() {
         }
         .pricing-card {
           background: #ffffff;
-          border: 1px solid #e4e4e7;
+          border: 1px solid #e9e5e8;
           border-radius: 20px;
           padding: 2.75rem 2rem;
           display: flex;
           flex-direction: column;
           position: relative;
           transition: all 0.25s ease;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
         }
         .pricing-card:hover {
           transform: translateY(-5px);
-          border-color: #d4d4d8;
+          border-color: #dbd7da;
           box-shadow: 0 15px 35px rgba(0, 0, 0, 0.06);
         }
         .pricing-card-featured {
@@ -1215,11 +1268,11 @@ export default function Home() {
         .pricing-name {
           font-size: 1.3rem;
           font-weight: 800;
-          color: #09090b;
+          color: #14141c;
           margin-bottom: 0.35rem;
         }
         .pricing-subtitle {
-          color: #71717a;
+          color: #59535f;
           font-size: 0.88rem;
           margin-bottom: 1.5rem;
         }
@@ -1231,18 +1284,18 @@ export default function Home() {
         .price-currency {
           font-size: 1.6rem;
           font-weight: 800;
-          color: #09090b;
+          color: #14141c;
           margin-right: 4px;
         }
         .price-big {
           font-size: 3.25rem;
           font-weight: 900;
-          color: #09090b;
+          color: #14141c;
           letter-spacing: -1.5px;
           line-height: 1;
         }
         .price-period {
-          color: #71717a;
+          color: #786065;
           font-size: 1rem;
           font-weight: 600;
           margin-left: 6px;
@@ -1250,7 +1303,7 @@ export default function Home() {
         .price-term {
           font-size: 0.82rem;
           font-weight: 700;
-          color: #71717a;
+          color: #786065;
           margin-bottom: 2rem;
         }
         .pricing-features {
@@ -1265,7 +1318,7 @@ export default function Home() {
           display: flex;
           align-items: center;
           gap: 0.75rem;
-          color: #27272a;
+          color: #2b252c;
           font-size: 0.92rem;
           line-height: 1.4;
         }
@@ -1278,15 +1331,15 @@ export default function Home() {
           text-align: center;
           padding: 0.85rem 1.5rem;
           border-radius: 10px;
-          border: 1px solid #e4e4e7;
-          color: #09090b;
+          border: 1px solid #e9e5e8;
+          color: #14141c;
           font-weight: 700;
           text-decoration: none;
           transition: all 0.2s ease;
         }
         .btn-plan-outline:hover {
-          background: #f4f4f5;
-          border-color: #d4d4d8;
+          background: #faf8f9;
+          border-color: #dbd7da;
         }
 
         /* FAQ ACCORDION */
@@ -1299,14 +1352,14 @@ export default function Home() {
         }
         .faq-item {
           background: #ffffff;
-          border: 1px solid #e4e4e7;
+          border: 1px solid #e9e5e8;
           border-radius: 14px;
           padding: 1.35rem 1.65rem;
           cursor: pointer;
           transition: all 0.2s ease;
         }
         .faq-item:hover {
-          border-color: #d4d4d8;
+          border-color: #dbd7da;
         }
         .faq-item-open {
           border-color: #a7f3d0;
@@ -1316,15 +1369,15 @@ export default function Home() {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          color: #09090b;
+          color: #14141c;
           font-weight: 700;
           font-size: 1.02rem;
         }
         .faq-answer {
           margin-top: 1rem;
           padding-top: 1rem;
-          border-top: 1px solid #f4f4f5;
-          color: #52525b;
+          border-top: 1px solid #f2edf0;
+          color: #59535f;
           line-height: 1.7;
           font-size: 0.92rem;
         }
@@ -1336,13 +1389,13 @@ export default function Home() {
         .cta-container {
           max-width: 1140px;
           margin: 0 auto;
-          background: #09090b;
-          border: 1px solid #27272a;
+          background: #14141c;
+          border: 1px solid #2b252c;
           border-radius: 24px;
           padding: 5rem 2rem;
           position: relative;
           overflow: hidden;
-          box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+          box-shadow: 0 25px 60px rgba(20, 20, 28, 0.2);
         }
         .cta-inner {
           position: relative;
@@ -1359,7 +1412,7 @@ export default function Home() {
           letter-spacing: -1.2px;
         }
         .cta-desc {
-          color: #a1a1aa;
+          color: #99797d;
           font-size: 1.15rem;
           line-height: 1.65;
           margin-bottom: 2.5rem;
@@ -1400,8 +1453,8 @@ export default function Home() {
 
         /* FOOTER */
         .site-footer {
-          background: #ffffff;
-          border-top: 1px solid #e4e4e7;
+          background: #fbf9fa;
+          border-top: 1px solid #e9e5e8;
           padding: 5rem 6% 2.5rem;
         }
         .footer-inner {
@@ -1411,16 +1464,16 @@ export default function Home() {
           grid-template-columns: 2fr 1fr 1fr 1.5fr;
           gap: 3.5rem;
           padding-bottom: 4rem;
-          border-bottom: 1px solid #f4f4f5;
+          border-bottom: 1px solid #e9e5e8;
         }
         .footer-brand-desc {
-          color: #71717a;
+          color: #59535f;
           font-size: 0.92rem;
           line-height: 1.65;
           max-width: 320px;
         }
         .footer-col-title {
-          color: #09090b;
+          color: #14141c;
           font-size: 1rem;
           font-weight: 700;
           margin-bottom: 1.35rem;
@@ -1434,7 +1487,7 @@ export default function Home() {
           gap: 0.85rem;
         }
         .footer-link {
-          color: #71717a;
+          color: #59535f;
           text-decoration: none;
           font-size: 0.9rem;
           transition: color 0.15s ease;
@@ -1446,7 +1499,7 @@ export default function Home() {
           display: flex;
           align-items: center;
           gap: 0.75rem;
-          color: #71717a;
+          color: #59535f;
           font-size: 0.9rem;
         }
         .footer-bottom {
@@ -1455,7 +1508,7 @@ export default function Home() {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          color: #a1a1aa;
+          color: #786065;
           font-size: 0.85rem;
         }
         .codfy-link {
