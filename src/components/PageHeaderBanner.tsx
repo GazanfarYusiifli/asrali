@@ -154,7 +154,8 @@ export default function PageHeaderBanner({
   primaryAction,
   secondaryAction
 }: PageHeaderBannerProps) {
-  const currentTheme = themeStyles[theme] || themeStyles.emerald;
+  // User requested all banners across all sections to be unified green (emerald)
+  const currentTheme = themeStyles.emerald;
   const PrimaryIcon = primaryAction?.icon || Plus;
   const SecondaryIcon = secondaryAction?.icon || Download;
 
