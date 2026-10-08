@@ -11,11 +11,11 @@ export default function Page() {
   return (
     <div style={{ padding: '2rem', maxWidth: '1600px', margin: '0 auto' }}>
       <PageHeaderBanner
-        title="Dövri Hesabatlar"
-        description="Həftəlik, aylıq və rüblük müqayisəli müəssisə statistikası."
+        title="Filial və Dövri Hesabatlar"
+        description="Filiallar üzrə həftəlik, aylıq və rüblük müqayisəli müəssisə statistikası."
         icon={Calendar}
-        theme="indigo"
-        badge="Dövri Təhlil"
+        theme="cyan"
+        badge="Filial Hesabatları"
         primaryAction={{
           label: "Yeni Əlavə Et",
           onClick: () => alert("Yeni qeyd pəncərəsi açılır..."),

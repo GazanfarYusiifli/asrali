@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Wallet, Banknote, CreditCard, MonitorSmartphone, PieChart, Plus, Link as LinkIcon, X } from 'lucide-react';
+import PageHeaderBanner from '@/components/PageHeaderBanner';
 
 import { getAppStorage, setAppStorage, removeAppStorage } from '@/utils/storage';
 
@@ -153,44 +154,24 @@ export default function AktivlerPage() {
   return (
     <div style={{ padding: '3rem 2rem', height: '100%', backgroundColor: '#f8fafc', display: 'flex', flexDirection: 'column', gap: '2rem', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
       
-      {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-        <div>
-          <h1 style={{ display: 'flex', alignItems: 'center', gap: '1rem', fontSize: '2.2rem', color: '#1e293b', margin: 0, fontWeight: 900, letterSpacing: '-1px' }}>
-            <PieChart size={36} color="#0ea5e9" /> Aktivlər (Maliyyə Varlıqları)
-          </h1>
-          <p style={{ margin: '0.5rem 0 0 0', color: '#64748b', fontSize: '1.1rem' }}>
-            Bütün kassa, bank, POS və kart hesablarınızdakı ümumi vəziyyət
-          </p>
-        </div>
-        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-          
-          <div style={{ position: 'relative' }}>
-            <button 
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.8rem 1.5rem', backgroundColor: 'white', color: '#0ea5e9', border: '1px solid #0ea5e9', borderRadius: '12px', fontWeight: 700, fontSize: '0.95rem', cursor: 'pointer', transition: 'all 0.2s' }} 
-              onMouseOver={e=>e.currentTarget.style.backgroundColor='#f0f9ff'} 
-              onMouseOut={e=>e.currentTarget.style.backgroundColor='white'}
-            >
-              <Plus size={20}/> Yeni Hesab Əlavə Et
-            </button>
-            {isDropdownOpen && (
-              <div style={{ position: 'absolute', top: '110%', right: 0, backgroundColor: 'white', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)', width: '220px', zIndex: 10 }}>
-                <div style={{ padding: '0.5rem', display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
-                  <button onClick={() => openModal('kassa')} style={dropdownBtnStyle} onMouseOver={e=>e.currentTarget.style.backgroundColor='#f8fafc'} onMouseOut={e=>e.currentTarget.style.backgroundColor='transparent'}>Kassa Əlavə Et</button>
-                  <button onClick={() => openModal('banka')} style={dropdownBtnStyle} onMouseOver={e=>e.currentTarget.style.backgroundColor='#f8fafc'} onMouseOut={e=>e.currentTarget.style.backgroundColor='transparent'}>Banka Hesabı Əlavə Et</button>
-                  <button onClick={() => openModal('kredi_karti')} style={dropdownBtnStyle} onMouseOver={e=>e.currentTarget.style.backgroundColor='#f8fafc'} onMouseOut={e=>e.currentTarget.style.backgroundColor='transparent'}>Kredit Kartı Əlavə Et</button>
-                  <button onClick={() => openModal('pos')} style={dropdownBtnStyle} onMouseOver={e=>e.currentTarget.style.backgroundColor='#f8fafc'} onMouseOut={e=>e.currentTarget.style.backgroundColor='transparent'}>POS Hesabı Əlavə Et</button>
-                </div>
-              </div>
-            )}
-          </div>
-
-          <button onClick={() => setIsBankIntegrationModalOpen(true)} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.8rem 1.5rem', backgroundColor: '#0ea5e9', color: 'white', border: 'none', borderRadius: '12px', fontWeight: 700, fontSize: '0.95rem', cursor: 'pointer', boxShadow: '0 4px 14px 0 rgba(14, 165, 233, 0.39)', transition: 'transform 0.1s' }} onMouseDown={e => e.currentTarget.style.transform = 'scale(0.96)'} onMouseUp={e => e.currentTarget.style.transform = 'scale(1)'}>
-            <LinkIcon size={20}/> Bank İnteqrasiyası Əlavə Et
-          </button>
-        </div>
-      </div>
+      {/* Page Header Banner */}
+      <PageHeaderBanner
+        title="Aktivlər və Maliyyə Varlıqları"
+        description="Bütün kassa, bank, POS və kart hesablarınızdakı ümumi vəziyyət."
+        icon={PieChart}
+        theme="indigo"
+        badge="Maliyyə Aktivləri"
+        primaryAction={{
+          label: "Bank İnteqrasiyası",
+          onClick: () => setIsBankIntegrationModalOpen(true),
+          icon: LinkIcon
+        }}
+        secondaryAction={{
+          label: "Yeni Hesab Əlavə Et",
+          onClick: () => openModal('kassa'),
+          icon: Plus
+        }}
+      />
 
       {/* Currency Selector Header */}
       <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '-1rem' }}>

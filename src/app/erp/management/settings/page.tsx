@@ -11,10 +11,10 @@ export default function Page() {
   return (
     <div style={{ padding: '2rem', maxWidth: '1600px', margin: '0 auto' }}>
       <PageHeaderBanner
-        title="Müəssisə Tənzimləmələri"
+        title="Müəssisə Tənzimləmələri və Şöbələr"
         description="Şirkət rekvizitləri, vergi dərəcələri və əsas sistem parametrləri."
         icon={Settings}
-        theme="slate"
+        theme="cyan"
         badge="Konfiqurasiya"
         primaryAction={{
           label: "Yeni Əlavə Et",

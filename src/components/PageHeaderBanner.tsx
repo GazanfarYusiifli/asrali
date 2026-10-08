@@ -8,7 +8,7 @@ interface PageHeaderBannerProps {
   description: string;
   icon: LucideIcon;
   badge?: string;
-  theme?: 'emerald' | 'amber' | 'blue' | 'indigo' | 'purple' | 'rose' | 'cyan' | 'slate';
+  theme?: 'emerald' | 'amber' | 'blue' | 'indigo' | 'purple' | 'rose' | 'cyan' | 'slate' | 'orange' | 'pink';
   primaryAction?: {
     label: string;
     onClick?: () => void;
@@ -46,6 +46,30 @@ const themeStyles = {
     badgeBorder: 'rgba(245, 158, 11, 0.25)',
     buttonBg: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
     buttonShadow: 'rgba(245, 158, 11, 0.38)'
+  },
+  orange: {
+    gradient: 'linear-gradient(135deg, rgba(249, 115, 22, 0.12) 0%, rgba(234, 88, 12, 0.04) 100%)',
+    border: 'rgba(249, 115, 22, 0.22)',
+    iconBg: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
+    iconShadow: 'rgba(249, 115, 22, 0.35)',
+    glow: 'rgba(249, 115, 22, 0.15)',
+    badgeBg: 'rgba(249, 115, 22, 0.12)',
+    badgeColor: '#ea580c',
+    badgeBorder: 'rgba(249, 115, 22, 0.25)',
+    buttonBg: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
+    buttonShadow: 'rgba(249, 115, 22, 0.38)'
+  },
+  pink: {
+    gradient: 'linear-gradient(135deg, rgba(236, 72, 153, 0.12) 0%, rgba(219, 39, 119, 0.04) 100%)',
+    border: 'rgba(236, 72, 153, 0.22)',
+    iconBg: 'linear-gradient(135deg, #ec4899 0%, #db2777 100%)',
+    iconShadow: 'rgba(236, 72, 153, 0.35)',
+    glow: 'rgba(236, 72, 153, 0.15)',
+    badgeBg: 'rgba(236, 72, 153, 0.12)',
+    badgeColor: '#db2777',
+    badgeBorder: 'rgba(236, 72, 153, 0.25)',
+    buttonBg: 'linear-gradient(135deg, #ec4899 0%, #db2777 100%)',
+    buttonShadow: 'rgba(236, 72, 153, 0.38)'
   },
   blue: {
     gradient: 'linear-gradient(135deg, rgba(59, 130, 246, 0.12) 0%, rgba(37, 99, 235, 0.04) 100%)',

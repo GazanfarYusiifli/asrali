@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { Search, Save, Trash2, ClipboardCheck, Package, RefreshCcw, CheckCircle2 } from 'lucide-react';
+import PageHeaderBanner from '@/components/PageHeaderBanner';
 
 import { getAppStorage, setAppStorage, removeAppStorage } from '@/utils/storage';
 
@@ -107,26 +108,21 @@ export default function StokSayimPage() {
   });
 
   return (
-    <div style={{ padding: '2rem', height: '100%', backgroundColor: '#f8fafc', display: 'flex', flexDirection: 'column', gap: '1.5rem', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+    <div style={{ padding: '2rem', height: '100%', maxWidth: '1600px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '1.5rem', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
       
-      {/* Header Area */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <div style={{ width: '56px', height: '56px', borderRadius: '16px', backgroundColor: '#eef2ff', color: '#6366f1', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <ClipboardCheck size={32} />
-          </div>
-          <div>
-            <h1 style={{ fontSize: '1.8rem', color: '#0f172a', margin: 0, fontWeight: 900, letterSpacing: '-0.5px' }}>
-              Anbar Sayımı
-            </h1>
-            <p style={{ margin: '0.2rem 0 0 0', color: '#64748b', fontSize: '0.95rem' }}>Məhsulların anbardakı faktiki mövcudluğunu yoxlayın və uyğunlaşdırın</p>
-          </div>
-        </div>
-
-        <button onClick={handleSaveAll} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.8rem 1.5rem', backgroundColor: '#10b981', color: 'white', border: 'none', borderRadius: '12px', fontWeight: 700, fontSize: '0.95rem', cursor: 'pointer', boxShadow: '0 4px 14px 0 rgba(16, 185, 129, 0.39)', transition: 'transform 0.2s' }} onMouseOver={e=>e.currentTarget.style.transform='translateY(-2px)'} onMouseOut={e=>e.currentTarget.style.transform='translateY(0)'}>
-          <Save size={20}/> Bütün Sayımları Yadda Saxla
-        </button>
-      </div>
+      {/* Page Header Banner */}
+      <PageHeaderBanner
+        title="Anbar Sayımı"
+        description="Məhsulların anbardakı faktiki mövcudluğunu yoxlayın və qalıqları uyğunlaşdırın."
+        icon={ClipboardCheck}
+        theme="blue"
+        badge="Stok Sayımı"
+        primaryAction={{
+          label: "Bütün Sayımları Yadda Saxla",
+          onClick: handleSaveAll,
+          icon: Save
+        }}
+      />
 
       {/* Filters Toolbar */}
       <div style={{ backgroundColor: 'white', padding: '1.2rem 1.5rem', borderRadius: '16px', border: '1px solid #e2e8f0', display: 'flex', gap: '2rem', alignItems: 'center', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)', flexWrap: 'wrap' }}>

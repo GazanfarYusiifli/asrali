@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { ArrowRightLeft, Plus, Trash2, Save, Store, FileText, PackagePlus, AlertCircle } from 'lucide-react';
+import PageHeaderBanner from '@/components/PageHeaderBanner';
 
 import { getAppStorage, setAppStorage, removeAppStorage } from '@/utils/storage';
 
@@ -158,26 +159,21 @@ export default function TransferPage() {
   };
 
   return (
-    <div style={{ padding: '2rem', height: '100%', backgroundColor: '#f8fafc', display: 'flex', flexDirection: 'column', gap: '1.5rem', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+    <div style={{ padding: '2rem', height: '100%', maxWidth: '1600px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '1.5rem', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
       
-      {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <div style={{ width: '56px', height: '56px', borderRadius: '16px', backgroundColor: '#fff7ed', color: '#f97316', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <ArrowRightLeft size={32} />
-          </div>
-          <div>
-            <h1 style={{ fontSize: '1.8rem', color: '#0f172a', margin: 0, fontWeight: 900, letterSpacing: '-0.5px' }}>
-              Anbarlararası Hərəkət
-            </h1>
-            <p style={{ margin: '0.2rem 0 0 0', color: '#64748b', fontSize: '0.95rem' }}>Anbarlar arasında məhsul transferi girişlərini idarə edin</p>
-          </div>
-        </div>
-
-        <button onClick={handleSaveTransfer} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.8rem 1.5rem', backgroundColor: '#f97316', color: 'white', border: 'none', borderRadius: '12px', fontWeight: 700, fontSize: '0.95rem', cursor: 'pointer', boxShadow: '0 4px 14px 0 rgba(249, 115, 22, 0.39)', transition: 'transform 0.2s' }} onMouseOver={e=>e.currentTarget.style.transform='translateY(-2px)'} onMouseOut={e=>e.currentTarget.style.transform='translateY(0)'}>
-          <Save size={20}/> Köçürməni Yadda Saxla
-        </button>
-      </div>
+      {/* Page Header Banner */}
+      <PageHeaderBanner
+        title="Anbarlararası Hərəkət"
+        description="Anbarlar və filiallar arasında daxili məhsul transferlərinin qeydiyyatı."
+        icon={ArrowRightLeft}
+        theme="blue"
+        badge="Stok Transferi"
+        primaryAction={{
+          label: "Köçürməni Yadda Saxla",
+          onClick: handleSaveTransfer,
+          icon: Save
+        }}
+      />
 
       {/* Main Form Container */}
       <div style={{ backgroundColor: 'white', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)', padding: '2rem', display: 'flex', flexDirection: 'column', gap: '2rem' }}>

@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { Wrench, Plus, Save, X, Search, FileText, ChevronLeft, Settings, Calendar, Shield, MapPin, Tag, Trash2, Edit2 } from 'lucide-react';
+import PageHeaderBanner from '@/components/PageHeaderBanner';
 
 import { getAppStorage, setAppStorage, removeAppStorage } from '@/utils/storage';
 
@@ -290,26 +291,21 @@ export default function TexnikiServisPage() {
 
   // List View
   return (
-    <div style={{ padding: '2rem', height: '100%', backgroundColor: '#f8fafc', display: 'flex', flexDirection: 'column', gap: '2rem', fontFamily: 'system-ui, -apple-system, sans-serif', overflowY: 'auto' }}>
+    <div style={{ padding: '2rem', height: '100%', maxWidth: '1600px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '2rem', fontFamily: 'system-ui, -apple-system, sans-serif', overflowY: 'auto' }}>
       
-      {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <div style={{ width: '56px', height: '56px', borderRadius: '16px', backgroundColor: '#d1fae5', color: '#047857', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Wrench size={32} />
-          </div>
-          <div>
-            <h1 style={{ fontSize: '1.8rem', color: '#0f172a', margin: 0, fontWeight: 900, letterSpacing: '-0.5px' }}>
-              Texniki Servis
-            </h1>
-            <p style={{ margin: '0.2rem 0 0 0', color: '#64748b', fontSize: '0.95rem' }}>Təmir və xidmət mərkəzi əməliyyatları</p>
-          </div>
-        </div>
-        
-        <button onClick={openNewForm} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.8rem 1.5rem', backgroundColor: '#10b981', color: 'white', border: 'none', borderRadius: '12px', fontWeight: 700, fontSize: '0.95rem', cursor: 'pointer', boxShadow: '0 4px 14px 0 rgba(16, 185, 129, 0.39)', transition: 'all 0.2s' }} onMouseOver={e=>{e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.backgroundColor='#059669'}} onMouseOut={e=>{e.currentTarget.style.transform='translateY(0)'; e.currentTarget.style.backgroundColor='#10b981'}}>
-          <Plus size={20}/> Yeni Servis Girişi
-        </button>
-      </div>
+      {/* Page Header Banner */}
+      <PageHeaderBanner
+        title="Texniki Servis və Təmir Mərkəzi"
+        description="Müştəri cihazlarının qəbulu, servis sifarişləri və təmir proseslərinin izlənməsi."
+        icon={Wrench}
+        theme="purple"
+        badge="Texniki Servis"
+        primaryAction={{
+          label: "Yeni Servis Girişi",
+          onClick: openNewForm,
+          icon: Plus
+        }}
+      />
 
       <div style={{ backgroundColor: 'white', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)', overflow: 'hidden' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>

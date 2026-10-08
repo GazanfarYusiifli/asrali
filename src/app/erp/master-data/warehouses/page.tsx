@@ -14,7 +14,7 @@ export default function Page() {
         title="Anbarlar Kataloqu"
         description="Şirkətin mərkəz, filial və tranzit anbarlarının siyahısı."
         icon={Warehouse}
-        theme="amber"
+        theme="blue"
         badge="Əsas Məlumatlar"
         primaryAction={{
           label: "Yeni Əlavə Et",

@@ -1,34 +1,28 @@
+'use client';
+
+import PageHeaderBanner from '@/components/PageHeaderBanner';
+import { ShoppingCart, Plus, Users } from 'lucide-react';
+
 export default function CommercePage() {
   return (
-    <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-        <h1 style={{ fontSize: '2rem', fontWeight: 700 }}>Ticarət və Satış (CRM)</h1>
-        <div style={{ display: 'flex', gap: '1rem' }}>
-          <button style={{ 
-            padding: '0.5rem 1rem', 
-            backgroundColor: 'transparent', 
-            color: 'var(--text-primary)',
-            border: '1px solid var(--border-color)', 
-            borderRadius: 'var(--radius-md)',
-            fontWeight: 500,
-            cursor: 'pointer'
-          }}>
-            Müştəri Əlavə Et
-          </button>
-          <button style={{ 
-            padding: '0.5rem 1rem', 
-            backgroundColor: 'var(--primary-color)', 
-            color: 'white', 
-            borderRadius: 'var(--radius-md)',
-            fontWeight: 500,
-            border: 'none',
-            cursor: 'pointer',
-            boxShadow: 'var(--shadow-sm)'
-          }}>
-            + Yeni Sifariş
-          </button>
-        </div>
-      </div>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+      <PageHeaderBanner
+        title="Büdcələr və Kommersiya İcmalı"
+        description="Satış dövriyyəsi, gözləyən sifarişlər və layihə büdcələrinin təhlili."
+        icon={ShoppingCart}
+        theme="cyan"
+        badge="Layihə Büdcələri"
+        primaryAction={{
+          label: "Yeni Sifariş",
+          onClick: () => alert("Yeni sifariş pəncərəsi..."),
+          icon: Plus
+        }}
+        secondaryAction={{
+          label: "Müştəri Əlavə Et",
+          onClick: () => alert("Müştəri qeydiyyatı..."),
+          icon: Users
+        }}
+      />
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
         <div className="glass-panel" style={{ padding: '1.5rem', borderRadius: 'var(--radius-lg)', borderLeft: '4px solid var(--primary-color)' }}>

@@ -14,7 +14,7 @@ export default function Page() {
         title="Alış Qaimələri"
         description="Təchizatçılardan daxil olan rəsmi alış qaimələri və fakturaları."
         icon={FileSpreadsheet}
-        theme="amber"
+        theme="rose"
         badge="Sənəd Dövriyyəsi"
         primaryAction={{
           label: "Yeni Əlavə Et",

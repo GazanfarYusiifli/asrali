@@ -5,6 +5,7 @@ import { getAppStorage, setAppStorage, removeAppStorage } from '@/utils/storage'
 import { CreditCard, Search, Filter, Plus, FileText, 
   ArrowDownRight, ArrowUpRight, CheckCircle, X, Download, Printer
 } from 'lucide-react';
+import PageHeaderBanner from '@/components/PageHeaderBanner';
 
 export default function FinansIslemlerPage() {
   const [transactions, setTransactions] = useState<any[]>([]);
@@ -97,29 +98,24 @@ export default function FinansIslemlerPage() {
       )}
 
       {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-        <div>
-          <h1 style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '1.8rem', color: '#1e293b', margin: 0, fontWeight: 800, letterSpacing: '-0.5px' }}>
-            <CreditCard size={32} color="#0284c7" /> Kassa və ya Bank Əməliyyatları
-          </h1>
-          <p style={{ margin: '0.4rem 0 0 0', color: '#64748b', fontSize: '0.95rem' }}>
-            Bütün giriş-çıxış əməliyyatlarınızın mərkəzləşdirilmiş siyahısı
-          </p>
-        </div>
-        <div style={{ display: 'flex', gap: '0.5rem' }}>
-          <button style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.8rem 1rem', backgroundColor: 'white', color: '#475569', border: '1px solid #cbd5e1', borderRadius: '12px', fontWeight: 600, fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.2s' }}>
-            <Download size={18}/> Excel-ə Çıxar
-          </button>
-          <button 
-            onClick={() => window.print()} 
-            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.8rem 1.5rem', backgroundColor: '#0284c7', color: 'white', border: 'none', borderRadius: '12px', fontWeight: 700, fontSize: '0.95rem', cursor: 'pointer', boxShadow: '0 4px 14px 0 rgba(2, 132, 199, 0.39)', transition: 'transform 0.1s' }}
-            onMouseDown={e => e.currentTarget.style.transform = 'scale(0.96)'}
-            onMouseUp={e => e.currentTarget.style.transform = 'scale(1)'}
-          >
-            <Printer size={20}/> Çap Et
-          </button>
-        </div>
-      </div>
+      {/* Page Header Banner */}
+      <PageHeaderBanner
+        title="Maliyyə Əməliyyatları və Ödənişlər"
+        description="Bütün giriş-çıxış, kassa və bank ödəniş əməliyyatlarınızın mərkəzləşdirilmiş siyahısı."
+        icon={CreditCard}
+        theme="amber"
+        badge="Ödənişlər & Əməliyyatlar"
+        primaryAction={{
+          label: "Çap Et",
+          onClick: () => window.print(),
+          icon: Printer
+        }}
+        secondaryAction={{
+          label: "Excel-ə Çıxar",
+          onClick: () => alert("Məlumatlar ixrac edilir..."),
+          icon: Download
+        }}
+      />
 
       {/* Toolbar */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'white', padding: '1rem 1.5rem', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>

@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Save, X, ShoppingCart, Plus, Trash2, Calculator, ArrowLeft, Search, PackageOpen } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import PageHeaderBanner from '@/components/PageHeaderBanner';
 
 import { getAppStorage, setAppStorage, removeAppStorage } from '@/utils/storage';
 
@@ -140,29 +141,25 @@ export default function YeniAlisPage() {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', backgroundColor: '#f8fafc' }}>
-      {/* Top Navigation / Action Bar */}
-      <div style={{ backgroundColor: 'white', padding: '1rem 2rem', borderBottom: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'sticky', top: 0, zIndex: 10 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <button onClick={() => router.back()} style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', color: '#64748b' }}>
-            <ArrowLeft size={24} />
-          </button>
-          <h1 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b', margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <div style={{ backgroundColor: '#fee2e2', padding: '0.5rem', borderRadius: '8px', color: '#ef4444' }}>
-              <PackageOpen size={24} />
-            </div>
-            {typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('id') ? 'ALIŞA DÜZƏLİŞ ET' : 'YENİ ALIŞ'}
-          </h1>
-        </div>
-        <div style={{ display: 'flex', gap: '1rem' }}>
-          <button onClick={() => router.push('/erp/alislar/liste')} style={{ padding: '0.6rem 1.2rem', backgroundColor: 'transparent', border: '1px solid #cbd5e1', color: '#475569', borderRadius: '8px', fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s', display: 'flex', alignItems: 'center', gap: '0.5rem' }} onMouseOver={e => e.currentTarget.style.backgroundColor = '#f1f5f9'} onMouseOut={e => e.currentTarget.style.backgroundColor = 'transparent'}>
-            <X size={18} /> İmtina Et
-          </button>
-          <button onClick={handleSave} style={{ padding: '0.6rem 1.5rem', backgroundColor: '#ef4444', color: 'white', border: 'none', borderRadius: '8px', fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 6px -1px rgba(239, 68, 68, 0.2)', display: 'flex', alignItems: 'center', gap: '0.5rem' }} onMouseOver={e => e.currentTarget.style.transform = 'translateY(-2px)'} onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'}>
-            <Save size={18} /> Alışı Tamamla
-          </button>
-        </div>
-      </div>
+    <div style={{ padding: '2rem', maxWidth: '1400px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '1.5rem', minHeight: '100%' }}>
+      {/* Page Header Banner */}
+      <PageHeaderBanner
+        title={typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('id') ? 'Alışa Düzəliş Et' : 'Yeni Alış'}
+        description="Təchizatçılardan daxil olan malların və fakturaların qeydiyyatı."
+        icon={PackageOpen}
+        theme="rose"
+        badge="Alış Əməliyyatı"
+        primaryAction={{
+          label: "Alışı Tamamla",
+          onClick: handleSave,
+          icon: Save
+        }}
+        secondaryAction={{
+          label: "Geriyə",
+          onClick: () => router.push('/erp/alislar/liste'),
+          icon: ArrowLeft
+        }}
+      />
 
       <div style={{ padding: '2rem', flex: 1, overflowY: 'auto' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '2rem' }}>

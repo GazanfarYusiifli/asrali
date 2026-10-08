@@ -109,7 +109,7 @@ export default function XercSiyahisiPage() {
         title="Xərc Siyahısı"
         description="Şirkətin bütün cari xərcləri, icarə və xidmət ödənişlərinin real vaxt jurnalı."
         icon={TrendingDown}
-        theme="amber"
+        theme="indigo"
         badge="Xərc Nəzarəti"
         primaryAction={{
           label: "Yeni Xərc",

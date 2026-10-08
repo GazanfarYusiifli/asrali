@@ -15,7 +15,7 @@ export default function Page() {
         title="Bank hesabları"
         description="Müəssisənin cari, depozit və kart bank hesablarının qalıqları və hərəkətləri."
         icon={Landmark}
-        theme="blue"
+        theme="indigo"
         badge="Bank & Maliyyə"
         primaryAction={{
           label: "Yeni Bank Hesabı",

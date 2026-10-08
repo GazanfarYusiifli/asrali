@@ -14,7 +14,7 @@ export default function Page() {
         title="Stok Qalıqları"
         description="Bütün anbarlar üzrə mövcud məhsul sayları və qalıq dəyəri."
         icon={PackageCheck}
-        theme="amber"
+        theme="blue"
         badge="Anbar İdarəetməsi"
         primaryAction={{
           label: "Yeni Əlavə Et",

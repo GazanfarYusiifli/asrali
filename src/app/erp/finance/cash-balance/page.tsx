@@ -15,7 +15,7 @@ export default function Page() {
         title="Kassa qalığı"
         description="Valyutalar və filial kassaları üzrə faktiki nağd pul qalıqlarının real vaxt icmalı."
         icon={Coins}
-        theme="emerald"
+        theme="indigo"
         badge="Maliyyə & Kassa"
         primaryAction={{
           label: "Yeni Kassa Əlavə Et",

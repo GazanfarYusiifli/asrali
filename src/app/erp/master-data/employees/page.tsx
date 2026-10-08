@@ -11,11 +11,11 @@ export default function Page() {
   return (
     <div style={{ padding: '2rem', maxWidth: '1600px', margin: '0 auto' }}>
       <PageHeaderBanner
-        title="Əməkdaşlar Kataloqu"
-        description="İşçilərin ştat cədvəli, departamentləri və vəzifə təsnifatı."
+        title="Əməkdaşlar və Texniklər Kataloqu"
+        description="İşçilərin ştat cədvəli, servis texnikləri və vəzifə təsnifatı."
         icon={UserCheck}
-        theme="emerald"
-        badge="Kadr Uçotu"
+        theme="purple"
+        badge="Servis Texnikləri"
         primaryAction={{
           label: "Yeni Əlavə Et",
           onClick: () => alert("Yeni qeyd pəncərəsi açılır..."),

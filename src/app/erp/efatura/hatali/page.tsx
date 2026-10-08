@@ -1,7 +1,8 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { AlertTriangle, Search, Eye } from 'lucide-react';
+import { AlertTriangle, Search, Eye, RefreshCw } from 'lucide-react';
 import Link from 'next/link';
+import PageHeaderBanner from '@/components/PageHeaderBanner';
 
 import { getAppStorage, setAppStorage, removeAppStorage } from '@/utils/storage';
 
@@ -24,18 +25,20 @@ export default function XetaliFakturalar() {
   });
 
   return (
-    <div style={{ padding: '2rem', height: '100%', backgroundColor: '#f8fafc', display: 'flex', flexDirection: 'column', gap: '2rem', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <div style={{ width: '48px', height: '48px', borderRadius: '12px', backgroundColor: '#fef3c7', color: '#d97706', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <AlertTriangle size={24} />
-          </div>
-          <div>
-            <h1 style={{ fontSize: '1.5rem', color: '#0f172a', margin: 0, fontWeight: 800 }}>Xətalı Fakturalar</h1>
-            <p style={{ margin: 0, color: '#64748b', fontSize: '0.9rem' }}>Sistem və ya məlumat xətasına görə göndərilməyən sənədlər</p>
-          </div>
-        </div>
-      </div>
+    <div style={{ padding: '2rem', height: '100%', maxWidth: '1600px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '2rem', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+      {/* Page Header Banner */}
+      <PageHeaderBanner
+        title="Xətalı E-Fakturalar"
+        description="Sistem və ya məlumat xətasına görə göndərilməyən sənədlər."
+        icon={AlertTriangle}
+        theme="orange"
+        badge="Xətalı Qaimələr"
+        primaryAction={{
+          label: "Yenilə",
+          onClick: () => window.location.reload(),
+          icon: RefreshCw
+        }}
+      />
 
       <div style={{ backgroundColor: 'white', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)', flex: 1, display: 'flex', flexDirection: 'column' }}>
         <div style={{ padding: '1.5rem', borderBottom: '1px solid #e2e8f0', display: 'flex', gap: '1rem' }}>

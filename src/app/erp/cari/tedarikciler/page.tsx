@@ -5,6 +5,7 @@ import {
   CreditCard, Wallet, Edit3, Trash2, X, ChevronRight, CheckCircle, FileText, ArrowRight
 } from 'lucide-react';
 import Link from 'next/link';
+import PageHeaderBanner from '@/components/PageHeaderBanner';
 
 import { getAppStorage, setAppStorage, removeAppStorage } from '@/utils/storage';
 
@@ -148,49 +149,19 @@ export default function TedarikcilerPage() {
   return (
     <div style={{ padding: '2rem', height: '100%', backgroundColor: '#f8fafc', display: 'flex', flexDirection: 'column', gap: '1.5rem', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
       
-      {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
-        <div>
-          <h1 style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', fontSize: '1.9rem', color: '#0f172a', margin: 0, fontWeight: 800, letterSpacing: '-0.025em' }}>
-            <div style={{
-              background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
-              padding: '0.6rem',
-              borderRadius: '12px',
-              color: 'white',
-              boxShadow: '0 6px 16px -2px rgba(245, 158, 11, 0.38)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}>
-              <Building2 size={24} />
-            </div>
-            Cari Hesablar (Təchizatçılar)
-          </h1>
-          <p style={{ margin: '0.35rem 0 0 0', color: '#64748b', fontSize: '0.92rem' }}>Bütün tədarükçü və satıcı hesablarınızı buradan izləyin və idarə edin.</p>
-        </div>
-        <button 
-          onClick={() => openModal()} 
-          style={{ 
-            display: 'flex', 
-            alignItems: 'center', 
-            gap: '0.5rem', 
-            padding: '0.65rem 1.35rem', 
-            background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', 
-            color: 'white', 
-            border: 'none', 
-            borderRadius: '10px', 
-            fontWeight: 650, 
-            fontSize: '0.9rem', 
-            cursor: 'pointer', 
-            boxShadow: '0 8px 20px -3px rgba(245, 158, 11, 0.4)', 
-            transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)' 
-          }}
-          onMouseOver={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 12px 24px -3px rgba(245, 158, 11, 0.45)'; }}
-          onMouseOut={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 8px 20px -3px rgba(245, 158, 11, 0.4)'; }}
-        >
-          <Plus size={18} strokeWidth={2.4}/> Yeni Təchizatçı
-        </button>
-      </div>
+      {/* Page Header Banner */}
+      <PageHeaderBanner
+        title="Cari Hesablar (Təchizatçılar)"
+        description="Bütün tədarükçü və satıcı hesablarınızı buradan izləyin və idarə edin."
+        icon={Building2}
+        theme="amber"
+        badge="Təchizatçı İdarəetməsi"
+        primaryAction={{
+          label: "Yeni Təchizatçı",
+          onClick: () => openModal(),
+          icon: Plus
+        }}
+      />
 
       {/* Toolbar (Search & Stats) */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#ffffff', padding: '1rem 1.5rem', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 4px 20px -4px rgba(15, 23, 42, 0.04)', flexWrap: 'wrap', gap: '1rem' }}>

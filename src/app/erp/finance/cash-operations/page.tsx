@@ -15,7 +15,7 @@ export default function Page() {
         title="Kassa əməliyyatları"
         description="Nağd pulla bağlı bütün məxaric, mədaxil və qaimə əməliyyatlarının real vaxt icmalı."
         icon={Wallet}
-        theme="emerald"
+        theme="indigo"
         badge="Maliyyə İdarəetməsi"
         primaryAction={{
           label: "Yeni Əməliyyat",

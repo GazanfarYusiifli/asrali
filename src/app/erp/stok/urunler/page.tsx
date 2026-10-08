@@ -280,7 +280,7 @@ export default function ProductsPage() {
         title="Məhsul və Xidmət Siyahısı"
         description="Anbardakı bütün məhsulların qalıq, maya dəyəri və satış qiyməti məlumatları."
         icon={Package}
-        theme="cyan"
+        theme="blue"
         badge="İnventar & Stok"
         primaryAction={{
           label: "Yeni Məhsul Əlavə Et",

@@ -1,7 +1,8 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { Users, UserPlus, Coins, CalendarDays, LineChart, Award, Search, Edit, Trash2, Shield } from 'lucide-react';
+import { Users, UserPlus, Coins, CalendarDays, LineChart, Award, Search, Edit, Trash2, Shield, Plus, Download } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import PageHeaderBanner from '@/components/PageHeaderBanner';
 
 import { getAppStorage, setAppStorage, removeAppStorage } from '@/utils/storage';
 
@@ -93,14 +94,24 @@ export default function IsciMaasveIcazePage() {
   return (
     <div style={{ padding: '2rem', height: '100%', display: 'flex', flexDirection: 'column', gap: '1.5rem', backgroundColor: '#f8fafc' }}>
       
-      {/* Header & Top Action Buttons */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <div style={{ backgroundColor: '#e0e7ff', padding: '0.5rem', borderRadius: '8px', color: '#4f46e5' }}>
-            <Users size={24} />
-          </div>
-          <h1 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#1e293b' }}>İşçi Maaş və İcazə Sistemi</h1>
-        </div>
+      {/* Page Header Banner */}
+      <PageHeaderBanner
+        title="İnsan Resursları və İşçilər"
+        description="Əməkdaşların şəxsi işləri, maaş, icazə və davamiyyət idarəetməsi."
+        icon={Users}
+        theme="pink"
+        badge="İnsan Resursları"
+        primaryAction={{
+          label: "Yeni İşçi",
+          onClick: () => router.push('/erp/giderler/personel/yeni'),
+          icon: UserPlus
+        }}
+        secondaryAction={{
+          label: "Toplu Maaş",
+          onClick: () => router.push('/erp/giderler/personel/toplu-maas'),
+          icon: Coins
+        }}
+      />
 
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
           <button style={actionBtnStyle('#4f46e5')} onClick={() => router.push('/erp/giderler/personel/yeni')} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
@@ -119,7 +130,6 @@ export default function IsciMaasveIcazePage() {
             <Award size={18} style={{ marginRight: '6px' }}/> Satış Primi
           </button>
         </div>
-      </div>
 
       {/* Filters Bar */}
       <div style={{ backgroundColor: 'white', padding: '1.2rem', borderRadius: '12px', border: '1px solid #e2e8f0', display: 'flex', gap: '1rem', alignItems: 'flex-end', flexWrap: 'wrap', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>

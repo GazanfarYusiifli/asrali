@@ -5,6 +5,7 @@ import {
   Settings, Trash2, X, ChevronDown, ChevronUp, Edit3, PowerOff, CheckCircle
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import PageHeaderBanner from '@/components/PageHeaderBanner';
 
 import { getAppStorage, setAppStorage, removeAppStorage } from '@/utils/storage';
 
@@ -316,29 +317,35 @@ export default function LayiheIzlemePage() {
   return (
     <div style={{ padding: '2rem', height: '100%', backgroundColor: '#f8fafc', display: 'flex', flexDirection: 'column', gap: '1.5rem', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
       
-      {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h1 style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '1.8rem', color: '#1e293b', margin: 0, fontWeight: 800, letterSpacing: '-0.5px' }}>
-          <FolderKanban size={32} color="#4f46e5" /> Layihə İzləmə
-        </h1>
-        <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-end' }}>
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', marginBottom: '4px' }}>Layihə Seçin</label>
-            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-              <select 
-                value={selectedProjectId} 
-                onChange={(e) => setSelectedProjectId(e.target.value)}
-                style={{ padding: '0.6rem 1rem', borderRadius: '8px', border: '1px solid #cbd5e1', backgroundColor: 'white', minWidth: '220px', fontWeight: 600, color: '#334155', outline: 'none' }}
-              >
-                <option value="" disabled>Seçin...</option>
-                {projects.map(p => (
-                  <option key={p.id} value={p.id}>{p.ad} {p.status === 'Bağlı' ? '(Bağlı)' : ''}</option>
-                ))}
-              </select>
-              <button onClick={() => openModal('newProject')} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0.65rem', background: '#e0e7ff', border: 'none', borderRadius: '8px', color: '#4f46e5', cursor: 'pointer', transition: 'all 0.2s', width: '40px', height: '40px' }}>
-                <Plus size={20}/>
-              </button>
-            </div>
+      {/* Page Header Banner */}
+      <PageHeaderBanner
+        title="Layihələr və Büdcə İdarəetməsi"
+        description="Layihə üzrə gəlir, xərc, alış və satışların gəlirlilik analitikası."
+        icon={FolderKanban}
+        theme="cyan"
+        badge="Layihə İdarəetməsi"
+        primaryAction={{
+          label: "Yeni Layihə",
+          onClick: () => openModal('newProject'),
+          icon: Plus
+        }}
+      />
+
+      {/* Project Selector Bar */}
+      <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', backgroundColor: 'white', padding: '1rem 1.5rem', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <label style={{ fontSize: '0.85rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase' }}>Aktiv Layihə:</label>
+          <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+            <select 
+              value={selectedProjectId} 
+              onChange={(e) => setSelectedProjectId(e.target.value)}
+              style={{ padding: '0.6rem 1rem', borderRadius: '8px', border: '1px solid #cbd5e1', backgroundColor: '#f8fafc', minWidth: '240px', fontWeight: 600, color: '#334155', outline: 'none' }}
+            >
+              <option value="" disabled>Layihə seçin...</option>
+              {projects.map(p => (
+                <option key={p.id} value={p.id}>{p.ad} {p.status === 'Bağlı' ? '(Bağlı)' : ''}</option>
+              ))}
+            </select>
           </div>
         </div>
       </div>

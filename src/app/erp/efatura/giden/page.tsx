@@ -1,7 +1,9 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { FileUp, Search, Eye, Filter, Trash2, AlertOctagon } from 'lucide-react';
+import { FileUp, Search, Eye, Filter, Trash2, AlertOctagon, Plus } from 'lucide-react';
 import Link from 'next/link';
+import PageHeaderBanner from '@/components/PageHeaderBanner';
+import { useRouter } from 'next/navigation';
 
 import { getAppStorage, setAppStorage, removeAppStorage } from '@/utils/storage';
 
@@ -58,21 +60,20 @@ export default function GedenFakturalar() {
   };
 
   return (
-    <div style={{ padding: '2rem', height: '100%', backgroundColor: '#f8fafc', display: 'flex', flexDirection: 'column', gap: '2rem', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <div style={{ width: '48px', height: '48px', borderRadius: '12px', backgroundColor: '#e0e7ff', color: '#4f46e5', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <FileUp size={24} />
-          </div>
-          <div>
-            <h1 style={{ fontSize: '1.5rem', color: '#0f172a', margin: 0, fontWeight: 800 }}>Gedən E-Fakturalar</h1>
-            <p style={{ margin: 0, color: '#64748b', fontSize: '0.9rem' }}>Göndərdiyiniz və yaratdığınız e-qaimələr</p>
-          </div>
-        </div>
-        <Link href="/erp/efatura/irsaliye" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.8rem 1.5rem', backgroundColor: '#10b981', color: 'white', textDecoration: 'none', borderRadius: '10px', fontWeight: 600 }}>
-          Yeni Qaimə Yarat
-        </Link>
-      </div>
+    <div style={{ padding: '2rem', height: '100%', maxWidth: '1600px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '2rem', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+      {/* Page Header Banner */}
+      <PageHeaderBanner
+        title="Göndərilən Elektron Fakturalar"
+        description="Müştərilərə tərtib edilmiş və vergi portalına göndərilmiş rəsmi e-qaimələr."
+        icon={FileUp}
+        theme="orange"
+        badge="Göndərilən E-Qaimələr"
+        primaryAction={{
+          label: "Yeni Qaimə Yarat",
+          onClick: () => router.push('/erp/efatura/irsaliye'),
+          icon: Plus
+        }}
+      />
 
       <div style={{ backgroundColor: 'white', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)', flex: 1, display: 'flex', flexDirection: 'column' }}>
         <div style={{ padding: '1.5rem', borderBottom: '1px solid #e2e8f0', display: 'flex', gap: '1rem' }}>

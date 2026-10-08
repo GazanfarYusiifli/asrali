@@ -14,7 +14,7 @@ export default function Page() {
         title="Borc və Alacaq Hesabatı"
         description="Bütün müştəri və təchizatçılar üzrə cari borcların təhlili."
         icon={CreditCard}
-        theme="rose"
+        theme="amber"
         badge="Borclar & Maliyyə"
         primaryAction={{
           label: "Yeni Əlavə Et",

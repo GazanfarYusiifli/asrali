@@ -14,7 +14,7 @@ export default function Page() {
         title="Anbar Hesabatı"
         description="Məhsul qalıqları, stok dəyəri və anbar hərəkətlərinin hesabatı."
         icon={Package}
-        theme="amber"
+        theme="blue"
         badge="Anbar & Stok"
         primaryAction={{
           label: "Yeni Əlavə Et",

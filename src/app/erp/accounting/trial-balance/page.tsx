@@ -11,11 +11,11 @@ export default function Page() {
   return (
     <div style={{ padding: '2rem', maxWidth: '1600px', margin: '0 auto' }}>
       <PageHeaderBanner
-        title="Dövriyyə Cədvəli (Trial Balance)"
-        description="Bütün hesablar üzrə debet və kredit qalıqlarının yoxlama cədvəli."
+        title="Dövriyyə Cədvəli və Layihə Mənfəəti"
+        description="Bütün hesablar və layihələr üzrə gəlir, xərc və mənfəətin yoxlama cədvəli."
         icon={Calculator}
-        theme="blue"
-        badge="Hesablar Planı"
+        theme="cyan"
+        badge="Layihə Mənfəəti"
         primaryAction={{
           label: "Yeni Əlavə Et",
           onClick: () => alert("Yeni qeyd pəncərəsi açılır..."),

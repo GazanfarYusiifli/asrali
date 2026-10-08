@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { FileDown, Search, Eye, Filter, Edit, Trash2, AlertOctagon, RefreshCw } from 'lucide-react';
 import Link from 'next/link';
+import PageHeaderBanner from '@/components/PageHeaderBanner';
 
 import { getAppStorage, setAppStorage, removeAppStorage } from '@/utils/storage';
 
@@ -77,31 +78,23 @@ export default function GelenFakturalar() {
   };
 
   return (
-    <div style={{ padding: '2rem', height: '100%', backgroundColor: '#f8fafc', display: 'flex', flexDirection: 'column', gap: '2rem', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <div style={{ width: '48px', height: '48px', borderRadius: '12px', backgroundColor: '#fce7f3', color: '#db2777', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <FileDown size={24} />
-          </div>
-          <div>
-            <h1 style={{ fontSize: '1.5rem', color: '#0f172a', margin: 0, fontWeight: 800 }}>Gələn E-Fakturalar</h1>
-            <p style={{ margin: 0, color: '#64748b', fontSize: '0.9rem' }}>Təchizatçılardan sizə göndərilən qaimələr</p>
-          </div>
-        </div>
-        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-          <a href="https://new.e-taxes.gov.az/eportal/login" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.8rem 1.2rem', backgroundColor: '#f1f5f9', color: '#475569', border: '1px solid #cbd5e1', borderRadius: '10px', fontWeight: 600, textDecoration: 'none', transition: 'all 0.2s', fontSize: '0.9rem' }} onMouseOver={e => e.currentTarget.style.backgroundColor = '#e2e8f0'} onMouseOut={e => e.currentTarget.style.backgroundColor = '#f1f5f9'}>
-            Portalda Bax (e-taxes)
-          </a>
-          <button onClick={() => {
-            alert('DVX API ilə sinxronlaşdırma (Simulyasiya) başladıldı. Yeni qaimələr yoxlanılır...');
-            setTimeout(() => {
-              alert('Yeni qaimə tapılmadı. Sistem artıq ən son məlumatları göstərir.');
-            }, 1500);
-          }} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.8rem 1.5rem', backgroundColor: '#3b82f6', color: 'white', border: 'none', borderRadius: '10px', fontWeight: 600, cursor: 'pointer', boxShadow: '0 4px 14px 0 rgba(59, 130, 246, 0.39)', transition: 'all 0.2s' }} onMouseOver={e => e.currentTarget.style.backgroundColor = '#2563eb'} onMouseOut={e => e.currentTarget.style.backgroundColor = '#3b82f6'}>
-            <RefreshCw size={18} /> DVX-dən Yenilə
-          </button>
-        </div>
-      </div>
+    <div style={{ padding: '2rem', height: '100%', maxWidth: '1600px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '2rem', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+      {/* Page Header Banner */}
+      <PageHeaderBanner
+        title="Gələn Elektron Fakturalar"
+        description="Təchizatçılardan vergi portalı üzərindən daxil olan rəsmi qaimələr."
+        icon={FileDown}
+        theme="orange"
+        badge="Gələn E-Qaimələr"
+        primaryAction={{
+          label: "DVX-dən Yenilə",
+          onClick: () => {
+            alert('DVX API ilə sinxronlaşdırma başladı. Yeni qaimələr yoxlanılır...');
+            setTimeout(() => { alert('Sistem ən son məlumatları əks etdirir.'); }, 1200);
+          },
+          icon: RefreshCw
+        }}
+      />
 
       <div style={{ backgroundColor: 'white', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)', flex: 1, display: 'flex', flexDirection: 'column' }}>
         <div style={{ padding: '1.5rem', borderBottom: '1px solid #e2e8f0', display: 'flex', gap: '1rem' }}>

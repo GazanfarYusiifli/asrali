@@ -11,11 +11,11 @@ export default function Page() {
   return (
     <div style={{ padding: '2rem', maxWidth: '1600px', margin: '0 auto' }}>
       <PageHeaderBanner
-        title="Mallar və Materiallar"
-        description="Nomenklatura, xammal və hazır məhsulların vahid kartotekası."
+        title="Mallar və Ehtiyat Hissələri"
+        description="Nomenklatura, servis ehtiyat hissələri və materialların kartotekası."
         icon={Package}
-        theme="amber"
-        badge="Əsas Məlumatlar"
+        theme="purple"
+        badge="Ehtiyat Hissələri"
         primaryAction={{
           label: "Yeni Əlavə Et",
           onClick: () => alert("Yeni qeyd pəncərəsi açılır..."),

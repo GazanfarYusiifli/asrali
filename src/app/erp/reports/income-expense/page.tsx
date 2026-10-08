@@ -14,7 +14,7 @@ export default function Page() {
         title="Gəlir və Xərc Hesabatı"
         description="Müəssisənin bütün dövriyyə, xərc və gəlirlərinin icmalı."
         icon={BarChart3}
-        theme="emerald"
+        theme="indigo"
         badge="Maliyyə Hesabatı"
         primaryAction={{
           label: "Yeni Əlavə Et",

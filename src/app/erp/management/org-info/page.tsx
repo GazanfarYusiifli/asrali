@@ -14,7 +14,7 @@ export default function Page() {
         title="Filial və Şirkət Məlumatları"
         description="Hüquqi şəxslər, filiallar və struktur bölmələrinin strukturu."
         icon={Building2}
-        theme="indigo"
+        theme="cyan"
         badge="Təşkilati Quruluş"
         primaryAction={{
           label: "Yeni Əlavə Et",

@@ -154,7 +154,7 @@ export default function MusterilerPage() {
         title="Cari Hesablar (Müştərilər)"
         description="Bütün müştərilərin borc, əlaqə və qeydiyyat məlumatlarının mərkəzləşdirilmiş bazası."
         icon={Users}
-        theme="indigo"
+        theme="amber"
         badge="Müştəri İdarəetməsi"
         primaryAction={{
           label: "Yeni Cari Hesab",
