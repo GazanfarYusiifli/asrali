@@ -42,57 +42,73 @@ export default function ProductsPage() {
     },
   ];
 
-  const [products, setProducts] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [products, setProducts] = useState<any[]>(defaultProducts);
+  const [isLoading, setIsLoading] = useState(false);
 
   React.useEffect(() => {
     setIsMounted(true);
     
-    const fetchProducts = async () => {
-      setIsLoading(true);
-      const supabase = createClient();
-      
-      const { data, error } = await supabase
-        .from('erp_products')
-        .select('*')
-        .order('created_at', { ascending: false });
-
-      if (error) {
-        console.error("Supabase fetch error (erp_products):", error);
-        setProducts([]);
-      } else if (data) {
-        // Map snake_case from DB back to camelCase used in the UI
-        const mappedData = data.map(item => ({
-          id: item.id,
-          kod: item.kod,
-          ad: item.ad,
-          merkezSobe: item.merkezSobe || 0,
-          toplam: item.toplam || 0,
-          alisFiyati: Number(item.alis_fiyati),
-          satisFiyati: Number(item.satis_fiyati),
-          img: item.img || null,
-          tur: item.tur || 'Məhsul',
-          izleme: item.izleme || 'İzlənməyəcək',
-          vahid: item.vahid || 'Ədəd',
-          depo: item.depo || 'Mərkəz Şöbə',
-          b2bGoster: item.b2bgoster || false,
-          kritikSeviyye: item.kritikseviyye || 0,
-          aciqlama: item.aciqlama || '',
-          edv: item.edv || 18,
-          satisValyuta: item.satisvalyuta || 'AZN',
-          satisNovu: item.satisnovu || 'ƏDV Daxil',
-          alisValyuta: item.alisvalyuta || 'AZN',
-          alisNovu: item.alisnovu || 'ƏDV Daxil',
-          barkod: item.barkod || '',
-          techizatciKodu: item.techizatcikodu || '',
-          refKodu: item.refkodu || '',
-          etiketler: item.etiketler || [],
-          sonSayimTarixi: item.sonsayimtarixi || '-',
-          sayimNeticesi: item.sayimneticesi || ''
-        }));
-        setProducts(mappedData);
+    // First load from local storage if available for instant display
+    try {
+      const stored = getAppStorage('erp_products');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setProducts(parsed);
+        }
       }
-      setIsLoading(false);
+    } catch (e) {
+      console.warn("Storage load error:", e);
+    }
+
+    const fetchProducts = async () => {
+      try {
+        const supabase = createClient();
+        const { data, error } = await supabase
+          .from('erp_products')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (error) {
+          console.warn("Supabase fetch error (erp_products), keeping cached/default products:", error);
+        } else if (data && data.length > 0) {
+          // Map snake_case from DB back to camelCase used in the UI
+          const mappedData = data.map(item => ({
+            id: item.id,
+            kod: item.kod || '',
+            ad: item.ad || '',
+            merkezSobe: Number(item.merkezSobe) || 0,
+            toplam: Number(item.toplam) || 0,
+            alisFiyati: Number(item.alis_fiyati) || 0,
+            satisFiyati: Number(item.satis_fiyati) || 0,
+            img: item.img || null,
+            tur: item.tur || 'Məhsul',
+            izleme: item.izleme || 'İzlənməyəcək',
+            vahid: item.vahid || 'Ədəd',
+            depo: item.depo || 'Mərkəz Şöbə',
+            b2bGoster: !!item.b2bgoster,
+            kritikSeviyye: Number(item.kritikseviyye) || 0,
+            aciqlama: item.aciqlama || '',
+            edv: Number(item.edv) || 18,
+            satisValyuta: item.satisvalyuta || 'AZN',
+            satisNovu: item.satisnovu || 'ƏDV Daxil',
+            alisValyuta: item.alisvalyuta || 'AZN',
+            alisNovu: item.alisnovu || 'ƏDV Daxil',
+            barkod: item.barkod || '',
+            techizatciKodu: item.techizatcikodu || '',
+            refKodu: item.refkodu || '',
+            etiketler: Array.isArray(item.etiketler) ? item.etiketler : [],
+            sonSayimTarixi: item.sonsayimtarixi || '-',
+            sayimNeticesi: item.sayimneticesi || ''
+          }));
+          setProducts(mappedData);
+          setAppStorage('erp_products', JSON.stringify(mappedData));
+        }
+      } catch (err) {
+        console.warn("Products fetch failed, continuing with fallback:", err);
+      } finally {
+        setIsLoading(false);
+      }
     };
     
     fetchProducts();
@@ -100,16 +116,17 @@ export default function ProductsPage() {
     try {
       const storedWarehouses = getAppStorage('erp_warehouses');
       if (storedWarehouses) {
-        setWarehouses(JSON.parse(storedWarehouses));
+        const parsedW = JSON.parse(storedWarehouses);
+        if (Array.isArray(parsedW) && parsedW.length > 0) {
+          setWarehouses(parsedW.map(w => typeof w === 'string' ? w : (w.shobeAdi || w.name || String(w))));
+        }
       }
     } catch(e) {}
   }, []);
 
-  if (!isMounted) return null;
-
   const updateProducts = (newProducts: any) => {
     setProducts(newProducts);
-    // Legacy storage backup removed, rely on Supabase
+    setAppStorage('erp_products', JSON.stringify(newProducts));
   };
 
   const defaultForm = {
@@ -344,9 +361,29 @@ export default function ProductsPage() {
             <tbody>
               {isLoading ? (
                 <tr>
-                  <td colSpan={9} style={{ padding: '3rem', textAlign: 'center', color: '#64748b' }}>
+                  <td colSpan={8} style={{ padding: '3rem', textAlign: 'center', color: '#64748b' }}>
                     <div style={{ display: 'inline-block', width: '24px', height: '24px', border: '3px solid #e2e8f0', borderTopColor: '#0ea5e9', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></div>
-                    <div style={{ marginTop: '0.5rem' }}>Məlumatlar Buluddan (Supabase) Yüklənir...</div>
+                    <div style={{ marginTop: '0.5rem' }}>Məlumatlar Yüklənir...</div>
+                  </td>
+                </tr>
+              ) : filteredProducts.length === 0 ? (
+                <tr>
+                  <td colSpan={8} style={{ padding: '4rem 2rem', textAlign: 'center', color: '#64748b' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '0.75rem' }}>
+                      <div style={{ width: '56px', height: '56px', borderRadius: '50%', backgroundColor: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#94a3b8' }}>
+                        <Package size={28} />
+                      </div>
+                      <div style={{ fontSize: '1.05rem', fontWeight: 700, color: '#334155' }}>Heç bir məhsul tapılmadı</div>
+                      <div style={{ fontSize: '0.85rem', color: '#94a3b8', maxWidth: '360px' }}>
+                        Axtarış parametrlərinə uyğun məhsul yoxdur və ya yeni məhsul əlavə etməlisiniz.
+                      </div>
+                      <button 
+                        onClick={openCreateModal}
+                        style={{ marginTop: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.6rem 1.2rem', backgroundColor: '#0ea5e9', color: 'white', border: 'none', borderRadius: '10px', fontWeight: 600, fontSize: '0.9rem', cursor: 'pointer' }}
+                      >
+                        <Plus size={16} /> Məhsul Əlavə Et
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ) : filteredProducts.map((item) => (
