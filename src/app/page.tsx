@@ -177,12 +177,6 @@ export default function Home() {
         <div className="glow-sphere glow-center" />
 
         <div className="hero-content">
-          <div className="hero-badge">
-            <span className="badge-dot" />
-            <Sparkles size={14} style={{ color: '#059669' }} />
-            <span>{t('hero_badge')}</span>
-          </div>
-          
           <h1 className="hero-title">
             Biznesinizi Daha Sadə və <br/>
             <span className="gradient-text">Nəzarətli İdarə Edin</span>
@@ -904,8 +898,8 @@ export default function Home() {
           position: relative;
           z-index: 2;
           width: 100%;
-          max-width: 1180px;
-          margin: 4.5rem auto 0;
+          max-width: 840px;
+          margin: 3.5rem auto 0;
           perspective: 1200px;
         }
 
