@@ -149,53 +149,81 @@ export default function TedarikcilerPage() {
     <div style={{ padding: '2rem', height: '100%', backgroundColor: '#f8fafc', display: 'flex', flexDirection: 'column', gap: '1.5rem', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
       
       {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
-          <h1 style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '1.8rem', color: '#1e293b', margin: 0, fontWeight: 800, letterSpacing: '-0.5px' }}>
-            <Building2 size={32} color="#f59e0b" /> Cari Hesablar (Təchizatçılar)
+          <h1 style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', fontSize: '1.9rem', color: '#0f172a', margin: 0, fontWeight: 800, letterSpacing: '-0.025em' }}>
+            <div style={{
+              background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+              padding: '0.6rem',
+              borderRadius: '12px',
+              color: 'white',
+              boxShadow: '0 6px 16px -2px rgba(245, 158, 11, 0.38)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
+              <Building2 size={24} />
+            </div>
+            Cari Hesablar (Təchizatçılar)
           </h1>
-          <p style={{ margin: '0.2rem 0 0 0', color: '#64748b', fontSize: '0.95rem' }}>Bütün tədarükçü (satıcı) siyahısı və idarəetməsi</p>
+          <p style={{ margin: '0.35rem 0 0 0', color: '#64748b', fontSize: '0.92rem' }}>Bütün tədarükçü və satıcı hesablarınızı buradan izləyin və idarə edin.</p>
         </div>
         <button 
           onClick={() => openModal()} 
-          style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.8rem 1.5rem', backgroundColor: '#f59e0b', color: 'white', border: 'none', borderRadius: '12px', fontWeight: 700, fontSize: '0.95rem', cursor: 'pointer', boxShadow: '0 4px 14px 0 rgba(245, 158, 11, 0.39)', transition: 'transform 0.1s' }}
-          onMouseDown={e => e.currentTarget.style.transform = 'scale(0.96)'}
-          onMouseUp={e => e.currentTarget.style.transform = 'scale(1)'}
+          style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '0.5rem', 
+            padding: '0.65rem 1.35rem', 
+            background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', 
+            color: 'white', 
+            border: 'none', 
+            borderRadius: '10px', 
+            fontWeight: 650, 
+            fontSize: '0.9rem', 
+            cursor: 'pointer', 
+            boxShadow: '0 8px 20px -3px rgba(245, 158, 11, 0.4)', 
+            transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)' 
+          }}
+          onMouseOver={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 12px 24px -3px rgba(245, 158, 11, 0.45)'; }}
+          onMouseOut={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 8px 20px -3px rgba(245, 158, 11, 0.4)'; }}
         >
-          <Plus size={20}/> Yeni Təchizatçı
+          <Plus size={18} strokeWidth={2.4}/> Yeni Təchizatçı
         </button>
       </div>
 
       {/* Toolbar (Search & Stats) */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'white', padding: '1rem 1.5rem', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
-        <div style={{ position: 'relative', width: '400px' }}>
-          <Search size={18} color="#94a3b8" style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)' }} />
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#ffffff', padding: '1rem 1.5rem', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 4px 20px -4px rgba(15, 23, 42, 0.04)', flexWrap: 'wrap', gap: '1rem' }}>
+        <div style={{ position: 'relative', width: '420px', maxWidth: '100%' }}>
+          <Search size={17} color="#94a3b8" style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)' }} />
           <input 
             type="text" 
             placeholder="Ad, VÖEN, Telefon və ya Kod ilə axtar..." 
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            style={{ width: '100%', padding: '0.8rem 1rem 0.8rem 2.8rem', borderRadius: '10px', border: '1px solid #cbd5e1', outline: 'none', fontSize: '0.95rem', color: '#334155', transition: 'border-color 0.2s', backgroundColor: '#f8fafc' }}
+            style={{ width: '100%', padding: '0.7rem 1rem 0.7rem 2.8rem', borderRadius: '10px', border: '1px solid #e2e8f0', outline: 'none', fontSize: '0.9rem', color: '#0f172a', transition: 'all 0.2s ease', backgroundColor: '#fafbfc' }}
+            onFocus={e => { e.currentTarget.style.borderColor = '#f59e0b'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(245, 158, 11, 0.12)'; e.currentTarget.style.backgroundColor = '#ffffff'; }}
+            onBlur={e => { e.currentTarget.style.borderColor = '#e2e8f0'; e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.backgroundColor = '#fafbfc'; }}
           />
         </div>
         <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
           <div style={{ textAlign: 'right' }}>
-            <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase' }}>Cəmi Tapılan</div>
-            <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a' }}>{filteredCustomers.length} <span style={{fontSize:'0.85rem', color:'#94a3b8', fontWeight:600}}>Cari</span></div>
+            <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Cəmi Tapılan</div>
+            <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a' }}>{filteredCustomers.length} <span style={{fontSize:'0.82rem', color:'#64748b', fontWeight:600}}>Cari</span></div>
           </div>
-          <div style={{ width: '1px', height: '30px', backgroundColor: '#e2e8f0' }}></div>
+          <div style={{ width: '1px', height: '28px', backgroundColor: '#f1f5f9' }}></div>
           <div style={{ textAlign: 'right' }}>
-            <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase' }}>Ümumi Baza</div>
+            <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Ümumi Baza</div>
             <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#f59e0b' }}>{customers.length}</div>
           </div>
         </div>
       </div>
 
       {/* Table */}
-      <div style={{ backgroundColor: 'white', borderRadius: '16px', border: '1px solid #e2e8f0', overflow: 'hidden', flex: 1, display: 'flex', flexDirection: 'column' }}>
+      <div style={{ backgroundColor: '#ffffff', borderRadius: '16px', border: '1px solid rgba(226, 232, 240, 0.8)', overflow: 'hidden', flex: 1, display: 'flex', flexDirection: 'column', boxShadow: '0 10px 30px -5px rgba(15, 23, 42, 0.04)' }}>
         <div style={{ overflowX: 'auto', flex: 1 }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '1000px' }}>
-            <thead style={{ backgroundColor: '#f8fafc', position: 'sticky', top: 0, zIndex: 1, borderBottom: '2px solid #e2e8f0' }}>
+          <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: 0, minWidth: '1000px' }}>
+            <thead style={{ backgroundColor: '#f8fafc', position: 'sticky', top: 0, zIndex: 1, borderBottom: '1px solid #e2e8f0' }}>
               <tr>
                 <th style={thStyle}>#</th>
                 <th style={thStyle}>Hesab Adı / Kodu</th>
@@ -208,10 +236,64 @@ export default function TedarikcilerPage() {
             </thead>
             <tbody>
               {filteredCustomers.length === 0 ? (
-                <tr><td colSpan={7} style={{ textAlign: 'center', padding: '4rem 2rem', color: '#94a3b8', fontWeight: 600, fontStyle: 'italic' }}>
-                  <Building2 size={48} style={{ opacity: 0.2, margin: '0 auto 1rem auto', display: 'block' }} />
-                  Heç bir təchizatçı tapılmadı.
-                </td></tr>
+                <tr>
+                  <td colSpan={7} style={{ padding: '3.5rem 2rem' }}>
+                    {/* Modern Banner Container */}
+                    <div style={{ 
+                      maxWidth: '680px', 
+                      margin: '0 auto', 
+                      padding: '2.5rem 2rem', 
+                      borderRadius: '16px', 
+                      background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.04) 0%, rgba(254, 243, 199, 0.3) 100%)',
+                      border: '1px dashed rgba(245, 158, 11, 0.35)',
+                      textAlign: 'center',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      gap: '0.85rem'
+                    }}>
+                      <div style={{ 
+                        width: '56px', 
+                        height: '56px', 
+                        borderRadius: '16px', 
+                        background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)', 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        justifyContent: 'center', 
+                        color: '#d97706',
+                        boxShadow: '0 4px 12px rgba(245, 158, 11, 0.15)'
+                      }}>
+                        <Building2 size={28} />
+                      </div>
+                      <div style={{ fontWeight: 800, color: '#1e293b', fontSize: '1.15rem', letterSpacing: '-0.01em' }}>
+                        Heç bir təchizatçı tapılmadı.
+                      </div>
+                      <p style={{ margin: 0, color: '#64748b', fontSize: '0.88rem', maxWidth: '420px', lineHeight: 1.5 }}>
+                        Axtarış sözünü dəyişdirin və ya mal və xidmət aldığınız tərəfdaşları sistemə əlavə etmək üçün yeni təchizatçı yaradın.
+                      </p>
+                      <button 
+                        onClick={() => openModal()}
+                        style={{ 
+                          marginTop: '0.5rem',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '0.45rem',
+                          padding: '0.55rem 1.25rem',
+                          background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+                          color: '#ffffff',
+                          borderRadius: '8px',
+                          border: 'none',
+                          fontWeight: 700,
+                          fontSize: '0.84rem',
+                          cursor: 'pointer',
+                          boxShadow: '0 4px 12px rgba(245, 158, 11, 0.25)'
+                        }}
+                      >
+                        <Plus size={16} strokeWidth={2.4} /> Təchizatçı Əlavə Et
+                      </button>
+                    </div>
+                  </td>
+                </tr>
               ) : filteredCustomers.map((c, idx) => (
                 <tr key={c.id} style={{ borderBottom: '1px solid #e2e8f0', transition: 'background-color 0.2s' }} onMouseOver={e=>e.currentTarget.style.backgroundColor='#f8fafc'} onMouseOut={e=>e.currentTarget.style.backgroundColor='white'}>
                   <td style={{...tdStyle, color: '#94a3b8', fontWeight: 700}}>{idx + 1}</td>
