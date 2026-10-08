@@ -378,7 +378,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '140px', background: 'radial-gradient(ellipse at 50% 0%, rgba(16, 185, 129, 0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1.35rem 1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', position: 'relative', zIndex: 1 }}>
-          <img src="/logo.png" alt="ASRALI" style={{ height: "32px", width: "auto", borderRadius: "8px" }} />
+          <Link href="/erp" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <span style={{ fontSize: '1.35rem', fontWeight: 900, letterSpacing: '-0.02em', color: '#ffffff' }}>
+              ASRALI <span style={{ color: '#10b981' }}>ERP</span>
+            </span>
+          </Link>
         </div>
 
         <nav style={{ flex: 1, overflowY: 'auto', padding: '1rem 0.65rem', position: 'relative', zIndex: 1 }}>
@@ -606,8 +610,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           top: 0,
           zIndex: 40
         }}>
-          <div style={{ fontWeight: 700, color: '#0f172a', fontSize: '1.1rem', letterSpacing: '-0.01em' }}>
-            ASRALI
+          <div style={{ fontWeight: 800, color: '#0f172a', fontSize: '1.15rem', letterSpacing: '-0.01em' }}>
+            ASRALI <span style={{ color: '#10b981' }}>ERP</span>
           </div>
           <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
             <LanguageSwitcher />

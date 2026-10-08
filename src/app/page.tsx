@@ -71,8 +71,9 @@ export default function Home() {
         boxShadow: '0 4px 30px rgba(0, 0, 0, 0.5)'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer' }} className="hover-lift-sm">
-          <img src="/logo.png" alt="ASRALI Logo" style={{ height: "40px", width: "auto", borderRadius: "8px" }} />
-          <span style={{ fontSize: '1.5rem', fontWeight: 900, letterSpacing: '-0.5px', color: 'white' }}>ASRALI</span>
+          <span style={{ fontSize: '1.5rem', fontWeight: 900, letterSpacing: '-0.5px', color: 'white' }}>
+            ASRALI <span style={{ color: '#10b981' }}>ERP</span>
+          </span>
         </div>
         
         <nav style={{ display: 'none', gap: '2.5rem', alignItems: 'center' }} className="desktop-nav">
