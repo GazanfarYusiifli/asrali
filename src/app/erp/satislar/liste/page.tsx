@@ -159,18 +159,18 @@ export default function SatisListesiPage() {
             display: 'inline-flex', 
             alignItems: 'center', 
             gap: '6px', 
-            padding: '4px 10px', 
+            padding: '5px 12px', 
             borderRadius: '9999px', 
             background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(5, 150, 105, 0.08) 100%)', 
-            border: '1px solid rgba(16, 185, 129, 0.25)', 
-            color: '#059669', 
-            fontSize: '0.78rem', 
-            fontWeight: 600, 
+            border: '1px solid rgba(16, 185, 129, 0.28)', 
+            color: '#047857', 
+            fontSize: '0.8rem', 
+            fontWeight: 650, 
             whiteSpace: 'nowrap',
-            letterSpacing: '0.01em'
+            boxShadow: '0 2px 6px rgba(16, 185, 129, 0.08)'
           }}>
-            <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#10b981', boxShadow: '0 0 6px #10b981' }} />
-            {status}
+            <CheckCircle2 size={13} strokeWidth={2.6} style={{ color: '#10b981' }} />
+            <span>{status}</span>
           </span>
         );
       case 'Təslim Edilməyib':
@@ -179,18 +179,18 @@ export default function SatisListesiPage() {
             display: 'inline-flex', 
             alignItems: 'center', 
             gap: '6px', 
-            padding: '4px 10px', 
+            padding: '5px 12px', 
             borderRadius: '9999px', 
-            background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.06) 100%)', 
-            border: '1px solid rgba(239, 68, 68, 0.2)', 
-            color: '#dc2626', 
-            fontSize: '0.78rem', 
+            background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(220, 38, 38, 0.04) 100%)', 
+            border: '1px solid rgba(239, 68, 68, 0.22)', 
+            color: '#b91c1c', 
+            fontSize: '0.8rem', 
             fontWeight: 600, 
             whiteSpace: 'nowrap',
-            letterSpacing: '0.01em'
+            boxShadow: '0 2px 6px rgba(239, 68, 68, 0.06)'
           }}>
-            <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#ef4444' }} />
-            {status}
+            <Clock size={13} strokeWidth={2.4} style={{ color: '#ef4444' }} />
+            <span>{status}</span>
           </span>
         );
       default:
@@ -199,17 +199,17 @@ export default function SatisListesiPage() {
             display: 'inline-flex', 
             alignItems: 'center', 
             gap: '6px', 
-            padding: '4px 10px', 
+            padding: '5px 12px', 
             borderRadius: '9999px', 
-            background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(217, 119, 6, 0.06) 100%)', 
-            border: '1px solid rgba(245, 158, 11, 0.2)', 
-            color: '#d97706', 
-            fontSize: '0.78rem', 
+            background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(217, 119, 6, 0.04) 100%)', 
+            border: '1px solid rgba(245, 158, 11, 0.22)', 
+            color: '#b45309', 
+            fontSize: '0.8rem', 
             fontWeight: 600, 
             whiteSpace: 'nowrap'
           }}>
-            <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#f59e0b' }} />
-            Təslim Edilməyib
+            <Clock size={13} strokeWidth={2.4} style={{ color: '#f59e0b' }} />
+            <span>Təslim Edilməyib</span>
           </span>
         );
     }
@@ -262,9 +262,6 @@ export default function SatisListesiPage() {
       {/* Page Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.3rem 0.75rem', borderRadius: '9999px', background: 'rgba(99, 102, 241, 0.08)', border: '1px solid rgba(99, 102, 241, 0.15)', color: '#4f46e5', fontSize: '0.75rem', fontWeight: 600, marginBottom: '0.5rem' }}>
-            <span>Faktura və Satış İdarəetməsi</span>
-          </div>
           <h1 style={{ fontSize: '1.9rem', fontWeight: 800, color: '#0f172a', letterSpacing: '-0.025em', display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
             <div style={{ 
               background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', 
