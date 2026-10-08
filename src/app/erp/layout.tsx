@@ -273,18 +273,20 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       {/* Sidebar */}
       <aside style={{
         width: '300px',
-        backgroundColor: '#1e293b', // Dark sidebar like ticari bulut
+        background: 'linear-gradient(180deg, #0b0f19 0%, #111827 50%, #0f172a 100%)',
         color: '#f8fafc',
         display: 'flex',
         flexDirection: 'column',
         transition: 'all 0.3s ease',
-        flexShrink: 0
+        flexShrink: 0,
+        borderRight: '1px solid rgba(255, 255, 255, 0.06)',
+        boxShadow: '4px 0 24px -2px rgba(0, 0, 0, 0.25)'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1.4rem 1.5rem', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
           <img src="/logo.png" alt="ASRALI" style={{ height: "32px", width: "auto", borderRadius: "8px" }} />
         </div>
 
-        <nav style={{ flex: 1, overflowY: 'auto', padding: '1rem 0.5rem' }}>
+        <nav style={{ flex: 1, overflowY: 'auto', padding: '1rem 0.65rem' }}>
           {menuStructure.filter(menu => menu.roles.includes(role)).map((menu) => {
             const hasSubItems = menu.subItems && menu.subItems.length > 0;
             const isOpen = openMenus.includes(menu.name);
@@ -306,22 +308,35 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                       display: 'flex',
                       alignItems: 'center',
                       gap: '0.75rem',
-                      padding: '0.6rem 1rem',
-                      borderRadius: '8px',
-                      backgroundColor: isAnyChildActive ? 'rgba(16, 185, 129, 0.1)' : 'transparent',
-                      color: isAnyChildActive ? '#10b981' : '#cbd5e1',
+                      padding: '0.65rem 1rem',
+                      borderRadius: '10px',
+                      backgroundColor: isAnyChildActive ? 'rgba(16, 185, 129, 0.16)' : 'transparent',
+                      color: isAnyChildActive ? '#34d399' : '#94a3b8',
                       fontWeight: isAnyChildActive ? 600 : 500,
-                      fontSize: '0.95rem',
+                      fontSize: '0.93rem',
                       fontFamily: 'inherit',
                       textDecoration: 'none',
-                      transition: 'all 0.2s ease',
+                      transition: 'all 0.18s ease',
+                      border: isAnyChildActive ? '1px solid rgba(52, 211, 153, 0.25)' : '1px solid transparent'
+                    }}
+                    onMouseOver={(e) => {
+                      if (!isAnyChildActive) {
+                        e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
+                        e.currentTarget.style.color = '#f1f5f9';
+                      }
+                    }}
+                    onMouseOut={(e) => {
+                      if (!isAnyChildActive) {
+                        e.currentTarget.style.backgroundColor = 'transparent';
+                        e.currentTarget.style.color = '#94a3b8';
+                      }
                     }}
                   >
-                    <div style={{ opacity: isAnyChildActive ? 1 : 0.7 }}>{menu.icon}</div>
+                    <div style={{ opacity: isAnyChildActive ? 1 : 0.75 }}>{menu.icon}</div>
                     {menu.name}
                   </LinkComponent>
                   {menu.separatorAfter && (
-                    <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.08)', margin: '0.75rem 1rem' }}></div>
+                    <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.06)', margin: '0.75rem 1rem' }}></div>
                   )}
                 </div>
               );
@@ -337,31 +352,43 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     gap: '0.75rem',
-                    padding: '0.6rem 1rem',
-                    borderRadius: '8px',
-                    backgroundColor: (isOpen || isAnyChildActive) ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
-                    color: (isOpen || isAnyChildActive) ? '#38bdf8' : '#cbd5e1',
+                    padding: '0.65rem 1rem',
+                    borderRadius: '10px',
+                    backgroundColor: (isOpen || isAnyChildActive) ? 'rgba(56, 189, 248, 0.12)' : 'transparent',
+                    color: (isOpen || isAnyChildActive) ? '#38bdf8' : '#94a3b8',
                     fontWeight: (isOpen || isAnyChildActive) ? 600 : 500,
-                    fontSize: '0.95rem',
+                    fontSize: '0.93rem',
                     fontFamily: 'inherit',
-                    border: 'none',
+                    border: (isOpen || isAnyChildActive) ? '1px solid rgba(56, 189, 248, 0.2)' : '1px solid transparent',
                     cursor: 'pointer',
-                    transition: 'all 0.2s ease',
+                    transition: 'all 0.18s ease',
                     textAlign: 'left'
+                  }}
+                  onMouseOver={(e) => {
+                    if (!isOpen && !isAnyChildActive) {
+                      e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
+                      e.currentTarget.style.color = '#f1f5f9';
+                    }
+                  }}
+                  onMouseOut={(e) => {
+                    if (!isOpen && !isAnyChildActive) {
+                      e.currentTarget.style.backgroundColor = 'transparent';
+                      e.currentTarget.style.color = '#94a3b8';
+                    }
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                    <div style={{ opacity: (isOpen || isAnyChildActive) ? 1 : 0.7, color: (isOpen || isAnyChildActive) ? '#38bdf8' : 'inherit' }}>{menu.icon}</div>
+                    <div style={{ opacity: (isOpen || isAnyChildActive) ? 1 : 0.75, color: (isOpen || isAnyChildActive) ? '#38bdf8' : 'inherit' }}>{menu.icon}</div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                       {menu.name}
-                      {menu.isPro && <span style={{ backgroundColor: '#f59e0b', color: 'white', fontSize: '0.65rem', padding: '0.1rem 0.4rem', borderRadius: '4px', fontWeight: 800 }}>PRO</span>}
+                      {menu.isPro && <span style={{ backgroundColor: '#f59e0b', color: 'white', fontSize: '0.62rem', padding: '0.15rem 0.45rem', borderRadius: '6px', fontWeight: 800 }}>PRO</span>}
                     </div>
                   </div>
                   {isOpen ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
                 </button>
                 
                 {isOpen && (
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.1rem', marginTop: '0.25rem', paddingLeft: '2.5rem' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.15rem', marginTop: '0.3rem', paddingLeft: '2.5rem' }}>
                     {menu.subItems.map((subItem) => {
                       const isSubActive = pathname === subItem.path;
                       return (
@@ -369,14 +396,27 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                           key={subItem.name}
                           href={subItem.path}
                           style={{
-                            padding: '0.5rem 0.75rem',
-                            borderRadius: '6px',
-                            backgroundColor: isSubActive ? 'rgba(16, 185, 129, 0.15)' : 'transparent',
-                            color: isSubActive ? '#10b981' : '#94a3b8',
+                            padding: '0.5rem 0.85rem',
+                            borderRadius: '8px',
+                            backgroundColor: isSubActive ? 'rgba(16, 185, 129, 0.18)' : 'transparent',
+                            color: isSubActive ? '#34d399' : '#94a3b8',
                             fontWeight: isSubActive ? 600 : 400,
                             fontSize: '0.85rem',
                             textDecoration: 'none',
-                            transition: 'all 0.2s ease'
+                            transition: 'all 0.18s ease',
+                            border: isSubActive ? '1px solid rgba(52, 211, 153, 0.25)' : '1px solid transparent'
+                          }}
+                          onMouseOver={(e) => {
+                            if (!isSubActive) {
+                              e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.04)';
+                              e.currentTarget.style.color = '#f1f5f9';
+                            }
+                          }}
+                          onMouseOut={(e) => {
+                            if (!isSubActive) {
+                              e.currentTarget.style.backgroundColor = 'transparent';
+                              e.currentTarget.style.color = '#94a3b8';
+                            }
                           }}
                         >
                           {subItem.name}
@@ -387,21 +427,69 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 )}
                 
                 {menu.separatorAfter && (
-                  <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.08)', margin: '0.75rem 1rem' }}></div>
+                  <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.06)', margin: '0.75rem 1rem' }}></div>
                 )}
               </div>
             );
           })}
         </nav>
 
-        <div style={{ padding: '1.5rem', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600, boxShadow: '0 2px 4px rgba(16,185,129,0.3)' }}>
+        {/* User Profile Card */}
+        <div style={{ padding: '1rem', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.85rem',
+            padding: '0.75rem 0.9rem',
+            borderRadius: '14px',
+            backgroundColor: 'rgba(255, 255, 255, 0.03)',
+            border: '1px solid rgba(255, 255, 255, 0.06)',
+            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+            backdropFilter: 'blur(8px)'
+          }}>
+            <div style={{ 
+              width: '38px', 
+              height: '38px', 
+              borderRadius: '10px', 
+              background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', 
+              color: 'white', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center', 
+              fontWeight: 700, 
+              fontSize: '0.95rem',
+              boxShadow: '0 4px 10px rgba(16, 185, 129, 0.35)',
+              flexShrink: 0
+            }}>
               İ
             </div>
-            <div>
-              <div style={{ fontSize: '0.875rem', fontWeight: 600, color: 'white', maxWidth: '150px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{user?.email || 'İstifadəçi'}</div>
-              <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Admin</div>
+            <div style={{ minWidth: 0, flex: 1 }}>
+              <div style={{ fontSize: '0.84rem', fontWeight: 600, color: '#f8fafc', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                {user?.email || 'yusifliqezenfer90@gmail.com'}
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginTop: '0.15rem' }}>
+                <span style={{ 
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  padding: '0.1rem 0.45rem',
+                  borderRadius: '6px',
+                  backgroundColor: 'rgba(56, 189, 248, 0.15)',
+                  color: '#38bdf8',
+                  fontSize: '0.7rem',
+                  fontWeight: 700,
+                  letterSpacing: '0.02em',
+                  border: '1px solid rgba(56, 189, 248, 0.25)'
+                }}>
+                  Admin
+                </span>
+                <span style={{ 
+                  width: '6px', 
+                  height: '6px', 
+                  borderRadius: '50%', 
+                  backgroundColor: '#10b981',
+                  boxShadow: '0 0 8px #10b981'
+                }} title="Aktiv" />
+              </div>
             </div>
           </div>
         </div>
