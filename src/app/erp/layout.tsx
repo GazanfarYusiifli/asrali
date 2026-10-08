@@ -270,31 +270,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         { name: 'İnteqrasiyalar', path: '/erp/eticaret/ayarlar' }
       ]
     },
-    {
-      name: 'MİRA AI',
-      icon: <Brain size={19} />,
-      roles: ['SUPERADMIN', 'ACCOUNTANT', 'MANAGER', 'STAFF'],
-      subItems: [
-        { name: 'AI Assistant', path: '/erp/ai' },
-        { name: 'AI Analitika', path: '/erp/ai' },
-        { name: 'Satış Proqnozu', path: '/erp/ai' },
-        { name: 'Stok Proqnozu', path: '/erp/ai' },
-        { name: 'Maliyyə Analizi', path: '/erp/ai' },
-        { name: 'AI Hesabatlar', path: '/erp/ai' }
-      ]
-    },
-    {
-      name: 'Aşralı Şəbəkəsi',
-      icon: <Share2 size={19} />,
-      roles: ['SUPERADMIN', 'ACCOUNTANT', 'MANAGER', 'STAFF'],
-      subItems: [
-        { name: 'Şirkətlər', path: '/erp/network' },
-        { name: 'Məhsullar', path: '/erp/network' },
-        { name: 'Təkliflər', path: '/erp/network' },
-        { name: 'Partnyorlar', path: '/erp/network' },
-        { name: 'Əməliyyatlar', path: '/erp/network' }
-      ]
-    },
+
     {
       name: 'Hesabatlar',
       icon: <BarChart3 size={19} />,
