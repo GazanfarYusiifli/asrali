@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { BarChart3, Calendar, Hash, Banknote, DollarSign, Filter, Download, FileText, Search, X } from 'lucide-react';
+import PageHeaderBanner from '@/components/PageHeaderBanner';
 
 import { getAppStorage, setAppStorage, removeAppStorage } from '@/utils/storage';
 
@@ -138,35 +139,26 @@ export default function SatisRaporuPage() {
   const donem = `${aylar[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
 
   return (
-    <div style={{ padding: '2rem', height: '100%', display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+    <div style={{ padding: '2rem', maxWidth: '1600px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '2rem' }}>
       
-      {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
-            <div style={{ backgroundColor: '#e0e7ff', padding: '0.5rem', borderRadius: '8px', color: '#4f46e5' }}>
-              <BarChart3 size={24} />
-            </div>
-            <h1 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#1e293b' }}>Satış Hesabatı</h1>
-          </div>
-          <p style={{ color: '#64748b', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 500 }}>
-            <Calendar size={16} /> {donem} • AZN
-          </p>
-        </div>
-        <div style={{ display: 'flex', gap: '1rem' }}>
-          <button 
-            onClick={() => setIsFilterOpen(true)}
-            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.6rem 1.2rem', backgroundColor: 'white', border: '1px solid #cbd5e1', color: '#475569', borderRadius: '8px', fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }} 
-            onMouseOver={e => e.currentTarget.style.backgroundColor = '#f8fafc'} 
-            onMouseOut={e => e.currentTarget.style.backgroundColor = 'white'}
-          >
-            <Filter size={18} /> Filtrlər
-          </button>
-          <button style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.6rem 1.2rem', backgroundColor: '#10b981', color: 'white', border: 'none', borderRadius: '8px', fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 6px -1px rgba(16,185,129,0.2)' }} onMouseOver={e => e.currentTarget.style.transform = 'translateY(-2px)'} onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'}>
-            <Download size={18} /> Excel-ə Çıxar
-          </button>
-        </div>
-      </div>
+      {/* Page Header Banner */}
+      <PageHeaderBanner
+        title="Satış Hesabatı"
+        description={`${donem} dövrü üzrə ümumi satış və xidmət gəlirlərinin analitik xülasəsi.`}
+        icon={BarChart3}
+        theme="emerald"
+        badge="Satış Analitikası"
+        primaryAction={{
+          label: "Excel-ə Çıxar",
+          onClick: () => alert("Hesabat Excel formatında ixrac edilir..."),
+          icon: Download
+        }}
+        secondaryAction={{
+          label: "Filtrlər",
+          onClick: () => setIsFilterOpen(true),
+          icon: Filter
+        }}
+      />
 
       {/* Summary Cards */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem' }}>

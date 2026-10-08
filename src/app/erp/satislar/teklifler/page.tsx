@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Plus, Search, FileText, Trash2, Printer, Eye, Edit } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import PageHeaderBanner from '@/components/PageHeaderBanner';
 
 import { getAppStorage, setAppStorage, removeAppStorage } from '@/utils/storage';
 
@@ -34,28 +35,19 @@ export default function TekliflerListesi() {
   };
 
   return (
-    <div style={{ padding: '2rem', height: '100%' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-        <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
-            <div style={{ backgroundColor: '#dcfce7', padding: '0.5rem', borderRadius: '8px', color: '#10b981' }}>
-              <FileText size={24} />
-            </div>
-            <h1 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#1e293b' }}>
-              Qiymət Təklifləri Siyahısı
-            </h1>
-          </div>
-          <p style={{ color: '#64748b' }}>Bütün hazırladığınız qiymət təkliflərini buradan izləyin və idarə edin.</p>
-        </div>
-        <div style={{ display: 'flex', gap: '1rem' }}>
-          <Link href="/erp/satislar/teklifler/yeni" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.6rem 1.2rem', backgroundColor: '#10b981', color: 'white', borderRadius: '8px', fontWeight: 600, textDecoration: 'none', transition: 'all 0.2s', boxShadow: '0 4px 6px -1px rgba(16, 185, 129, 0.2)' }}
-            onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
-            onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
-          >
-            <Plus size={18} /> Yeni Yarat
-          </Link>
-        </div>
-      </div>
+    <div style={{ padding: '2rem', height: '100%', maxWidth: '1600px', margin: '0 auto' }}>
+      <PageHeaderBanner
+        title="Qiymət Təklifləri Siyahısı"
+        description="Bütün hazırladığınız qiymət təkliflərini buradan real vaxtda izləyin və idarə edin."
+        icon={FileText}
+        theme="emerald"
+        badge="Kommersiya Təklifləri"
+        primaryAction={{
+          label: "Yeni Təklif",
+          onClick: () => router.push('/erp/satislar/teklifler/yeni'),
+          icon: Plus
+        }}
+      />
 
       <div style={{ backgroundColor: 'white', borderRadius: '12px', border: '1px solid #e2e8f0', overflow: 'hidden', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)' }}>
         <div style={{ padding: '1.5rem', borderBottom: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between' }}>

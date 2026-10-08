@@ -75,8 +75,8 @@ export default function YeniFakturaYarat() {
           title="Yeni E-Qaimə Yarat"
           description="Dövlət Vergi standartlarına uyğun elektron faktura tərtib et və rəsmiləşdir."
           icon={FilePlus}
-          theme="blue"
-          badge="Elektron Faktura"
+          theme="emerald"
+          badge="Satış & İrsaliyyə"
         />
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 350px', gap: '2rem', alignItems: 'start' }}>

@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation';
 import { getAppStorage, setAppStorage, removeAppStorage } from '@/utils/storage';
 import { createClient } from '@/utils/supabase/client';
 
+import PageHeaderBanner from '@/components/PageHeaderBanner';
+
 export default function YeniSatisPage() {
   const router = useRouter();
   
@@ -174,27 +176,23 @@ export default function YeniSatisPage() {
     <div style={{ padding: '2rem', maxWidth: '1400px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '1.5rem', minHeight: '100%' }}>
       
       {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div>
-          <button onClick={() => router.back()} style={{ background: 'none', border: 'none', color: '#64748b', display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', marginBottom: '0.5rem', fontWeight: 600 }}>
-            <ArrowLeft size={16} /> Geriyə
-          </button>
-          <h1 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#1e293b', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <div style={{ backgroundColor: '#dcfce7', padding: '0.5rem', borderRadius: '8px', color: '#16a34a' }}>
-              <ShoppingCart size={24} />
-            </div>
-            {typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('id') ? 'SATIŞA DÜZƏLİŞ ET' : 'YENİ SATIŞ'}
-          </h1>
-        </div>
-        <div style={{ display: 'flex', gap: '1rem' }}>
-          <button onClick={() => router.back()} style={{ padding: '0.6rem 1.2rem', backgroundColor: 'white', border: '1px solid #cbd5e1', borderRadius: '8px', color: '#475569', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <X size={18} /> Ləğv Et
-          </button>
-          <button onClick={handleSave} style={{ padding: '0.6rem 1.5rem', backgroundColor: '#10b981', border: 'none', borderRadius: '8px', color: 'white', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem', boxShadow: '0 4px 6px -1px rgba(16,185,129,0.2)' }}>
-            <Save size={18} /> Təsdiqlə (Satış Et)
-          </button>
-        </div>
-      </div>
+      <PageHeaderBanner
+        title={typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('id') ? 'Satışa Düzəliş Et' : 'Yeni Satış'}
+        description="Yeni satış fakturası və ya müştəri qaiməsi tərtib edin."
+        icon={ShoppingCart}
+        theme="emerald"
+        badge="Satış Əməliyyatı"
+        primaryAction={{
+          label: "Təsdiqlə (Satış Et)",
+          onClick: handleSave,
+          icon: Save
+        }}
+        secondaryAction={{
+          label: "Geriyə",
+          onClick: () => router.back(),
+          icon: ArrowLeft
+        }}
+      />
 
       {/* Main Form Content */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 350px', gap: '1.5rem', alignItems: 'start' }}>
