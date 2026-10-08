@@ -13,7 +13,8 @@ import { getAppStorage, setAppStorage, removeAppStorage } from '@/utils/storage'
 import { 
   LayoutDashboard, ShoppingCart, ShoppingBag, TrendingDown, Users, 
   CreditCard, Package, Settings, Wrench, FileCheck, Globe, BarChart3, HelpCircle, 
-  ChevronDown, ChevronRight, LogOut, Bell, Wallet, Video, Brain
+  ChevronDown, ChevronRight, LogOut, Bell, Wallet, Video, Brain,
+  Building2, Briefcase, Share2, Shield, FolderGit2
 } from 'lucide-react';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -22,11 +23,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const router = useRouter();
   const { user, loading, role, subscription, trialDaysLeft, updateSubscription, logout } = useAuth();
   
-  const menuNames = [
-    'Ümumi Baxış', 'Satışlar', 'Alışlar', 'Xərclər', 'Müştəri və Təchizatçı',
-    'Kassa və Bank', 'Anbar', 'Digər Xüsusiyyətlər', 'E-Faktura', 'E-Ticarət', 'E-Konsultasiya',
-    'Hesabatlar', 'Sistem Tənzimləmələri', 'Dəstək'
-  ];
   const [openMenus, setOpenMenus] = useState<string[]>([]);
   const [notifications, setNotifications] = useState<any[]>([]);
   const [showNotifications, setShowNotifications] = useState(false);
@@ -117,11 +113,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       router.push('/login');
       return;
     }
-
-    // ⚡ FREE ACCESS MODE — EXPIRED yönləndirməsi deaktiv edilib
-    // if (subscription?.status === 'EXPIRED' && !pathname.startsWith('/erp/upgrade')) {
-    //   router.push('/erp/upgrade');
-    // }
   }, [user, loading, subscription?.status, pathname, router]);
 
   const toggleMenu = (menuName: string) => {
@@ -130,141 +121,241 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   const menuStructure = [
     {
-      name: t('menu_dashboard'),
-      icon: <LayoutDashboard size={20} />,
-      roles: ['SUPERADMIN', 'ACCOUNTANT'],
+      name: 'İdarə Paneli',
+      icon: <LayoutDashboard size={19} />,
+      roles: ['SUPERADMIN', 'ACCOUNTANT', 'MANAGER', 'STAFF'],
       path: '/erp/dashboard',
       subItems: [],
       separatorAfter: true
     },
     {
-      name: t('menu_sales'),
-      icon: <ShoppingCart size={20} />,
-      roles: ['SUPERADMIN', 'ACCOUNTANT'],
+      name: 'Satışlar',
+      icon: <ShoppingCart size={19} />,
+      roles: ['SUPERADMIN', 'ACCOUNTANT', 'MANAGER', 'STAFF'],
       subItems: [
-        { name: t('sub_sales_list'), path: '/erp/satislar/liste' },
-        { name: t('sub_quotes'), path: '/erp/satislar/teklifler' },
-        { name: t('sub_calendar'), path: '/erp/satislar/takvim' },
-        { name: t('sub_smm'), path: '/erp/satislar/smm' },
-        { name: t('sub_sales_report'), path: '/erp/satislar/rapor' },
-        { name: t('sub_bulk_invoice'), path: '/erp/satislar/toplu-fatura' }
+        { name: 'Yeni Satış', path: '/erp/satislar/yeni' },
+        { name: 'Sifarişlər', path: '/erp/satislar/liste' },
+        { name: 'Təkliflər', path: '/erp/satislar/teklifler' },
+        { name: 'Fakturalar', path: '/erp/documents/sales-invoice' },
+        { name: 'İrsaliyyələr', path: '/erp/efatura/irsaliye' },
+        { name: 'Qaytarmalar', path: '/erp/satislar/anonim' },
+        { name: 'Satış Hesabatları', path: '/erp/satislar/rapor' }
       ]
     },
     {
-      name: t('menu_purchases'),
-      icon: <ShoppingBag size={20} />,
-      roles: ['SUPERADMIN', 'ACCOUNTANT'],
+      name: 'Alışlar',
+      icon: <ShoppingBag size={19} />,
+      roles: ['SUPERADMIN', 'ACCOUNTANT', 'MANAGER', 'STAFF'],
       subItems: [
-        { name: t('sub_purchases_list'), path: '/erp/alislar/liste' },
-        { name: t('sub_purchases_report'), path: '/erp/alislar/rapor' }
+        { name: 'Yeni Alış', path: '/erp/alislar/yeni' },
+        { name: 'Alış Sifarişləri', path: '/erp/alislar/liste' },
+        { name: 'Fakturalar', path: '/erp/documents/purchase-invoice' },
+        { name: 'Qaytarmalar', path: '/erp/alislar/liste?filter=qaytarma' },
+        { name: 'Alış Hesabatları', path: '/erp/alislar/rapor' }
       ]
     },
     {
-      name: t('menu_expenses'),
-      icon: <TrendingDown size={20} />,
-      roles: ['SUPERADMIN', 'ACCOUNTANT'],
+      name: 'Anbar',
+      icon: <Package size={19} />,
+      roles: ['SUPERADMIN', 'ACCOUNTANT', 'MANAGER', 'STAFF'],
       subItems: [
-        { name: t('sub_expenses_list'), path: '/erp/giderler/liste' },
-        { name: t('sub_recurring_expenses'), path: '/erp/giderler/tekrarlayan' },
-        { name: t('sub_payroll'), path: '/erp/giderler/personel' },
-        { name: t('sub_projects'), path: '/erp/giderler/proje' }
-      ],
-      separatorAfter: true
-    },
-    {
-      name: t('menu_crm'),
-      icon: <Users size={20} />,
-      roles: ['SUPERADMIN', 'ACCOUNTANT'],
-      subItems: [
-        { name: t('sub_customer_list'), path: '/erp/cari/musteriler' },
-        { name: t('sub_supplier_list'), path: '/erp/cari/tedarikciler' },
-        { name: t('sub_search'), path: '/erp/cari/arama' }
+        { name: 'Məhsullar', path: '/erp/stok/urunler' },
+        { name: 'Kateqoriyalar', path: '/erp/stok/depolar' },
+        { name: 'Anbarlar', path: '/erp/master-data/warehouses' },
+        { name: 'Stok', path: '/erp/warehouse/stock-balance' },
+        { name: 'Sayım', path: '/erp/stok/sayim' },
+        { name: 'Transfer', path: '/erp/stok/transfer' },
+        { name: 'Stok Düzəlişi', path: '/erp/stok/fiyat-guncelleme' },
+        { name: 'Stok Hesabatları', path: '/erp/reports/warehouse' }
       ]
     },
     {
-      name: t('menu_finance'),
-      icon: <Wallet size={20} />,
-      roles: ['SUPERADMIN', 'ACCOUNTANT'],
+      name: 'Cari Hesablar',
+      icon: <Users size={19} />,
+      roles: ['SUPERADMIN', 'ACCOUNTANT', 'MANAGER', 'STAFF'],
       subItems: [
-        { name: t('sub_transactions'), path: '/erp/finans/islemler' },
-        { name: t('sub_assets'), path: '/erp/finans/aktivler' },
-        { name: t('sub_bank_integration'), path: '/erp/finans/entegrasyon' },
-        { name: t('sub_credit_calc'), path: '/erp/finans/kredit' },
-        { name: 'Valyuta Kalkulyatoru', path: '/erp/finans/valyuta' }
+        { name: 'Müştərilər', path: '/erp/cari/musteriler' },
+        { name: 'Təchizatçılar', path: '/erp/cari/tedarikciler' },
+        { name: 'Borclar', path: '/erp/reports/debts' },
+        { name: 'Ödənişlər', path: '/erp/finans/islemler' },
+        { name: 'Üzləşmə', path: '/erp/diger/mutabakat' }
       ]
     },
     {
-      name: t('menu_inventory'),
-      icon: <Package size={20} />,
-      roles: ['SUPERADMIN', 'ACCOUNTANT'],
+      name: 'Maliyyə',
+      icon: <CreditCard size={19} />,
+      roles: ['SUPERADMIN', 'ACCOUNTANT', 'MANAGER', 'STAFF'],
       subItems: [
-        { name: t('sub_product_list'), path: '/erp/stok/urunler' },
-        { name: t('sub_inventory_count'), path: '/erp/stok/sayim' },
-        { name: t('sub_inventory_transfer'), path: '/erp/stok/transfer' },
-        { name: t('sub_warehouse'), path: '/erp/stok/depolar' },
-        { name: t('sub_special_price'), path: '/erp/stok/ozel-fiyat' }
-      ],
-      separatorAfter: true
-    },
-    {
-      name: t('menu_other'),
-      icon: <Wrench size={20} />,
-      roles: ['SUPERADMIN', 'ACCOUNTANT'],
-      subItems: [
-        { name: t('sub_checks'), path: '/erp/diger/cek-senet' },
-        { name: t('sub_service'), path: '/erp/diger/servis' },
-        { name: t('sub_erecon'), path: '/erp/diger/mutabakat' }
+        { name: 'Kassa', path: '/erp/finance/cash-balance' },
+        { name: 'Bank', path: '/erp/finance/bank-accounts' },
+        { name: 'Gəlirlər', path: '/erp/reports/income-expense' },
+        { name: 'Xərclər', path: '/erp/giderler/liste' },
+        { name: 'Ödənişlər', path: '/erp/finance/cash-operations' },
+        { name: 'Aktivlər', path: '/erp/finans/aktivler' },
+        { name: 'Çek / Veksəl', path: '/erp/diger/cek-senet' },
+        { name: 'Maliyyə Hesabatları', path: '/erp/accounting/balance-sheet' }
       ]
     },
     {
-      name: t('menu_einvoice'),
-      icon: <FileCheck size={20} />,
-      roles: ['SUPERADMIN', 'ACCOUNTANT'],
+      name: 'İnsan Resursları',
+      icon: <Briefcase size={19} />,
+      roles: ['SUPERADMIN', 'ACCOUNTANT', 'MANAGER'],
       subItems: [
-        { name: t('sub_new_einvoice'), path: '/erp/efatura/irsaliye' },
-        { name: t('sub_in_einvoice'), path: '/erp/efatura/gelen' },
-        { name: t('sub_out_einvoice'), path: '/erp/efatura/giden' },
-        { name: t('sub_rejected_einvoice'), path: '/erp/efatura/red' },
-        { name: t('sub_error_einvoice'), path: '/erp/efatura/hatali' }
+        { name: 'İşçilər', path: '/erp/giderler/personel' },
+        { name: 'Davamiyyət', path: '/erp/giderler/personel/icazeler' },
+        { name: 'Məzuniyyət', path: '/erp/giderler/personel/icazeler' },
+        { name: 'Maaş', path: '/erp/giderler/personel/toplu-maas' },
+        { name: 'Bonus', path: '/erp/giderler/personel/satish-primi' },
+        { name: 'İşçi Hesabatları', path: '/erp/giderler/personel/performans' }
+      ]
+    },
+    {
+      name: 'Filiallar',
+      icon: <Building2 size={19} />,
+      roles: ['SUPERADMIN', 'ACCOUNTANT', 'MANAGER'],
+      subItems: [
+        { name: 'Filiallar', path: '/erp/management/org-info' },
+        { name: 'Şöbələr', path: '/erp/management/settings' },
+        { name: 'Filial Hesabatları', path: '/erp/reports/periodic' }
+      ]
+    },
+    {
+      name: 'E-Qaimə / E-Sənədlər',
+      icon: <FileCheck size={19} />,
+      roles: ['SUPERADMIN', 'ACCOUNTANT', 'MANAGER', 'STAFF'],
+      subItems: [
+        { name: 'Yeni E-Qaimə', path: '/erp/efatura/irsaliye' },
+        { name: 'Gələn', path: '/erp/efatura/gelen' },
+        { name: 'Göndərilən', path: '/erp/efatura/giden' },
+        { name: 'Rədd edilən', path: '/erp/efatura/red' },
+        { name: 'Xətalı', path: '/erp/efatura/hatali' },
+        { name: 'İrsaliyyələr', path: '/erp/efatura/irsaliye' }
+      ]
+    },
+    {
+      name: 'Texniki Servis',
+      icon: <Wrench size={19} />,
+      roles: ['SUPERADMIN', 'ACCOUNTANT', 'MANAGER', 'STAFF'],
+      subItems: [
+        { name: 'Servis Sifarişləri', path: '/erp/diger/servis' },
+        { name: 'Müştəri Cihazları', path: '/erp/service/logs' },
+        { name: 'Texniklər', path: '/erp/master-data/employees' },
+        { name: 'Ehtiyat Hissələri', path: '/erp/master-data/goods' },
+        { name: 'Servis Hesabatları', path: '/erp/reports/services' }
+      ]
+    },
+    {
+      name: 'Layihələr',
+      icon: <FolderGit2 size={19} />,
+      roles: ['SUPERADMIN', 'ACCOUNTANT', 'MANAGER'],
+      subItems: [
+        { name: 'Layihələr', path: '/erp/giderler/proje' },
+        { name: 'Büdcələr', path: '/erp/dashboard/commerce' },
+        { name: 'Tapşırıqlar', path: '/erp/giderler/proje' },
+        { name: 'Xərclər', path: '/erp/giderler/liste' },
+        { name: 'Layihə Mənfəəti', path: '/erp/accounting/trial-balance' }
+      ]
+    },
+    {
+      name: 'E-Ticarət',
+      icon: <Globe size={19} />,
+      roles: ['SUPERADMIN', 'ACCOUNTANT', 'MANAGER'],
+      subItems: [
+        { name: 'Mağazalar', path: '/erp/eticaret/ayarlar' },
+        { name: 'Sifarişlər', path: '/erp/eticaret/siparisler' },
+        { name: 'Məhsullar', path: '/erp/eticaret/pro' },
+        { name: 'Stok Sinxronizasiyası', path: '/erp/warehouse/stock-balance' },
+        { name: 'Ödənişlər', path: '/erp/finance/cash-operations' },
+        { name: 'Çatdırılma', path: '/erp/warehouse/outgoing' },
+        { name: 'İnteqrasiyalar', path: '/erp/eticaret/ayarlar' }
+      ]
+    },
+    {
+      name: 'MİRA AI',
+      icon: <Brain size={19} />,
+      roles: ['SUPERADMIN', 'ACCOUNTANT', 'MANAGER', 'STAFF'],
+      subItems: [
+        { name: 'AI Assistant', path: '/erp/ai' },
+        { name: 'AI Analitika', path: '/erp/ai' },
+        { name: 'Satış Proqnozu', path: '/erp/ai' },
+        { name: 'Stok Proqnozu', path: '/erp/ai' },
+        { name: 'Maliyyə Analizi', path: '/erp/ai' },
+        { name: 'AI Hesabatlar', path: '/erp/ai' }
       ]
     },
     {
       name: 'Aşralı Şəbəkəsi',
-      icon: <FileCheck size={20} />,
-      roles: ['SUPERADMIN', 'ACCOUNTANT'],
-      path: '/erp/network',
-      subItems: []
-    },
-    {
-      name: 'MİRA AI',
-      icon: <Brain size={20} />,
-      roles: ['SUPERADMIN', 'ACCOUNTANT'],
-      path: '/erp/ai',
-      subItems: []
-    },
-    {
-      name: t('menu_ecommerce'),
-      icon: <Globe size={20} />,
-      roles: ['SUPERADMIN', 'ACCOUNTANT'],
+      icon: <Share2 size={19} />,
+      roles: ['SUPERADMIN', 'ACCOUNTANT', 'MANAGER', 'STAFF'],
       subItems: [
-        { name: t('sub_in_orders'), path: '/erp/eticaret/pro' },
-        { name: t('sub_settings'), path: '/erp/eticaret/pro' }
+        { name: 'Şirkətlər', path: '/erp/network' },
+        { name: 'Məhsullar', path: '/erp/network' },
+        { name: 'Təkliflər', path: '/erp/network' },
+        { name: 'Partnyorlar', path: '/erp/network' },
+        { name: 'Əməliyyatlar', path: '/erp/network' }
       ]
     },
     {
-      name: 'E-Konsultasiya',
-      icon: <Video size={20} />,
+      name: 'Hesabatlar',
+      icon: <BarChart3 size={19} />,
+      roles: ['SUPERADMIN', 'ACCOUNTANT', 'MANAGER'],
+      subItems: [
+        { name: 'Satış', path: '/erp/satislar/rapor' },
+        { name: 'Alış', path: '/erp/alislar/rapor' },
+        { name: 'Maliyyə', path: '/erp/reports/income-expense' },
+        { name: 'Anbar', path: '/erp/reports/warehouse' },
+        { name: 'Müştəri', path: '/erp/reports/debts' },
+        { name: 'Təchizatçı', path: '/erp/cari/tedarikciler' },
+        { name: 'İşçi', path: '/erp/giderler/personel/performans' },
+        { name: 'Filial', path: '/erp/reports/periodic' },
+        { name: 'Layihə', path: '/erp/giderler/proje' }
+      ]
+    },
+    {
+      name: 'İnteqrasiyalar',
+      icon: <Globe size={19} />,
       roles: ['SUPERADMIN', 'ACCOUNTANT'],
-      path: 'https://nitrocalls.site',
+      subItems: [
+        { name: 'Bank', path: '/erp/finans/entegrasyon' },
+        { name: 'E-Qaimə', path: '/erp/efatura/irsaliye' },
+        { name: 'Ödəniş', path: '/erp/finans/islemler' },
+        { name: 'Shopify', path: '/erp/eticaret/ayarlar' },
+        { name: 'WooCommerce', path: '/erp/eticaret/ayarlar' },
+        { name: 'WhatsApp', path: '/erp/service/tests' },
+        { name: 'SMS / Email', path: '/erp/service/logs' },
+        { name: 'Kargo', path: '/erp/warehouse/outgoing' },
+        { name: 'Telefon / Call Center', path: 'https://nitrocalls.site' }
+      ]
+    },
+    {
+      name: 'Bildirişlər',
+      icon: <Bell size={19} />,
+      roles: ['SUPERADMIN', 'ACCOUNTANT', 'MANAGER', 'STAFF'],
+      path: '/erp/dashboard',
       subItems: []
     },
     {
-      name: t('menu_support'),
-      icon: <HelpCircle size={20} />,
+      name: 'Tənzimləmələr',
+      icon: <Settings size={19} />,
       roles: ['SUPERADMIN', 'ACCOUNTANT'],
       subItems: [
-        { name: t('sub_support_center'), path: '/erp/yardim' }
+        { name: 'Şirkət', path: '/erp/management/org-info' },
+        { name: 'İstifadəçilər', path: '/erp/users/list' },
+        { name: 'Rollar və İcazələr', path: '/erp/users/roles' },
+        { name: 'Vergilər', path: '/erp/management/settings' },
+        { name: 'Valyutalar', path: '/erp/finans/valyuta' },
+        { name: 'Sənədlər', path: '/erp/dashboard/documents' },
+        { name: 'Bildirişlər', path: '/erp/ayarlar' },
+        { name: 'Təhlükəsizlik', path: '/erp/management/audit' },
+        { name: 'Audit Log', path: '/erp/management/audit' }
       ]
+    },
+    {
+      name: 'Dəstək',
+      icon: <HelpCircle size={19} />,
+      roles: ['SUPERADMIN', 'ACCOUNTANT', 'MANAGER', 'STAFF'],
+      path: '/erp/yardim',
+      subItems: []
     }
   ];
 
