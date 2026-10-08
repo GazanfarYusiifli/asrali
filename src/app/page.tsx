@@ -147,7 +147,17 @@ export default function Home() {
 
   return (
     <div className="hex-root-container">
-      
+      {/* GLOBAL HEX.TECH CARTESIAN BLUEPRINT GRID & MESH BACKDROP (COVERS ENTIRE SITE) */}
+      <div className="hex-global-backdrop" aria-hidden="true">
+        <div className="hex-radial-spot hex-spot-violet" />
+        <div className="hex-radial-spot hex-spot-rose" />
+        <div className="hex-radial-spot hex-spot-emerald" />
+        <div className="hex-radial-spot hex-spot-lower-amethyst" />
+        <div className="hex-radial-spot hex-spot-lower-emerald" />
+        <div className="hex-cartesian-grid" />
+        <div className="hex-dot-pattern" />
+      </div>
+
       {/* HEADER / NAVBAR */}
       <header className="site-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
@@ -181,16 +191,8 @@ export default function Home() {
         </div>
       </header>
 
-      {/* HERO SECTION WITH AUTHENTIC HEX.TECH BACKDROP */}
+      {/* HERO SECTION */}
       <section className="hero-section">
-        {/* Hex.tech Ambient Gradient Mesh & Dot Grid */}
-        <div className="hex-hero-backdrop">
-          <div className="hex-radial-spot hex-spot-violet" />
-          <div className="hex-radial-spot hex-spot-rose" />
-          <div className="hex-radial-spot hex-spot-emerald" />
-          <div className="hex-cartesian-grid" />
-        </div>
-
         <div className="hero-content">
           <h1 className="hero-title">
             Biznesinizi Daha Sadə və <br/>
@@ -759,50 +761,74 @@ export default function Home() {
           text-align: center;
         }
 
-        /* Hex.tech Cartesian Blueprint & Radial Spots */
-        .hex-hero-backdrop {
-          position: absolute;
+        /* Hex.tech Full-Page Cartesian Blueprint & Mesh Backdrop */
+        .hex-global-backdrop {
+          position: fixed;
           inset: 0;
           pointer-events: none;
           z-index: 0;
           overflow: hidden;
+          width: 100vw;
+          height: 100vh;
         }
         .hex-radial-spot {
           position: absolute;
           border-radius: 50%;
-          filter: blur(85px);
-          opacity: 0.65;
+          filter: blur(90px);
+          opacity: 0.55;
+          pointer-events: none;
         }
         .hex-spot-violet {
-          top: -10%;
-          left: 20%;
+          top: -5%;
+          left: 15%;
           width: 50vw;
           height: 45vw;
-          background: radial-gradient(circle, rgba(164, 119, 178, 0.25) 0%, transparent 70%);
+          background: radial-gradient(circle, rgba(164, 119, 178, 0.22) 0%, transparent 70%);
         }
         .hex-spot-rose {
-          top: 15%;
-          right: -10%;
-          width: 45vw;
-          height: 40vw;
-          background: radial-gradient(circle, rgba(245, 192, 192, 0.3) 0%, transparent 70%);
+          top: 10%;
+          right: -8%;
+          width: 48vw;
+          height: 42vw;
+          background: radial-gradient(circle, rgba(245, 192, 192, 0.28) 0%, transparent 70%);
         }
         .hex-spot-emerald {
-          top: 30%;
-          left: -5%;
+          top: 25%;
+          left: -8%;
           width: 45vw;
           height: 40vw;
-          background: radial-gradient(circle, rgba(92, 177, 152, 0.2) 0%, transparent 70%);
+          background: radial-gradient(circle, rgba(92, 177, 152, 0.18) 0%, transparent 70%);
         }
+        .hex-spot-lower-amethyst {
+          bottom: 15%;
+          right: 5%;
+          width: 45vw;
+          height: 40vw;
+          background: radial-gradient(circle, rgba(164, 119, 178, 0.16) 0%, transparent 70%);
+        }
+        .hex-spot-lower-emerald {
+          bottom: -5%;
+          left: 10%;
+          width: 50vw;
+          height: 40vw;
+          background: radial-gradient(circle, rgba(92, 177, 152, 0.15) 0%, transparent 70%);
+        }
+        /* Crisp Cartesian Blueprint Grid (Hex.tech style) */
         .hex-cartesian-grid {
           position: absolute;
           inset: 0;
           background-size: 32px 32px;
           background-image: 
-            linear-gradient(to right, rgba(43, 37, 44, 0.05) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(43, 37, 44, 0.05) 1px, transparent 1px);
-          mask-image: radial-gradient(ellipse at 50% 35%, #000 35%, transparent 80%);
-          -webkit-mask-image: radial-gradient(ellipse at 50% 35%, #000 35%, transparent 80%);
+            linear-gradient(to right, rgba(43, 37, 44, 0.055) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(43, 37, 44, 0.055) 1px, transparent 1px);
+        }
+        /* Subtle Dot Accent Pattern Overlay */
+        .hex-dot-pattern {
+          position: absolute;
+          inset: 0;
+          background-size: 32px 32px;
+          background-position: 0 0;
+          background-image: radial-gradient(rgba(43, 37, 44, 0.12) 1px, transparent 1px);
         }
 
         .hero-content {
@@ -1453,7 +1479,11 @@ export default function Home() {
 
         /* FOOTER */
         .site-footer {
-          background: #fbf9fa;
+          position: relative;
+          z-index: 2;
+          background: rgba(247, 245, 246, 0.7);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
           border-top: 1px solid #e9e5e8;
           padding: 5rem 6% 2.5rem;
         }
