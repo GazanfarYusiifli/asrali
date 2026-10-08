@@ -54,49 +54,49 @@ export default function Home() {
   const features = [
     { 
       icon: BarChart3, 
-      color: '#10b981', 
-      bg: 'rgba(16, 185, 129, 0.1)', 
-      border: 'rgba(16, 185, 129, 0.25)',
+      color: '#059669', 
+      bg: '#ecfdf5', 
+      border: '#a7f3d0',
       title: 'Müştəri və Satış İdarəetməsi', 
       desc: 'Müştəri bazası, borc xülasələri, cari hesab qalığı və real-vaxt ödəniş tarixçəsi tək idarəetmə panelində.' 
     },
     { 
       icon: FileText, 
-      color: '#38bdf8', 
-      bg: 'rgba(56, 189, 248, 0.1)', 
-      border: 'rgba(56, 189, 248, 0.25)',
+      color: '#0284c7', 
+      bg: '#f0f9ff', 
+      border: '#bae6fd',
       title: 'Avtomatlaşdırılmış Müqavilələr', 
       desc: 'Şablon əsaslı müqavilə yaratmaq, avtomatik nömrələmə, çap, QR təsdiqi və ani PDF ixrac funksiyaları.' 
     },
     { 
       icon: TrendingUp, 
-      color: '#10b981', 
-      bg: 'rgba(16, 185, 129, 0.1)', 
-      border: 'rgba(16, 185, 129, 0.25)',
+      color: '#059669', 
+      bg: '#ecfdf5', 
+      border: '#a7f3d0',
       title: 'Maliyyə & Balans Analitikası', 
       desc: 'Gəlir-xərc nisbətləri, debitor-kreditor borc hesabatları, kassa və bank çıxarışları dəqiq göstəricilərlə.' 
     },
     { 
       icon: Package, 
-      color: '#a855f7', 
-      bg: 'rgba(168, 85, 247, 0.1)', 
-      border: 'rgba(168, 85, 247, 0.25)',
+      color: '#7c3aed', 
+      bg: '#f5f3ff', 
+      border: '#ddd6fe',
       title: 'İnventar & Stok İdarəetməsi', 
       desc: 'Çoxanbarlı stok izləmə, barkod, kritik limit xəbərdarlıqları, anbarlararası transfer və sayım prosesləri.' 
     },
     { 
       icon: Users, 
-      color: '#f59e0b', 
-      bg: 'rgba(245, 158, 11, 0.1)', 
-      border: 'rgba(245, 158, 11, 0.25)',
+      color: '#d97706', 
+      bg: '#fffbeb', 
+      border: '#fde68a',
       title: 'Əməkdaş və HR Uçotu', 
       desc: 'Əməkdaş məlumatları, vəzifələr, davamiyyət və məzuniyyətlər, toplu maaş hesablanması və bonus uçotu.' 
     },
     { 
       icon: ShieldCheck, 
-      color: '#06b6d4', 
-      bg: 'rgba(6, 182, 212, 0.1)', 
-      border: 'rgba(6, 182, 212, 0.25)',
+      color: '#0891b2', 
+      bg: '#ecfeff', 
+      border: '#a5f3fc',
       title: 'Təhlükəsiz Bulud İnfrastrukturu', 
       desc: 'Hər biznes üçün ayrıca izolyasiya olunmuş verilənlər bazası, gündəlik nüsxələmə və güclü icazə idarəsi.' 
     }
@@ -122,7 +122,7 @@ export default function Home() {
   ];
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#030712', color: '#f3f4f6', overflowX: 'hidden', fontFamily: 'inherit' }}>
+    <div style={{ minHeight: '100vh', backgroundColor: '#f8fafc', color: '#0f172a', overflowX: 'hidden', fontFamily: 'inherit' }}>
       
       {/* HEADER / NAVBAR */}
       <header className="site-header">
@@ -136,15 +136,15 @@ export default function Home() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 4px 14px rgba(16, 185, 129, 0.4)',
+              boxShadow: '0 4px 14px rgba(16, 185, 129, 0.35)',
               fontWeight: 900,
               color: 'white',
               fontSize: '1.25rem'
             }}>
               A
             </div>
-            <span style={{ fontSize: '1.45rem', fontWeight: 900, letterSpacing: '-0.5px', color: 'white' }}>
-              ASRALI <span style={{ color: '#10b981' }}>ERP</span>
+            <span style={{ fontSize: '1.45rem', fontWeight: 900, letterSpacing: '-0.5px', color: '#0f172a' }}>
+              ASRALI <span style={{ color: '#059669' }}>ERP</span>
             </span>
           </Link>
         </div>
@@ -171,7 +171,7 @@ export default function Home() {
 
       {/* HERO SECTION */}
       <section className="hero-section">
-        {/* Ambient Gradient Glows */}
+        {/* Soft Ambient Light Glows */}
         <div className="glow-sphere glow-left" />
         <div className="glow-sphere glow-right" />
         <div className="glow-sphere glow-center" />
@@ -179,7 +179,7 @@ export default function Home() {
         <div className="hero-content">
           <div className="hero-badge">
             <span className="badge-dot" />
-            <Sparkles size={14} style={{ color: '#10b981' }} />
+            <Sparkles size={14} style={{ color: '#059669' }} />
             <span>{t('hero_badge')}</span>
           </div>
           
@@ -197,8 +197,8 @@ export default function Home() {
               <span>{t('btn_register_now')}</span>
               <ArrowRight size={18} />
             </Link>
-            <a href="#is-prinsipi" className="btn-glass-secondary">
-              <Zap size={17} style={{ color: '#10b981' }} />
+            <a href="#is-prinsipi" className="btn-light-secondary">
+              <Zap size={17} style={{ color: '#059669' }} />
               <span>Necə İşləyir?</span>
             </a>
           </div>
@@ -213,10 +213,10 @@ export default function Home() {
                 <Star size={15} fill="#f59e0b" />
                 <Star size={15} fill="#f59e0b" />
               </div>
-              <span style={{ fontWeight: 700, color: 'white', fontSize: '0.88rem' }}>5.0 / 5.0</span>
+              <span style={{ fontWeight: 800, color: '#0f172a', fontSize: '0.88rem' }}>5.0 / 5.0</span>
             </div>
             <div className="proof-divider" />
-            <span style={{ color: '#94a3b8', fontSize: '0.88rem' }}>14 gün limitsiz pulsuz sınaq • Kredit kartı tələb olunmur</span>
+            <span style={{ color: '#64748b', fontSize: '0.88rem', fontWeight: 500 }}>14 gün pulsuz sınaq • Kredit kartı tələb olunmur</span>
           </div>
         </div>
 
@@ -276,7 +276,7 @@ export default function Home() {
             <span className="ticker-item"><Check size={16} className="text-emerald" /> Müqavilə, qəbz və hesabatların ani ixrac imkanı</span>
             <span className="ticker-item"><Check size={16} className="text-emerald" /> Rol əsaslı təhlükəsiz giriş və ətraflı icazə sistemi</span>
             <span className="ticker-item"><Check size={16} className="text-emerald" /> Barkodlu satış və anbar qalıqlarının real-vaxt sinxronizasiyası</span>
-            {/* Duplicated for smooth infinite loop */}
+            {/* Infinite loop copy */}
             <span className="ticker-item"><Check size={16} className="text-emerald" /> Multi-tenant struktur: hər biznes üçün ayrıca verilənlər bazası</span>
             <span className="ticker-item"><Check size={16} className="text-emerald" /> Müqavilə, qəbz və hesabatların ani ixrac imkanı</span>
             <span className="ticker-item"><Check size={16} className="text-emerald" /> Rol əsaslı təhlükəsiz giriş və ətraflı icazə sistemi</span>
@@ -349,7 +349,7 @@ export default function Home() {
                 <div className="step-top-row">
                   <div className="step-number-badge">{step.num}</div>
                   <div className="step-icon-bubble">
-                    <Icon size={20} style={{ color: '#10b981' }} />
+                    <Icon size={20} style={{ color: '#059669' }} />
                   </div>
                 </div>
                 <h3 className="step-title">{step.title}</h3>
@@ -388,7 +388,7 @@ export default function Home() {
             return (
               <div key={i} className="org-card">
                 <div className="org-icon-wrapper">
-                  <Icon size={28} style={{ color: '#10b981' }} />
+                  <Icon size={28} style={{ color: '#059669' }} />
                 </div>
                 <h3 className="org-title">{org.title}</h3>
                 <p className="org-desc">{org.desc}</p>
@@ -440,14 +440,14 @@ export default function Home() {
             <div className="featured-badge">ƏN ÇOX SEÇİLƏN</div>
             
             <div className="pricing-top">
-              <h3 className="pricing-name" style={{ color: '#10b981' }}>PRO PAKET</h3>
+              <h3 className="pricing-name" style={{ color: '#059669' }}>PRO PAKET</h3>
               <p className="pricing-subtitle">Kiçik və orta bizneslər üçün ideal seçim</p>
               <div className="pricing-cost">
                 <span className="price-currency">{pricing.symbol}</span>
                 <span className="price-big gradient-text">{pricing.amount}</span>
                 <span className="price-period">/ ay</span>
               </div>
-              <div className="price-term" style={{ color: '#10b981' }}>Tam funksional paket</div>
+              <div className="price-term" style={{ color: '#059669' }}>Tam funksional paket</div>
             </div>
             
             <ul className="pricing-features">
@@ -516,13 +516,13 @@ export default function Home() {
               >
                 <div className="faq-question">
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
-                    <HelpCircle size={19} style={{ color: isOpen ? '#10b981' : '#64748b' }} />
+                    <HelpCircle size={19} style={{ color: isOpen ? '#059669' : '#94a3b8' }} />
                     <span>{faq.q}</span>
                   </div>
                   <ChevronRight 
                     size={18} 
                     style={{ 
-                      color: isOpen ? '#10b981' : '#64748b', 
+                      color: isOpen ? '#059669' : '#94a3b8', 
                       transform: isOpen ? 'rotate(90deg)' : 'rotate(0deg)',
                       transition: 'transform 0.25s ease'
                     }} 
@@ -595,8 +595,8 @@ export default function Home() {
               }}>
                 A
               </div>
-              <span style={{ fontSize: '1.45rem', fontWeight: 900, letterSpacing: '-0.5px', color: 'white' }}>
-                ASRALI <span style={{ color: '#10b981' }}>ERP</span>
+              <span style={{ fontSize: '1.45rem', fontWeight: 900, letterSpacing: '-0.5px', color: '#0f172a' }}>
+                ASRALI <span style={{ color: '#059669' }}>ERP</span>
               </span>
             </div>
             <p className="footer-brand-desc">
@@ -652,12 +652,12 @@ export default function Home() {
         </div>
       </footer>
 
-      {/* GLOBAL CSS STYLING */}
+      {/* GLOBAL CSS STYLING - MODERN LIGHT LUXURY THEME */}
       <style dangerouslySetInnerHTML={{__html: `
         /* Reset & Base */
         html { scroll-behavior: smooth; }
         
-        .text-emerald { color: #10b981; }
+        .text-emerald { color: #059669; }
 
         /* HEADER */
         .site-header {
@@ -668,111 +668,110 @@ export default function Home() {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          background: rgba(3, 7, 18, 0.75);
-          backdrop-filter: blur(24px);
-          -webkit-backdrop-filter: blur(24px);
+          background: rgba(255, 255, 255, 0.88);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
           z-index: 100;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+          border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
         }
 
         .desktop-nav {
           display: flex;
-          gap: 2rem;
+          gap: 2.2rem;
           align-items: center;
         }
 
         .nav-link {
-          color: #94a3b8;
-          font-weight: 500;
+          color: #475569;
+          font-weight: 600;
           text-decoration: none;
           font-size: 0.92rem;
           transition: color 0.2s ease;
           position: relative;
         }
         .nav-link:hover {
-          color: #ffffff;
+          color: #059669;
         }
 
         .nav-btn-secondary {
-          color: #cbd5e1;
-          font-weight: 600;
+          color: #334155;
+          font-weight: 700;
           font-size: 0.92rem;
           text-decoration: none;
-          padding: 0.55rem 1.15rem;
-          border-radius: 10px;
+          padding: 0.6rem 1.25rem;
+          border-radius: 12px;
           transition: all 0.2s;
         }
         .nav-btn-secondary:hover {
-          color: white;
-          background: rgba(255, 255, 255, 0.05);
+          color: #059669;
+          background: #f1f5f9;
         }
 
         .nav-btn-primary {
           display: inline-flex;
           align-items: center;
           gap: 0.45rem;
-          padding: 0.6rem 1.35rem;
+          padding: 0.62rem 1.35rem;
           background: linear-gradient(135deg, #10b981 0%, #059669 100%);
           color: white;
           border-radius: 12px;
-          font-weight: 600;
+          font-weight: 700;
           font-size: 0.92rem;
           text-decoration: none;
-          box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35);
+          box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
           transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-          border: 1px solid rgba(255, 255, 255, 0.15);
         }
         .nav-btn-primary:hover {
           transform: translateY(-2px);
-          box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5);
+          box-shadow: 0 8px 22px rgba(16, 185, 129, 0.45);
         }
 
         /* HERO SECTION */
         .hero-section {
-          padding: 10rem 5% 5rem;
+          padding: 9.5rem 5% 5rem;
           position: relative;
           overflow: hidden;
           display: flex;
           flex-direction: column;
           align-items: center;
           text-align: center;
-          background: radial-gradient(ellipse at 50% 0%, #0f172a 0%, #030712 75%);
+          background: radial-gradient(ellipse at 50% 0%, #ecfdf5 0%, #f8fafc 70%);
         }
 
         .glow-sphere {
           position: absolute;
           border-radius: 50%;
-          filter: blur(100px);
+          filter: blur(80px);
           pointer-events: none;
           z-index: 1;
         }
         .glow-left {
-          top: 15%;
-          left: -10%;
-          width: 50vw;
-          height: 50vw;
-          background: radial-gradient(circle, rgba(16, 185, 129, 0.14) 0%, rgba(0, 0, 0, 0) 70%);
-        }
-        .glow-right {
-          top: 20%;
-          right: -10%;
+          top: 10%;
+          left: -5%;
           width: 45vw;
           height: 45vw;
-          background: radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, rgba(0, 0, 0, 0) 70%);
+          background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, rgba(255, 255, 255, 0) 70%);
+        }
+        .glow-right {
+          top: 15%;
+          right: -5%;
+          width: 40vw;
+          height: 40vw;
+          background: radial-gradient(circle, rgba(14, 165, 233, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
         }
         .glow-center {
           top: 5%;
-          left: 30%;
-          width: 40vw;
-          height: 40vw;
-          background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, rgba(0, 0, 0, 0) 70%);
+          left: 25%;
+          width: 50vw;
+          height: 50vw;
+          background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, rgba(255, 255, 255, 0) 70%);
         }
 
         .hero-content {
           position: relative;
           z-index: 2;
-          max-width: 950px;
+          max-width: 960px;
           margin: 0 auto;
         }
 
@@ -781,15 +780,14 @@ export default function Home() {
           align-items: center;
           gap: 0.65rem;
           padding: 0.45rem 1.15rem;
-          background: rgba(16, 185, 129, 0.08);
-          border: 1px solid rgba(16, 185, 129, 0.25);
+          background: #ffffff;
+          border: 1px solid #d1fae5;
           border-radius: 9999px;
-          color: #d1fae5;
+          color: #065f46;
           font-size: 0.88rem;
-          font-weight: 600;
+          font-weight: 700;
           margin-bottom: 2rem;
-          backdrop-filter: blur(12px);
-          box-shadow: 0 4px 20px rgba(16, 185, 129, 0.12);
+          box-shadow: 0 4px 15px rgba(16, 185, 129, 0.1);
         }
 
         .badge-dot {
@@ -797,7 +795,7 @@ export default function Home() {
           height: 7px;
           border-radius: 50%;
           background-color: #10b981;
-          box-shadow: 0 0 10px #10b981;
+          box-shadow: 0 0 8px #10b981;
           animation: pulse 2s infinite;
         }
 
@@ -811,22 +809,22 @@ export default function Home() {
           font-weight: 900;
           line-height: 1.12;
           letter-spacing: -1.5px;
-          color: white;
+          color: #0f172a;
           margin-bottom: 1.75rem;
         }
 
         .gradient-text {
-          background: linear-gradient(135deg, #34d399 0%, #10b981 50%, #38bdf8 100%);
+          background: linear-gradient(135deg, #059669 0%, #10b981 50%, #0284c7 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
         }
 
         .hero-subtitle {
           font-size: clamp(1.05rem, 1.8vw, 1.25rem);
-          color: #94a3b8;
-          max-width: 760px;
+          color: #475569;
+          max-width: 780px;
           margin: 0 auto 2.5rem;
-          line-height: 1.65;
+          line-height: 1.7;
           font-weight: 400;
         }
 
@@ -843,52 +841,52 @@ export default function Home() {
           display: inline-flex;
           align-items: center;
           gap: 0.65rem;
-          padding: 1rem 2.2rem;
+          padding: 1.05rem 2.25rem;
           background: linear-gradient(135deg, #10b981 0%, #059669 100%);
           color: white;
+          border-radius: 14px;
+          font-weight: 800;
+          font-size: 1.05rem;
+          text-decoration: none;
+          box-shadow: 0 8px 25px rgba(16, 185, 129, 0.35);
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .btn-emerald-primary:hover {
+          transform: translateY(-3px) scale(1.02);
+          box-shadow: 0 14px 35px rgba(16, 185, 129, 0.5);
+        }
+
+        .btn-light-secondary {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.65rem;
+          padding: 1.05rem 2.25rem;
+          background: #ffffff;
+          color: #0f172a;
           border-radius: 14px;
           font-weight: 700;
           font-size: 1.05rem;
           text-decoration: none;
-          box-shadow: 0 8px 30px rgba(16, 185, 129, 0.45);
-          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-          border: 1px solid rgba(255, 255, 255, 0.18);
-        }
-        .btn-emerald-primary:hover {
-          transform: translateY(-3px) scale(1.02);
-          box-shadow: 0 14px 40px rgba(16, 185, 129, 0.6);
-        }
-
-        .btn-glass-secondary {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.65rem;
-          padding: 1rem 2.2rem;
-          background: rgba(255, 255, 255, 0.05);
-          color: white;
-          border-radius: 14px;
-          font-weight: 600;
-          font-size: 1.05rem;
-          text-decoration: none;
-          border: 1px solid rgba(255, 255, 255, 0.12);
-          backdrop-filter: blur(12px);
+          border: 1px solid #e2e8f0;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
           transition: all 0.25s ease;
         }
-        .btn-glass-secondary:hover {
-          background: rgba(255, 255, 255, 0.1);
-          border-color: rgba(255, 255, 255, 0.25);
+        .btn-light-secondary:hover {
+          background: #f8fafc;
+          border-color: #cbd5e1;
           transform: translateY(-2px);
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
         }
 
         .social-proof-strip {
           display: inline-flex;
           align-items: center;
           gap: 1.25rem;
-          padding: 0.65rem 1.5rem;
-          background: rgba(15, 23, 42, 0.65);
-          border: 1px solid rgba(255, 255, 255, 0.08);
+          padding: 0.7rem 1.6rem;
+          background: #ffffff;
+          border: 1px solid #e2e8f0;
           border-radius: 9999px;
-          backdrop-filter: blur(16px);
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
         }
         .proof-rating {
           display: flex;
@@ -898,7 +896,7 @@ export default function Home() {
         .proof-divider {
           width: 1px;
           height: 18px;
-          background: rgba(255, 255, 255, 0.15);
+          background: #e2e8f0;
         }
 
         /* DASHBOARD PREVIEW */
@@ -913,29 +911,29 @@ export default function Home() {
 
         .mockup-frame {
           border-radius: 20px;
-          border: 1px solid rgba(255, 255, 255, 0.12);
-          background: rgba(15, 23, 42, 0.7);
-          box-shadow: 0 35px 80px -15px rgba(0, 0, 0, 0.8), 0 0 50px rgba(16, 185, 129, 0.15);
+          border: 1px solid #e2e8f0;
+          background: #ffffff;
+          box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.12), 0 0 40px rgba(16, 185, 129, 0.08);
           overflow: hidden;
           transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease;
         }
         .mockup-frame:hover {
           transform: translateY(-6px);
-          box-shadow: 0 45px 100px -10px rgba(0, 0, 0, 0.9), 0 0 70px rgba(16, 185, 129, 0.25);
+          box-shadow: 0 35px 80px -10px rgba(15, 23, 42, 0.18), 0 0 50px rgba(16, 185, 129, 0.15);
         }
 
         .mockup-header-bar {
-          background: rgba(3, 7, 18, 0.85);
+          background: #f8fafc;
           padding: 0.85rem 1.25rem;
           display: flex;
           align-items: center;
           justify-content: space-between;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+          border-bottom: 1px solid #e2e8f0;
         }
 
         .mockup-url-pill {
-          background: rgba(255, 255, 255, 0.05);
-          border: 1px solid rgba(255, 255, 255, 0.08);
+          background: #ffffff;
+          border: 1px solid #cbd5e1;
           border-radius: 8px;
           padding: 0.3rem 1.25rem;
           color: #64748b;
@@ -953,14 +951,13 @@ export default function Home() {
           max-width: 1100px;
           margin: 0 auto;
           display: grid;
-          grid-templateColumns: repeat(auto-fit, minmax(220px, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
           gap: 1.5rem;
-          background: rgba(15, 23, 42, 0.65);
-          border: 1px solid rgba(255, 255, 255, 0.07);
+          background: #ffffff;
+          border: 1px solid #e2e8f0;
           border-radius: 24px;
-          padding: 2.5rem 2rem;
-          backdrop-filter: blur(20px);
-          box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+          padding: 2.75rem 2rem;
+          box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.05);
         }
         .metric-box {
           text-align: center;
@@ -969,25 +966,25 @@ export default function Home() {
         .metric-num {
           font-size: 2.8rem;
           font-weight: 900;
-          color: white;
+          color: #0f172a;
           letter-spacing: -1px;
           margin-bottom: 0.45rem;
-          background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+          background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
         }
         .metric-label {
-          color: #94a3b8;
+          color: #64748b;
           font-size: 0.95rem;
-          font-weight: 500;
+          font-weight: 600;
         }
 
         /* VALUE TICKER */
         .ticker-section {
           padding: 1.75rem 0;
-          background: #020617;
-          border-top: 1px solid rgba(255, 255, 255, 0.05);
-          border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+          background: #ffffff;
+          border-top: 1px solid #e2e8f0;
+          border-bottom: 1px solid #e2e8f0;
           overflow: hidden;
           white-space: nowrap;
         }
@@ -1009,9 +1006,9 @@ export default function Home() {
           align-items: center;
           gap: 0.65rem;
           margin-right: 4.5rem;
-          color: #cbd5e1;
+          color: #334155;
           font-size: 0.95rem;
-          font-weight: 500;
+          font-weight: 600;
           letter-spacing: 0.2px;
         }
 
@@ -1032,26 +1029,26 @@ export default function Home() {
           font-weight: 700;
           text-transform: uppercase;
           letter-spacing: 1.5px;
-          color: #10b981;
-          background: rgba(16, 185, 129, 0.1);
-          border: 1px solid rgba(16, 185, 129, 0.25);
-          padding: 0.35rem 1rem;
+          color: #059669;
+          background: #ecfdf5;
+          border: 1px solid #a7f3d0;
+          padding: 0.35rem 1.1rem;
           border-radius: 9999px;
           margin-bottom: 1rem;
         }
         .section-heading {
           font-size: clamp(2.2rem, 4vw, 3.2rem);
           font-weight: 900;
-          color: white;
+          color: #0f172a;
           letter-spacing: -1px;
           margin-bottom: 1rem;
         }
         .section-subtext {
           font-size: 1.1rem;
-          color: #94a3b8;
+          color: #64748b;
           max-width: 650px;
           margin: 0 auto;
-          line-height: 1.6;
+          line-height: 1.65;
         }
 
         /* FEATURES GRID */
@@ -1061,20 +1058,19 @@ export default function Home() {
           gap: 2rem;
         }
         .feature-card {
-          background: rgba(15, 23, 42, 0.55);
-          border: 1px solid rgba(255, 255, 255, 0.06);
+          background: #ffffff;
+          border: 1px solid #e2e8f0;
           border-radius: 24px;
           padding: 2.5rem;
           position: relative;
           overflow: hidden;
           transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-          backdrop-filter: blur(16px);
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
         }
         .feature-card:hover {
           transform: translateY(-8px);
-          background: rgba(15, 23, 42, 0.85);
-          border-color: rgba(255, 255, 255, 0.15);
-          box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.6);
+          border-color: #cbd5e1;
+          box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.08);
         }
         .feature-icon-wrapper {
           width: 58px;
@@ -1093,12 +1089,12 @@ export default function Home() {
         .feature-title {
           font-size: 1.25rem;
           font-weight: 800;
-          color: white;
+          color: #0f172a;
           margin-bottom: 0.85rem;
           line-height: 1.35;
         }
         .feature-desc {
-          color: #94a3b8;
+          color: #64748b;
           line-height: 1.65;
           font-size: 0.95rem;
         }
@@ -1122,18 +1118,18 @@ export default function Home() {
           gap: 2rem;
         }
         .step-card {
-          background: rgba(15, 23, 42, 0.55);
-          border: 1px solid rgba(255, 255, 255, 0.06);
+          background: #ffffff;
+          border: 1px solid #e2e8f0;
           border-radius: 24px;
           padding: 2.5rem;
           transition: all 0.3s ease;
           position: relative;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
         }
         .step-card:hover {
           transform: translateY(-6px);
-          border-color: rgba(16, 185, 129, 0.35);
-          background: rgba(15, 23, 42, 0.8);
-          box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
+          border-color: #a7f3d0;
+          box-shadow: 0 15px 35px rgba(16, 185, 129, 0.1);
         }
         .step-top-row {
           display: flex;
@@ -1144,15 +1140,15 @@ export default function Home() {
         .step-number-badge {
           font-size: 1.85rem;
           font-weight: 900;
-          color: #10b981;
+          color: #059669;
           letter-spacing: -1px;
         }
         .step-icon-bubble {
           width: 44px;
           height: 44px;
           border-radius: 12px;
-          background: rgba(16, 185, 129, 0.1);
-          border: 1px solid rgba(16, 185, 129, 0.25);
+          background: #ecfdf5;
+          border: 1px solid #a7f3d0;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -1160,11 +1156,11 @@ export default function Home() {
         .step-title {
           font-size: 1.3rem;
           font-weight: 800;
-          color: white;
+          color: #0f172a;
           margin-bottom: 0.85rem;
         }
         .step-desc {
-          color: #94a3b8;
+          color: #64748b;
           line-height: 1.65;
           font-size: 0.95rem;
         }
@@ -1176,24 +1172,24 @@ export default function Home() {
           gap: 2rem;
         }
         .org-card {
-          background: rgba(15, 23, 42, 0.5);
-          border: 1px solid rgba(255, 255, 255, 0.06);
+          background: #ffffff;
+          border: 1px solid #e2e8f0;
           border-radius: 22px;
           padding: 2.25rem 2rem;
           transition: all 0.3s;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
         }
         .org-card:hover {
           transform: translateY(-6px);
-          border-color: rgba(16, 185, 129, 0.25);
-          background: rgba(15, 23, 42, 0.8);
-          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+          border-color: #a7f3d0;
+          box-shadow: 0 15px 35px rgba(16, 185, 129, 0.08);
         }
         .org-icon-wrapper {
           width: 54px;
           height: 54px;
           border-radius: 14px;
-          background: rgba(16, 185, 129, 0.1);
-          border: 1px solid rgba(16, 185, 129, 0.22);
+          background: #ecfdf5;
+          border: 1px solid #a7f3d0;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -1202,11 +1198,11 @@ export default function Home() {
         .org-title {
           font-size: 1.2rem;
           font-weight: 800;
-          color: white;
+          color: #0f172a;
           margin-bottom: 0.75rem;
         }
         .org-desc {
-          color: #94a3b8;
+          color: #64748b;
           font-size: 0.92rem;
           line-height: 1.6;
         }
@@ -1219,29 +1215,30 @@ export default function Home() {
           align-items: stretch;
         }
         .pricing-card {
-          background: rgba(15, 23, 42, 0.5);
-          border: 1px solid rgba(255, 255, 255, 0.07);
+          background: #ffffff;
+          border: 1px solid #e2e8f0;
           border-radius: 28px;
           padding: 3rem 2.25rem;
           display: flex;
           flex-direction: column;
           position: relative;
           transition: all 0.35s ease;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
         }
         .pricing-card:hover {
           transform: translateY(-8px);
-          border-color: rgba(255, 255, 255, 0.15);
-          box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+          border-color: #cbd5e1;
+          box-shadow: 0 25px 50px rgba(0, 0, 0, 0.08);
         }
         .pricing-card-featured {
-          background: rgba(15, 23, 42, 0.85);
-          border-color: rgba(16, 185, 129, 0.45);
-          box-shadow: 0 20px 50px rgba(16, 185, 129, 0.15);
+          background: #ffffff;
+          border: 2px solid #10b981;
+          box-shadow: 0 20px 45px rgba(16, 185, 129, 0.12);
           transform: scale(1.02);
         }
         .pricing-card-featured:hover {
           transform: scale(1.02) translateY(-8px);
-          box-shadow: 0 35px 70px rgba(16, 185, 129, 0.25);
+          box-shadow: 0 30px 60px rgba(16, 185, 129, 0.18);
         }
         .featured-badge {
           position: absolute;
@@ -1254,16 +1251,16 @@ export default function Home() {
           letter-spacing: 0.8px;
           padding: 0.35rem 1.15rem;
           border-radius: 9999px;
-          box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+          box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
         }
         .pricing-name {
           font-size: 1.35rem;
           font-weight: 800;
-          color: white;
+          color: #0f172a;
           margin-bottom: 0.4rem;
         }
         .pricing-subtitle {
-          color: #94a3b8;
+          color: #64748b;
           font-size: 0.9rem;
           margin-bottom: 1.75rem;
         }
@@ -1275,18 +1272,18 @@ export default function Home() {
         .price-currency {
           font-size: 1.75rem;
           font-weight: 800;
-          color: white;
+          color: #0f172a;
           margin-right: 4px;
         }
         .price-big {
           font-size: 3.5rem;
           font-weight: 900;
-          color: white;
+          color: #0f172a;
           letter-spacing: -1.5px;
           line-height: 1;
         }
         .price-period {
-          color: #64748b;
+          color: #94a3b8;
           font-size: 1.05rem;
           font-weight: 600;
           margin-left: 6px;
@@ -1294,7 +1291,7 @@ export default function Home() {
         .price-term {
           font-size: 0.85rem;
           font-weight: 700;
-          color: #64748b;
+          color: #94a3b8;
           margin-bottom: 2.25rem;
         }
         .pricing-features {
@@ -1309,7 +1306,7 @@ export default function Home() {
           display: flex;
           align-items: center;
           gap: 0.75rem;
-          color: #cbd5e1;
+          color: #334155;
           font-size: 0.95rem;
           line-height: 1.4;
         }
@@ -1322,15 +1319,15 @@ export default function Home() {
           text-align: center;
           padding: 0.95rem 1.5rem;
           border-radius: 12px;
-          border: 1px solid rgba(255, 255, 255, 0.15);
-          color: white;
+          border: 1px solid #cbd5e1;
+          color: #0f172a;
           font-weight: 700;
           text-decoration: none;
           transition: all 0.25s ease;
         }
         .btn-plan-outline:hover {
-          background: rgba(255, 255, 255, 0.08);
-          border-color: rgba(255, 255, 255, 0.3);
+          background: #f8fafc;
+          border-color: #94a3b8;
           transform: translateY(-2px);
         }
 
@@ -1343,34 +1340,37 @@ export default function Home() {
           gap: 1rem;
         }
         .faq-item {
-          background: rgba(15, 23, 42, 0.55);
-          border: 1px solid rgba(255, 255, 255, 0.06);
+          background: #ffffff;
+          border: 1px solid #e2e8f0;
           border-radius: 18px;
           padding: 1.4rem 1.75rem;
           cursor: pointer;
           transition: all 0.25s ease;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
         }
         .faq-item:hover {
-          background: rgba(15, 23, 42, 0.8);
-          border-color: rgba(255, 255, 255, 0.12);
+          background: #ffffff;
+          border-color: #cbd5e1;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         }
         .faq-item-open {
-          border-color: rgba(16, 185, 129, 0.35);
-          background: rgba(15, 23, 42, 0.85);
+          border-color: #a7f3d0;
+          background: #ffffff;
+          box-shadow: 0 6px 20px rgba(16, 185, 129, 0.08);
         }
         .faq-question {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          color: white;
+          color: #0f172a;
           font-weight: 700;
           font-size: 1.05rem;
         }
         .faq-answer {
           margin-top: 1.15rem;
           padding-top: 1.15rem;
-          border-top: 1px solid rgba(255, 255, 255, 0.06);
-          color: #94a3b8;
+          border-top: 1px solid #f1f5f9;
+          color: #475569;
           line-height: 1.7;
           font-size: 0.95rem;
         }
@@ -1382,13 +1382,13 @@ export default function Home() {
         .cta-container {
           max-width: 1140px;
           margin: 0 auto;
-          background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(6, 182, 212, 0.1) 100%);
-          border: 1px solid rgba(16, 185, 129, 0.35);
+          background: linear-gradient(135deg, #ecfdf5 0%, #e0f2fe 100%);
+          border: 1px solid #a7f3d0;
           border-radius: 32px;
           padding: 5rem 2rem;
           position: relative;
           overflow: hidden;
-          box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 50px rgba(16, 185, 129, 0.15);
+          box-shadow: 0 25px 60px -10px rgba(16, 185, 129, 0.15);
         }
         .cta-inner {
           position: relative;
@@ -1400,12 +1400,12 @@ export default function Home() {
         .cta-title {
           font-size: clamp(2.2rem, 4vw, 3.2rem);
           font-weight: 900;
-          color: white;
+          color: #0f172a;
           margin-bottom: 1.25rem;
           letter-spacing: -1px;
         }
         .cta-desc {
-          color: #cbd5e1;
+          color: #475569;
           font-size: 1.15rem;
           line-height: 1.65;
           margin-bottom: 2.75rem;
@@ -1415,41 +1415,42 @@ export default function Home() {
           align-items: center;
           gap: 0.65rem;
           padding: 1rem 2.5rem;
-          background: #ffffff;
-          color: #030712;
+          background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+          color: white;
           border-radius: 14px;
           font-weight: 800;
           font-size: 1.05rem;
           text-decoration: none;
-          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 10px 25px rgba(16, 185, 129, 0.35);
           transition: all 0.25s ease;
         }
         .btn-cta-main:hover {
           transform: translateY(-2px);
-          box-shadow: 0 15px 35px rgba(255, 255, 255, 0.2);
+          box-shadow: 0 15px 35px rgba(16, 185, 129, 0.5);
         }
         .btn-cta-secondary {
           display: inline-flex;
           align-items: center;
           padding: 1rem 2.2rem;
-          background: rgba(255, 255, 255, 0.08);
-          color: white;
+          background: #ffffff;
+          color: #0f172a;
           border-radius: 14px;
           font-weight: 700;
           font-size: 1.05rem;
           text-decoration: none;
-          border: 1px solid rgba(255, 255, 255, 0.2);
+          border: 1px solid #cbd5e1;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
           transition: all 0.25s ease;
         }
         .btn-cta-secondary:hover {
-          background: rgba(255, 255, 255, 0.15);
+          background: #f8fafc;
           transform: translateY(-2px);
         }
 
         /* FOOTER */
         .site-footer {
-          background: #020617;
-          border-top: 1px solid rgba(255, 255, 255, 0.06);
+          background: #ffffff;
+          border-top: 1px solid #e2e8f0;
           padding: 5rem 5% 2.5rem;
         }
         .footer-inner {
@@ -1459,7 +1460,7 @@ export default function Home() {
           grid-template-columns: 2fr 1fr 1fr 1.5fr;
           gap: 3.5rem;
           padding-bottom: 4rem;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+          border-bottom: 1px solid #f1f5f9;
         }
         .footer-brand-desc {
           color: #64748b;
@@ -1468,7 +1469,7 @@ export default function Home() {
           max-width: 320px;
         }
         .footer-col-title {
-          color: white;
+          color: #0f172a;
           font-size: 1.05rem;
           font-weight: 700;
           margin-bottom: 1.5rem;
@@ -1482,19 +1483,19 @@ export default function Home() {
           gap: 0.85rem;
         }
         .footer-link {
-          color: #94a3b8;
+          color: #64748b;
           text-decoration: none;
           font-size: 0.92rem;
           transition: color 0.2s ease;
         }
         .footer-link:hover {
-          color: #10b981;
+          color: #059669;
         }
         .footer-contact-list li {
           display: flex;
           align-items: center;
           gap: 0.75rem;
-          color: #94a3b8;
+          color: #64748b;
           font-size: 0.92rem;
         }
         .footer-bottom {
@@ -1503,11 +1504,11 @@ export default function Home() {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          color: #64748b;
+          color: #94a3b8;
           font-size: 0.88rem;
         }
         .codfy-link {
-          color: #10b981;
+          color: #059669;
           font-weight: 700;
           text-decoration: none;
         }
@@ -1530,7 +1531,7 @@ export default function Home() {
             height: 68px;
           }
           .hero-section {
-            padding-top: 8rem;
+            padding-top: 7.5rem;
           }
           .footer-inner {
             grid-template-columns: 1fr;

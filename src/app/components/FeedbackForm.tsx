@@ -13,7 +13,6 @@ export default function FeedbackForm() {
     e.preventDefault();
     if (!form.name || !form.message) return;
     setStatus('sending');
-    // Simulate sending (no backend needed — just show success)
     await new Promise(r => setTimeout(r, 1200));
     setStatus('sent');
   };
@@ -28,19 +27,19 @@ export default function FeedbackForm() {
   if (status === 'sent') {
     return (
       <div style={{
-        backgroundColor: '#0f2d1f', border: '1px solid #166534', borderRadius: '20px',
-        padding: '3rem', textAlign: 'center',
+        backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '24px',
+        padding: '3rem', textAlign: 'center', boxShadow: '0 10px 25px -5px rgba(16, 185, 129, 0.1)'
       }}>
         <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>✅</div>
-        <h3 style={{ color: '#4ade80', fontSize: '1.5rem', fontWeight: 800, margin: '0 0 0.75rem' }}>
+        <h3 style={{ color: '#15803d', fontSize: '1.5rem', fontWeight: 800, margin: '0 0 0.75rem' }}>
           Təşəkkür edirik!
         </h3>
-        <p style={{ color: '#86efac', lineHeight: 1.6, margin: '0 0 1.5rem' }}>
-          Mesajınız uğurla göndərildi. Tezliklə sizinlə əlaqə saxlayacağıq.
+        <p style={{ color: '#166534', lineHeight: 1.6, margin: '0 0 1.5rem' }}>
+          Mesajınız uğurla qəbul edildi. Tezliklə sizinlə əlaqə saxlayacağıq.
         </p>
         <button
           onClick={() => { setStatus('idle'); setForm({ name: '', email: '', type: 'suggestion', message: '' }); setRating(0); }}
-          style={{ padding: '0.65rem 1.5rem', background: 'linear-gradient(135deg,#10b981,#059669)', color: 'white', border: 'none', borderRadius: '10px', fontWeight: 700, cursor: 'pointer', fontSize: '0.9rem' }}
+          style={{ padding: '0.75rem 1.75rem', background: 'linear-gradient(135deg,#10b981,#059669)', color: 'white', border: 'none', borderRadius: '12px', fontWeight: 700, cursor: 'pointer', fontSize: '0.92rem', boxShadow: '0 4px 14px rgba(16, 185, 129, 0.35)' }}
         >
           Yeni Mesaj Göndər
         </button>
@@ -50,37 +49,56 @@ export default function FeedbackForm() {
 
   return (
     <form onSubmit={handleSubmit}
-      style={{ backgroundColor: '#1e293b', border: '1px solid #334155', borderRadius: '20px', padding: '2.5rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+      style={{ 
+        backgroundColor: '#ffffff', 
+        border: '1px solid #e2e8f0', 
+        borderRadius: '24px', 
+        padding: '2.5rem', 
+        display: 'flex', 
+        flexDirection: 'column', 
+        gap: '1.5rem',
+        boxShadow: '0 20px 40px -10px rgba(0, 0, 0, 0.05)'
+      }}>
 
       {/* Name + Email row */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem' }}>
         <div>
-          <label style={{ display: 'block', color: '#94a3b8', fontSize: '0.8rem', fontWeight: 600, marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Ad Soyad *</label>
+          <label style={{ display: 'block', color: '#475569', fontSize: '0.82rem', fontWeight: 700, marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Ad Soyad *</label>
           <input required value={form.name} onChange={e => set('name', e.target.value)}
-            placeholder="Adınızı yazın"
-            style={{ width: '100%', padding: '0.75rem 1rem', backgroundColor: '#0f172a', border: '1px solid #334155', borderRadius: '10px', color: 'white', fontSize: '0.9rem', outline: 'none', boxSizing: 'border-box', transition: 'border 0.2s' }}
-            onFocus={e => e.target.style.borderColor = '#10b981'}
-            onBlur={e => e.target.style.borderColor = '#334155'}
+            placeholder="Adınızı daxil edin"
+            style={{ width: '100%', padding: '0.85rem 1rem', backgroundColor: '#f8fafc', border: '1px solid #cbd5e1', borderRadius: '12px', color: '#0f172a', fontSize: '0.92rem', outline: 'none', boxSizing: 'border-box', transition: 'all 0.2s' }}
+            onFocus={e => { e.target.style.borderColor = '#10b981'; e.target.style.backgroundColor = '#ffffff'; }}
+            onBlur={e => { e.target.style.borderColor = '#cbd5e1'; e.target.style.backgroundColor = '#f8fafc'; }}
           />
         </div>
         <div>
-          <label style={{ display: 'block', color: '#94a3b8', fontSize: '0.8rem', fontWeight: 600, marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Email</label>
+          <label style={{ display: 'block', color: '#475569', fontSize: '0.82rem', fontWeight: 700, marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Email</label>
           <input type="email" value={form.email} onChange={e => set('email', e.target.value)}
             placeholder="email@example.com"
-            style={{ width: '100%', padding: '0.75rem 1rem', backgroundColor: '#0f172a', border: '1px solid #334155', borderRadius: '10px', color: 'white', fontSize: '0.9rem', outline: 'none', boxSizing: 'border-box', transition: 'border 0.2s' }}
-            onFocus={e => e.target.style.borderColor = '#10b981'}
-            onBlur={e => e.target.style.borderColor = '#334155'}
+            style={{ width: '100%', padding: '0.85rem 1rem', backgroundColor: '#f8fafc', border: '1px solid #cbd5e1', borderRadius: '12px', color: '#0f172a', fontSize: '0.92rem', outline: 'none', boxSizing: 'border-box', transition: 'all 0.2s' }}
+            onFocus={e => { e.target.style.borderColor = '#10b981'; e.target.style.backgroundColor = '#ffffff'; }}
+            onBlur={e => { e.target.style.borderColor = '#cbd5e1'; e.target.style.backgroundColor = '#f8fafc'; }}
           />
         </div>
       </div>
 
       {/* Type selector */}
       <div>
-        <label style={{ display: 'block', color: '#94a3b8', fontSize: '0.8rem', fontWeight: 600, marginBottom: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Mesaj növü</label>
-        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+        <label style={{ display: 'block', color: '#475569', fontSize: '0.82rem', fontWeight: 700, marginBottom: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Mesaj növü</label>
+        <div style={{ display: 'flex', gap: '0.65rem', flexWrap: 'wrap' }}>
           {types.map(t => (
             <button type="button" key={t.key} onClick={() => set('type', t.key)}
-              style={{ padding: '0.5rem 1rem', borderRadius: '8px', border: form.type === t.key ? '1px solid #10b981' : '1px solid #334155', backgroundColor: form.type === t.key ? '#064e3b' : 'transparent', color: form.type === t.key ? '#10b981' : '#94a3b8', fontWeight: 600, fontSize: '0.82rem', cursor: 'pointer', transition: 'all 0.2s' }}>
+              style={{ 
+                padding: '0.55rem 1.15rem', 
+                borderRadius: '10px', 
+                border: form.type === t.key ? '1px solid #10b981' : '1px solid #e2e8f0', 
+                backgroundColor: form.type === t.key ? '#ecfdf5' : '#f8fafc', 
+                color: form.type === t.key ? '#047857' : '#64748b', 
+                fontWeight: 700, 
+                fontSize: '0.88rem', 
+                cursor: 'pointer', 
+                transition: 'all 0.2s' 
+              }}>
               {t.label}
             </button>
           ))}
@@ -89,20 +107,20 @@ export default function FeedbackForm() {
 
       {/* Star Rating */}
       <div>
-        <label style={{ display: 'block', color: '#94a3b8', fontSize: '0.8rem', fontWeight: 600, marginBottom: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Qiymətləndirmə</label>
-        <div style={{ display: 'flex', gap: '0.4rem' }}>
+        <label style={{ display: 'block', color: '#475569', fontSize: '0.82rem', fontWeight: 700, marginBottom: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Qiymətləndirmə</label>
+        <div style={{ display: 'flex', gap: '0.45rem', alignItems: 'center' }}>
           {[1, 2, 3, 4, 5].map(star => (
             <button type="button" key={star}
               onClick={() => setRating(star)}
               onMouseEnter={() => setHoverRating(star)}
               onMouseLeave={() => setHoverRating(0)}
-              style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '2rem', padding: '0', lineHeight: 1, transition: 'transform 0.15s', transform: (hoverRating || rating) >= star ? 'scale(1.2)' : 'scale(1)' }}>
+              style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.85rem', padding: '0', lineHeight: 1, transition: 'transform 0.15s', transform: (hoverRating || rating) >= star ? 'scale(1.15)' : 'scale(1)' }}>
               {(hoverRating || rating) >= star ? '⭐' : '☆'}
             </button>
           ))}
           {rating > 0 && (
-            <span style={{ color: '#64748b', fontSize: '0.85rem', alignSelf: 'center', marginLeft: '0.5rem' }}>
-              {['', 'Pis', 'Orta', 'Yaxşı', 'Çox yaxşı', 'Əla!'][rating]}
+            <span style={{ color: '#047857', fontWeight: 700, fontSize: '0.9rem', marginLeft: '0.75rem' }}>
+              {['', 'Zəif', 'Orta', 'Yaxşı', 'Çox yaxşı', 'Mükəmməl!'][rating]}
             </span>
           )}
         </div>
@@ -110,20 +128,31 @@ export default function FeedbackForm() {
 
       {/* Message */}
       <div>
-        <label style={{ display: 'block', color: '#94a3b8', fontSize: '0.8rem', fontWeight: 600, marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Mesajınız *</label>
+        <label style={{ display: 'block', color: '#475569', fontSize: '0.82rem', fontWeight: 700, marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Mesajınız *</label>
         <textarea required value={form.message} onChange={e => set('message', e.target.value)}
-          rows={5} placeholder="Fikirlərinizi, təkliflərinizi və ya şikayətlərinizi burada yazın..."
-          style={{ width: '100%', padding: '0.85rem 1rem', backgroundColor: '#0f172a', border: '1px solid #334155', borderRadius: '10px', color: 'white', fontSize: '0.9rem', outline: 'none', resize: 'vertical', boxSizing: 'border-box', fontFamily: 'inherit', lineHeight: 1.6, transition: 'border 0.2s' }}
-          onFocus={e => e.target.style.borderColor = '#10b981'}
-          onBlur={e => e.target.style.borderColor = '#334155'}
+          rows={5} placeholder="Fikirlərinizi, təkliflərinizi və ya suallarınızı qeyd edin..."
+          style={{ width: '100%', padding: '0.9rem 1rem', backgroundColor: '#f8fafc', border: '1px solid #cbd5e1', borderRadius: '12px', color: '#0f172a', fontSize: '0.92rem', outline: 'none', resize: 'vertical', boxSizing: 'border-box', fontFamily: 'inherit', lineHeight: 1.6, transition: 'all 0.2s' }}
+          onFocus={e => { e.target.style.borderColor = '#10b981'; e.target.style.backgroundColor = '#ffffff'; }}
+          onBlur={e => { e.target.style.borderColor = '#cbd5e1'; e.target.style.backgroundColor = '#f8fafc'; }}
         />
-        <div style={{ textAlign: 'right', color: '#475569', fontSize: '0.75rem', marginTop: '0.3rem' }}>{form.message.length} simvol</div>
+        <div style={{ textAlign: 'right', color: '#94a3b8', fontSize: '0.78rem', marginTop: '0.35rem' }}>{form.message.length} simvol</div>
       </div>
 
       {/* Submit */}
       <button type="submit" disabled={status === 'sending' || !form.name || !form.message}
-        style={{ padding: '1rem', background: (!form.name || !form.message) ? '#1e293b' : 'linear-gradient(135deg, #10b981, #059669)', color: (!form.name || !form.message) ? '#475569' : 'white', border: '1px solid #334155', borderRadius: '12px', fontWeight: 800, fontSize: '1rem', cursor: (!form.name || !form.message) ? 'not-allowed' : 'pointer', transition: 'all 0.2s', boxShadow: (!form.name || !form.message) ? 'none' : '0 4px 15px rgba(16,185,129,0.3)' }}>
-        {status === 'sending' ? '⏳ Göndərilir...' : '📨 Göndər'}
+        style={{ 
+          padding: '1rem', 
+          background: (!form.name || !form.message) ? '#e2e8f0' : 'linear-gradient(135deg, #10b981, #059669)', 
+          color: (!form.name || !form.message) ? '#94a3b8' : 'white', 
+          border: 'none', 
+          borderRadius: '12px', 
+          fontWeight: 800, 
+          fontSize: '1rem', 
+          cursor: (!form.name || !form.message) ? 'not-allowed' : 'pointer', 
+          transition: 'all 0.25s', 
+          boxShadow: (!form.name || !form.message) ? 'none' : '0 6px 20px rgba(16, 185, 129, 0.35)' 
+        }}>
+        {status === 'sending' ? '⏳ Göndərilir...' : '📨 Rəyi Göndər'}
       </button>
     </form>
   );
