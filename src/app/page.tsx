@@ -27,7 +27,11 @@ import {
   Layers, 
   Clock,
   HelpCircle,
-  Star
+  Star,
+  Activity,
+  Database,
+  Cloud,
+  CheckCircle2
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -50,6 +54,29 @@ export default function Home() {
   const toggleFaq = (idx: number) => {
     setOpenFaq(prev => prev === idx ? null : idx);
   };
+
+  const metricsData = [
+    {
+      num: '10+',
+      title: 'Maliyyə & Resurs Modulları',
+      desc: 'Satış, alış, anbar, kassa, bank, əməkdaşlar və e-qaimə tək nüvədə.'
+    },
+    {
+      num: '1 Mərkəz',
+      title: 'Vahid İdarəetmə Paneli',
+      desc: 'Bütün filial və şöbələrin gəlir-xərc dövriyyəsinə real-vaxt canlı nəzarət.'
+    },
+    {
+      num: '24/7',
+      title: 'Kəsintisiz Bulud Çıxışı',
+      desc: 'İstənilən cihazdan dərhal daxil olun — quraşdırma və server xərci yoxdur.'
+    },
+    {
+      num: '99.9%',
+      title: 'SLA Məlumat Zəmanəti',
+      desc: 'Hər şirkət üçün tam izolyasiya olunmuş baza və avtomatik gündəlik ehtiyat nüsxə.'
+    }
+  ];
 
   const features = [
     { 
@@ -122,29 +149,17 @@ export default function Home() {
   ];
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#f8fafc', color: '#0f172a', overflowX: 'hidden', fontFamily: 'inherit' }}>
+    <div style={{ minHeight: '100vh', backgroundColor: '#fafafa', color: '#09090b', overflowX: 'hidden', fontFamily: 'inherit' }}>
       
       {/* HEADER / NAVBAR */}
       <header className="site-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
           <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-            <div style={{
-              width: '40px',
-              height: '40px',
-              borderRadius: '12px',
-              background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 4px 14px rgba(16, 185, 129, 0.35)',
-              fontWeight: 900,
-              color: 'white',
-              fontSize: '1.25rem'
-            }}>
+            <div className="brand-logo-hex">
               A
             </div>
-            <span style={{ fontSize: '1.45rem', fontWeight: 900, letterSpacing: '-0.5px', color: '#0f172a' }}>
-              ASRALI <span style={{ color: '#059669' }}>ERP</span>
+            <span style={{ fontSize: '1.35rem', fontWeight: 800, letterSpacing: '-0.5px', color: '#09090b' }}>
+              ASRALI <span style={{ color: '#059669', fontWeight: 900 }}>ERP</span>
             </span>
           </Link>
         </div>
@@ -164,17 +179,15 @@ export default function Home() {
           </Link>
           <Link href="/register" className="nav-btn-primary">
             <span>{t('nav_register')}</span>
-            <ArrowRight size={15} />
+            <ArrowRight size={14} />
           </Link>
         </div>
       </header>
 
       {/* HERO SECTION */}
       <section className="hero-section">
-        {/* Soft Ambient Light Glows */}
-        <div className="glow-sphere glow-left" />
-        <div className="glow-sphere glow-right" />
-        <div className="glow-sphere glow-center" />
+        {/* Subtle Engineering Grid Background */}
+        <div className="hero-grid-bg" />
 
         <div className="hero-content">
           <h1 className="hero-title">
@@ -189,10 +202,10 @@ export default function Home() {
           <div className="hero-actions">
             <Link href="/register" className="btn-emerald-primary">
               <span>{t('btn_register_now')}</span>
-              <ArrowRight size={18} />
+              <ArrowRight size={17} />
             </Link>
             <a href="#is-prinsipi" className="btn-light-secondary">
-              <Zap size={17} style={{ color: '#059669' }} />
+              <Zap size={16} style={{ color: '#059669' }} />
               <span>Necə İşləyir?</span>
             </a>
           </div>
@@ -201,64 +214,60 @@ export default function Home() {
           <div className="social-proof-strip">
             <div className="proof-rating">
               <div style={{ display: 'flex', gap: '2px', color: '#f59e0b' }}>
-                <Star size={15} fill="#f59e0b" />
-                <Star size={15} fill="#f59e0b" />
-                <Star size={15} fill="#f59e0b" />
-                <Star size={15} fill="#f59e0b" />
-                <Star size={15} fill="#f59e0b" />
+                <Star size={14} fill="#f59e0b" />
+                <Star size={14} fill="#f59e0b" />
+                <Star size={14} fill="#f59e0b" />
+                <Star size={14} fill="#f59e0b" />
+                <Star size={14} fill="#f59e0b" />
               </div>
-              <span style={{ fontWeight: 800, color: '#0f172a', fontSize: '0.88rem' }}>5.0 / 5.0</span>
+              <span style={{ fontWeight: 800, color: '#09090b', fontSize: '0.85rem' }}>5.0 / 5.0</span>
             </div>
             <div className="proof-divider" />
-            <span style={{ color: '#64748b', fontSize: '0.88rem', fontWeight: 500 }}>14 gün pulsuz sınaq • Kredit kartı tələb olunmur</span>
+            <span style={{ color: '#52525b', fontSize: '0.85rem', fontWeight: 500 }}>14 gün pulsuz sınaq • Kredit kartı tələb olunmur</span>
           </div>
         </div>
 
-        {/* DASHBOARD PREVIEW MOCKUP */}
+        {/* LARGE DASHBOARD PREVIEW MOCKUP (HEX.TECH EXPANSIVE HERO) */}
         <div className="mockup-container">
           <div className="mockup-frame">
             <div className="mockup-header-bar">
-              <div style={{ display: 'flex', gap: '6px' }}>
-                <div style={{ width: '11px', height: '11px', borderRadius: '50%', backgroundColor: '#ef4444' }} />
-                <div style={{ width: '11px', height: '11px', borderRadius: '50%', backgroundColor: '#f59e0b' }} />
-                <div style={{ width: '11px', height: '11px', borderRadius: '50%', backgroundColor: '#10b981' }} />
+              <div style={{ display: 'flex', gap: '7px', alignItems: 'center' }}>
+                <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#f43f5e' }} />
+                <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#f59e0b' }} />
+                <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#10b981' }} />
               </div>
               <div className="mockup-url-pill">
                 <span>https://app.asrali.com/erp/dashboard</span>
               </div>
-              <div style={{ width: '33px' }} />
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <div style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: '#10b981' }} />
+                <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#059669' }}>Live</span>
+              </div>
             </div>
-            <Image 
-              src="/dashboard_mockup.png" 
-              alt="ASRALI ERP Dashboard Preview" 
-              width={1240} 
-              height={760} 
-              style={{ width: '100%', height: 'auto', display: 'block' }}
-              priority
-            />
+            <div className="mockup-img-wrap">
+              <Image 
+                src="/dashboard_mockup.png" 
+                alt="ASRALI ERP Dashboard Preview" 
+                width={1920} 
+                height={1080} 
+                style={{ width: '100%', height: 'auto', display: 'block' }}
+                priority
+              />
+            </div>
           </div>
         </div>
       </section>
 
-      {/* METRICS STRIP */}
+      {/* METRICS STRIP (HEX.TECH MODULAR DESIGN) */}
       <section className="metrics-section">
         <div className="metrics-card">
-          <div className="metric-box">
-            <div className="metric-num">10+</div>
-            <div className="metric-label">Maliyyə və İdarəetmə Modulu</div>
-          </div>
-          <div className="metric-box">
-            <div className="metric-num">1 Panel</div>
-            <div className="metric-label">Satış, Alış və Hesabat Nəzarəti</div>
-          </div>
-          <div className="metric-box">
-            <div className="metric-num">24/7</div>
-            <div className="metric-label">Bulud Əsaslı Onlayn Çıxış</div>
-          </div>
-          <div className="metric-box">
-            <div className="metric-num">99.9%</div>
-            <div className="metric-label">Fasiləsiz Xidmət Zəmanəti</div>
-          </div>
+          {metricsData.map((m, idx) => (
+            <div key={idx} className="metric-box">
+              <div className="metric-num">{m.num}</div>
+              <div className="metric-title">{m.title}</div>
+              <div className="metric-desc">{m.desc}</div>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -266,15 +275,15 @@ export default function Home() {
       <section className="ticker-section">
         <div className="ticker-wrapper">
           <div className="ticker-content">
-            <span className="ticker-item"><Check size={16} className="text-emerald" /> Multi-tenant struktur: hər biznes üçün ayrıca verilənlər bazası</span>
-            <span className="ticker-item"><Check size={16} className="text-emerald" /> Müqavilə, qəbz və hesabatların ani ixrac imkanı</span>
-            <span className="ticker-item"><Check size={16} className="text-emerald" /> Rol əsaslı təhlükəsiz giriş və ətraflı icazə sistemi</span>
-            <span className="ticker-item"><Check size={16} className="text-emerald" /> Barkodlu satış və anbar qalıqlarının real-vaxt sinxronizasiyası</span>
+            <span className="ticker-item"><CheckCircle2 size={16} className="text-emerald" /> Multi-tenant struktur: hər biznes üçün ayrıca verilənlər bazası</span>
+            <span className="ticker-item"><CheckCircle2 size={16} className="text-emerald" /> Müqavilə, qəbz və hesabatların ani ixrac imkanı</span>
+            <span className="ticker-item"><CheckCircle2 size={16} className="text-emerald" /> Rol əsaslı təhlükəsiz giriş və ətraflı icazə sistemi</span>
+            <span className="ticker-item"><CheckCircle2 size={16} className="text-emerald" /> Barkodlu satış və anbar qalıqlarının real-vaxt sinxronizasiyası</span>
             {/* Infinite loop copy */}
-            <span className="ticker-item"><Check size={16} className="text-emerald" /> Multi-tenant struktur: hər biznes üçün ayrıca verilənlər bazası</span>
-            <span className="ticker-item"><Check size={16} className="text-emerald" /> Müqavilə, qəbz və hesabatların ani ixrac imkanı</span>
-            <span className="ticker-item"><Check size={16} className="text-emerald" /> Rol əsaslı təhlükəsiz giriş və ətraflı icazə sistemi</span>
-            <span className="ticker-item"><Check size={16} className="text-emerald" /> Barkodlu satış və anbar qalıqlarının real-vaxt sinxronizasiyası</span>
+            <span className="ticker-item"><CheckCircle2 size={16} className="text-emerald" /> Multi-tenant struktur: hər biznes üçün ayrıca verilənlər bazası</span>
+            <span className="ticker-item"><CheckCircle2 size={16} className="text-emerald" /> Müqavilə, qəbz və hesabatların ani ixrac imkanı</span>
+            <span className="ticker-item"><CheckCircle2 size={16} className="text-emerald" /> Rol əsaslı təhlükəsiz giriş və ətraflı icazə sistemi</span>
+            <span className="ticker-item"><CheckCircle2 size={16} className="text-emerald" /> Barkodlu satış və anbar qalıqlarının real-vaxt sinxronizasiyası</span>
           </div>
         </div>
       </section>
@@ -295,7 +304,7 @@ export default function Home() {
             return (
               <div key={i} className="feature-card">
                 <div className="feature-icon-wrapper" style={{ backgroundColor: f.bg, borderColor: f.border, color: f.color }}>
-                  <Icon size={26} />
+                  <Icon size={24} />
                 </div>
                 <h3 className="feature-title">{f.title}</h3>
                 <p className="feature-desc">{f.desc}</p>
@@ -356,7 +365,7 @@ export default function Home() {
         <div style={{ textAlign: 'center', marginTop: '4rem' }}>
           <Link href="/register" className="btn-emerald-primary" style={{ display: 'inline-flex' }}>
             <span>İndi Qeydiyyatdan Keç</span>
-            <ArrowRight size={18} />
+            <ArrowRight size={17} />
           </Link>
         </div>
       </section>
@@ -382,7 +391,7 @@ export default function Home() {
             return (
               <div key={i} className="org-card">
                 <div className="org-icon-wrapper">
-                  <Icon size={28} style={{ color: '#059669' }} />
+                  <Icon size={26} style={{ color: '#059669' }} />
                 </div>
                 <h3 className="org-title">{org.title}</h3>
                 <p className="org-desc">{org.desc}</p>
@@ -466,7 +475,7 @@ export default function Home() {
               <h3 className="pricing-name">KORPORATİV</h3>
               <p className="pricing-subtitle">Böyük şirkətlər və holdinqlər üçün</p>
               <div className="pricing-cost">
-                <span className="price-big" style={{ fontSize: '2.1rem' }}>Razılaşma ilə</span>
+                <span className="price-big" style={{ fontSize: '2rem' }}>Razılaşma ilə</span>
               </div>
               <div className="price-term">Fərdi yanaşma</div>
             </div>
@@ -510,13 +519,13 @@ export default function Home() {
               >
                 <div className="faq-question">
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
-                    <HelpCircle size={19} style={{ color: isOpen ? '#059669' : '#94a3b8' }} />
+                    <HelpCircle size={18} style={{ color: isOpen ? '#059669' : '#a1a1aa' }} />
                     <span>{faq.q}</span>
                   </div>
                   <ChevronRight 
                     size={18} 
                     style={{ 
-                      color: isOpen ? '#059669' : '#94a3b8', 
+                      color: isOpen ? '#059669' : '#a1a1aa', 
                       transform: isOpen ? 'rotate(90deg)' : 'rotate(0deg)',
                       transition: 'transform 0.25s ease'
                     }} 
@@ -559,7 +568,7 @@ export default function Home() {
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
               <Link href="/register" className="btn-cta-main">
                 <span>İndi Qeydiyyatdan Keç</span>
-                <ArrowRight size={18} />
+                <ArrowRight size={17} />
               </Link>
               <Link href="/login" className="btn-cta-secondary">
                 Daxil Ol
@@ -575,21 +584,10 @@ export default function Home() {
           
           <div className="footer-brand-block">
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem' }}>
-              <div style={{
-                width: '36px',
-                height: '36px',
-                borderRadius: '10px',
-                background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontWeight: 900,
-                color: 'white',
-                fontSize: '1.1rem'
-              }}>
+              <div className="brand-logo-hex" style={{ width: '34px', height: '34px', fontSize: '1rem' }}>
                 A
               </div>
-              <span style={{ fontSize: '1.45rem', fontWeight: 900, letterSpacing: '-0.5px', color: '#0f172a' }}>
+              <span style={{ fontSize: '1.35rem', fontWeight: 800, letterSpacing: '-0.5px', color: '#09090b' }}>
                 ASRALI <span style={{ color: '#059669' }}>ERP</span>
               </span>
             </div>
@@ -621,10 +619,10 @@ export default function Home() {
           <div>
             <h4 className="footer-col-title">Əlaqə</h4>
             <ul className="footer-contact-list">
-              <li><Mail size={16} className="text-emerald" /> info@asrali.az</li>
-              <li><Phone size={16} className="text-emerald" /> +994 55 594 51 00</li>
-              <li><MapPin size={16} className="text-emerald" /> Bakı, Azərbaycan</li>
-              <li><Clock size={16} className="text-emerald" /> 24/7 Dəstək Mərkəzi</li>
+              <li><Mail size={15} className="text-emerald" /> info@asrali.az</li>
+              <li><Phone size={15} className="text-emerald" /> +994 55 594 51 00</li>
+              <li><MapPin size={15} className="text-emerald" /> Bakı, Azərbaycan</li>
+              <li><Clock size={15} className="text-emerald" /> 24/7 Dəstək Mərkəzi</li>
             </ul>
           </div>
 
@@ -646,28 +644,42 @@ export default function Home() {
         </div>
       </footer>
 
-      {/* GLOBAL CSS STYLING - MODERN LIGHT LUXURY THEME */}
+      {/* GLOBAL CSS STYLING - HEX.TECH HIGH-END LIGHT SAAS AESTHETIC */}
       <style dangerouslySetInnerHTML={{__html: `
         /* Reset & Base */
         html { scroll-behavior: smooth; }
         
         .text-emerald { color: #059669; }
 
+        .brand-logo-hex {
+          width: 38px;
+          height: 38px;
+          border-radius: 10px;
+          background: #09090b;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 900;
+          color: white;
+          font-size: 1.15rem;
+          border: 1px solid rgba(0, 0, 0, 0.1);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
         /* HEADER */
         .site-header {
           position: fixed;
           top: 0; left: 0; right: 0;
-          height: 76px;
-          padding: 0 5%;
+          height: 72px;
+          padding: 0 6%;
           display: flex;
           justify-content: space-between;
           align-items: center;
-          background: rgba(255, 255, 255, 0.88);
-          backdrop-filter: blur(20px);
-          -webkit-backdrop-filter: blur(20px);
+          background: rgba(250, 250, 250, 0.85);
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
           z-index: 100;
-          border-bottom: 1px solid rgba(226, 232, 240, 0.8);
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+          border-bottom: 1px solid #e4e4e7;
         }
 
         .desktop-nav {
@@ -677,308 +689,274 @@ export default function Home() {
         }
 
         .nav-link {
-          color: #475569;
-          font-weight: 600;
+          color: #52525b;
+          font-weight: 500;
           text-decoration: none;
           font-size: 0.92rem;
-          transition: color 0.2s ease;
-          position: relative;
+          transition: color 0.15s ease;
         }
         .nav-link:hover {
-          color: #059669;
+          color: #09090b;
         }
 
         .nav-btn-secondary {
-          color: #334155;
-          font-weight: 700;
-          font-size: 0.92rem;
+          color: #27272a;
+          font-weight: 600;
+          font-size: 0.9rem;
           text-decoration: none;
-          padding: 0.6rem 1.25rem;
-          border-radius: 12px;
-          transition: all 0.2s;
+          padding: 0.55rem 1.15rem;
+          border-radius: 9px;
+          transition: all 0.15s;
         }
         .nav-btn-secondary:hover {
-          color: #059669;
-          background: #f1f5f9;
+          color: #09090b;
+          background: #f4f4f5;
         }
 
         .nav-btn-primary {
           display: inline-flex;
           align-items: center;
           gap: 0.45rem;
-          padding: 0.62rem 1.35rem;
-          background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+          padding: 0.55rem 1.25rem;
+          background: #09090b;
           color: white;
-          border-radius: 12px;
-          font-weight: 700;
-          font-size: 0.92rem;
+          border-radius: 9px;
+          font-weight: 600;
+          font-size: 0.9rem;
           text-decoration: none;
-          box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
-          transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: all 0.2s ease;
+          border: 1px solid #27272a;
         }
         .nav-btn-primary:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 8px 22px rgba(16, 185, 129, 0.45);
+          background: #18181b;
+          transform: translateY(-1px);
         }
 
         /* HERO SECTION */
         .hero-section {
-          padding: 9.5rem 5% 5rem;
+          padding: 8.5rem 4% 5rem;
           position: relative;
           overflow: hidden;
           display: flex;
           flex-direction: column;
           align-items: center;
           text-align: center;
-          background: radial-gradient(ellipse at 50% 0%, #ecfdf5 0%, #f8fafc 70%);
+          background: #fafafa;
         }
 
-        .glow-sphere {
+        /* Hex.tech style engineering dot grid */
+        .hero-grid-bg {
           position: absolute;
-          border-radius: 50%;
-          filter: blur(80px);
+          top: 0; left: 0; right: 0; bottom: 0;
+          background-image: radial-gradient(#d4d4d8 1px, transparent 1px);
+          background-size: 32px 32px;
+          opacity: 0.5;
           pointer-events: none;
-          z-index: 1;
-        }
-        .glow-left {
-          top: 10%;
-          left: -5%;
-          width: 45vw;
-          height: 45vw;
-          background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, rgba(255, 255, 255, 0) 70%);
-        }
-        .glow-right {
-          top: 15%;
-          right: -5%;
-          width: 40vw;
-          height: 40vw;
-          background: radial-gradient(circle, rgba(14, 165, 233, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
-        }
-        .glow-center {
-          top: 5%;
-          left: 25%;
-          width: 50vw;
-          height: 50vw;
-          background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, rgba(255, 255, 255, 0) 70%);
+          z-index: 0;
+          mask-image: radial-gradient(ellipse at 50% 30%, #000 30%, transparent 80%);
+          -webkit-mask-image: radial-gradient(ellipse at 50% 30%, #000 30%, transparent 80%);
         }
 
         .hero-content {
           position: relative;
           z-index: 2;
-          max-width: 960px;
+          max-width: 980px;
           margin: 0 auto;
         }
 
-        .hero-badge {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.65rem;
-          padding: 0.45rem 1.15rem;
-          background: #ffffff;
-          border: 1px solid #d1fae5;
-          border-radius: 9999px;
-          color: #065f46;
-          font-size: 0.88rem;
-          font-weight: 700;
-          margin-bottom: 2rem;
-          box-shadow: 0 4px 15px rgba(16, 185, 129, 0.1);
-        }
-
-        .badge-dot {
-          width: 7px;
-          height: 7px;
-          border-radius: 50%;
-          background-color: #10b981;
-          box-shadow: 0 0 8px #10b981;
-          animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-          0%, 100% { opacity: 1; transform: scale(1); }
-          50% { opacity: 0.5; transform: scale(1.3); }
-        }
-
         .hero-title {
-          font-size: clamp(2.8rem, 5.5vw, 4.8rem);
-          font-weight: 900;
-          line-height: 1.12;
-          letter-spacing: -1.5px;
-          color: #0f172a;
-          margin-bottom: 1.75rem;
+          font-size: clamp(2.8rem, 5.8vw, 5rem);
+          font-weight: 800;
+          line-height: 1.08;
+          letter-spacing: -2px;
+          color: #09090b;
+          margin-bottom: 1.6rem;
         }
 
         .gradient-text {
-          background: linear-gradient(135deg, #059669 0%, #10b981 50%, #0284c7 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
+          color: #059669;
         }
 
         .hero-subtitle {
           font-size: clamp(1.05rem, 1.8vw, 1.25rem);
-          color: #475569;
+          color: #52525b;
           max-width: 780px;
           margin: 0 auto 2.5rem;
-          line-height: 1.7;
+          line-height: 1.65;
           font-weight: 400;
         }
 
         .hero-actions {
           display: flex;
-          gap: 1.2rem;
+          gap: 1rem;
           justify-content: center;
           align-items: center;
           flex-wrap: wrap;
-          margin-bottom: 3.5rem;
+          margin-bottom: 2.75rem;
         }
 
         .btn-emerald-primary {
           display: inline-flex;
           align-items: center;
-          gap: 0.65rem;
-          padding: 1.05rem 2.25rem;
-          background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+          gap: 0.6rem;
+          padding: 0.95rem 2.2rem;
+          background: #059669;
           color: white;
-          border-radius: 14px;
-          font-weight: 800;
-          font-size: 1.05rem;
+          border-radius: 10px;
+          font-weight: 700;
+          font-size: 1.02rem;
           text-decoration: none;
-          box-shadow: 0 8px 25px rgba(16, 185, 129, 0.35);
-          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25);
+          transition: all 0.2s ease;
         }
         .btn-emerald-primary:hover {
-          transform: translateY(-3px) scale(1.02);
-          box-shadow: 0 14px 35px rgba(16, 185, 129, 0.5);
+          background: #047857;
+          transform: translateY(-2px);
+          box-shadow: 0 8px 22px rgba(5, 150, 105, 0.35);
         }
 
         .btn-light-secondary {
           display: inline-flex;
           align-items: center;
-          gap: 0.65rem;
-          padding: 1.05rem 2.25rem;
+          gap: 0.6rem;
+          padding: 0.95rem 2.2rem;
           background: #ffffff;
-          color: #0f172a;
-          border-radius: 14px;
-          font-weight: 700;
-          font-size: 1.05rem;
+          color: #09090b;
+          border-radius: 10px;
+          font-weight: 600;
+          font-size: 1.02rem;
           text-decoration: none;
-          border: 1px solid #e2e8f0;
-          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
-          transition: all 0.25s ease;
+          border: 1px solid #e4e4e7;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+          transition: all 0.2s ease;
         }
         .btn-light-secondary:hover {
-          background: #f8fafc;
-          border-color: #cbd5e1;
+          background: #f4f4f5;
+          border-color: #d4d4d8;
           transform: translateY(-2px);
-          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
         }
 
         .social-proof-strip {
           display: inline-flex;
           align-items: center;
-          gap: 1.25rem;
-          padding: 0.7rem 1.6rem;
+          gap: 1.15rem;
+          padding: 0.6rem 1.4rem;
           background: #ffffff;
-          border: 1px solid #e2e8f0;
+          border: 1px solid #e4e4e7;
           border-radius: 9999px;
-          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
         }
         .proof-rating {
           display: flex;
           align-items: center;
-          gap: 0.5rem;
+          gap: 0.45rem;
         }
         .proof-divider {
           width: 1px;
-          height: 18px;
-          background: #e2e8f0;
+          height: 16px;
+          background: #e4e4e7;
         }
 
-        /* DASHBOARD PREVIEW */
+        /* EXPANSIVE HERO MOCKUP (HEX.TECH STYLE) */
         .mockup-container {
           position: relative;
           z-index: 2;
           width: 100%;
-          max-width: 840px;
-          margin: 3.5rem auto 0;
-          perspective: 1200px;
+          max-width: 1320px;
+          margin: 4.5rem auto 0;
+          padding: 0 1rem;
         }
 
         .mockup-frame {
-          border-radius: 20px;
-          border: 1px solid #e2e8f0;
+          border-radius: 16px;
+          border: 1px solid #e4e4e7;
           background: #ffffff;
-          box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.12), 0 0 40px rgba(16, 185, 129, 0.08);
+          box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.07), 0 0 1px rgba(0,0,0,0.1);
           overflow: hidden;
-          transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease;
+          transition: all 0.4s ease;
         }
         .mockup-frame:hover {
-          transform: translateY(-6px);
-          box-shadow: 0 35px 80px -10px rgba(15, 23, 42, 0.18), 0 0 50px rgba(16, 185, 129, 0.15);
+          box-shadow: 0 35px 80px -15px rgba(0, 0, 0, 0.12);
+          border-color: #d4d4d8;
         }
 
         .mockup-header-bar {
-          background: #f8fafc;
-          padding: 0.85rem 1.25rem;
+          background: #fcfcfc;
+          padding: 0.75rem 1.25rem;
           display: flex;
           align-items: center;
           justify-content: space-between;
-          border-bottom: 1px solid #e2e8f0;
+          border-bottom: 1px solid #f4f4f5;
         }
 
         .mockup-url-pill {
           background: #ffffff;
-          border: 1px solid #cbd5e1;
-          border-radius: 8px;
-          padding: 0.3rem 1.25rem;
-          color: #64748b;
+          border: 1px solid #e4e4e7;
+          border-radius: 6px;
+          padding: 0.25rem 1.25rem;
+          color: #71717a;
           font-size: 0.78rem;
           font-family: monospace;
         }
 
-        /* METRICS STRIP */
+        .mockup-img-wrap {
+          background: #ffffff;
+          padding: 4px;
+        }
+
+        /* METRICS STRIP (HEX.TECH MODULAR 4-COLUMN) */
         .metrics-section {
-          padding: 2rem 5% 5rem;
+          padding: 1.5rem 4% 5rem;
           position: relative;
           z-index: 5;
+          max-width: 1360px;
+          margin: 0 auto;
         }
         .metrics-card {
-          max-width: 1100px;
-          margin: 0 auto;
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
           gap: 1.5rem;
-          background: #ffffff;
-          border: 1px solid #e2e8f0;
-          border-radius: 24px;
-          padding: 2.75rem 2rem;
-          box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.05);
         }
         .metric-box {
-          text-align: center;
-          padding: 0.5rem;
+          background: #ffffff;
+          border: 1px solid #e4e4e7;
+          border-radius: 16px;
+          padding: 2.25rem 2rem;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+          transition: all 0.25s ease;
+          text-align: left;
+        }
+        .metric-box:hover {
+          border-color: #a7f3d0;
+          box-shadow: 0 8px 24px rgba(5, 150, 105, 0.08);
+          transform: translateY(-3px);
         }
         .metric-num {
-          font-size: 2.8rem;
+          font-size: 2.75rem;
           font-weight: 900;
-          color: #0f172a;
-          letter-spacing: -1px;
-          margin-bottom: 0.45rem;
-          background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
+          color: #059669;
+          letter-spacing: -1.5px;
+          line-height: 1;
+          margin-bottom: 0.75rem;
         }
-        .metric-label {
-          color: #64748b;
-          font-size: 0.95rem;
-          font-weight: 600;
+        .metric-title {
+          font-size: 1.1rem;
+          font-weight: 800;
+          color: #09090b;
+          margin-bottom: 0.45rem;
+        }
+        .metric-desc {
+          color: #71717a;
+          font-size: 0.9rem;
+          line-height: 1.55;
         }
 
         /* VALUE TICKER */
         .ticker-section {
-          padding: 1.75rem 0;
+          padding: 1.5rem 0;
           background: #ffffff;
-          border-top: 1px solid #e2e8f0;
-          border-bottom: 1px solid #e2e8f0;
+          border-top: 1px solid #e4e4e7;
+          border-bottom: 1px solid #e4e4e7;
           overflow: hidden;
           white-space: nowrap;
         }
@@ -1000,8 +978,8 @@ export default function Home() {
           align-items: center;
           gap: 0.65rem;
           margin-right: 4.5rem;
-          color: #334155;
-          font-size: 0.95rem;
+          color: #27272a;
+          font-size: 0.92rem;
           font-weight: 600;
           letter-spacing: 0.2px;
         }
@@ -1009,7 +987,7 @@ export default function Home() {
         /* SECTION BASE */
         .section-container {
           padding: 7rem 5%;
-          max-width: 1240px;
+          max-width: 1260px;
           margin: 0 auto;
           position: relative;
         }
@@ -1019,87 +997,83 @@ export default function Home() {
         }
         .section-pill {
           display: inline-block;
-          font-size: 0.8rem;
+          font-size: 0.78rem;
           font-weight: 700;
           text-transform: uppercase;
-          letter-spacing: 1.5px;
+          letter-spacing: 1.2px;
           color: #059669;
           background: #ecfdf5;
           border: 1px solid #a7f3d0;
-          padding: 0.35rem 1.1rem;
-          border-radius: 9999px;
+          padding: 0.3rem 0.95rem;
+          border-radius: 6px;
           margin-bottom: 1rem;
         }
         .section-heading {
           font-size: clamp(2.2rem, 4vw, 3.2rem);
-          font-weight: 900;
-          color: #0f172a;
-          letter-spacing: -1px;
+          font-weight: 800;
+          color: #09090b;
+          letter-spacing: -1.2px;
           margin-bottom: 1rem;
         }
         .section-subtext {
           font-size: 1.1rem;
-          color: #64748b;
+          color: #71717a;
           max-width: 650px;
           margin: 0 auto;
           line-height: 1.65;
         }
 
-        /* FEATURES GRID */
+        /* FEATURES GRID (HEX.TECH MINIMAL CLEAN CARDS) */
         .features-grid {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-          gap: 2rem;
+          gap: 1.75rem;
         }
         .feature-card {
           background: #ffffff;
-          border: 1px solid #e2e8f0;
-          border-radius: 24px;
-          padding: 2.5rem;
+          border: 1px solid #e4e4e7;
+          border-radius: 16px;
+          padding: 2.25rem;
           position: relative;
           overflow: hidden;
-          transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+          transition: all 0.25s ease;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
         }
         .feature-card:hover {
-          transform: translateY(-8px);
-          border-color: #cbd5e1;
-          box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.08);
+          border-color: #a7f3d0;
+          box-shadow: 0 12px 30px rgba(5, 150, 105, 0.08);
+          transform: translateY(-4px);
         }
         .feature-icon-wrapper {
-          width: 58px;
-          height: 58px;
-          border-radius: 16px;
+          width: 52px;
+          height: 52px;
+          border-radius: 12px;
           display: flex;
           align-items: center;
           justify-content: center;
-          margin-bottom: 1.75rem;
+          margin-bottom: 1.5rem;
           border: 1px solid;
-          transition: transform 0.3s ease;
-        }
-        .feature-card:hover .feature-icon-wrapper {
-          transform: scale(1.08) rotate(3deg);
         }
         .feature-title {
-          font-size: 1.25rem;
+          font-size: 1.2rem;
           font-weight: 800;
-          color: #0f172a;
-          margin-bottom: 0.85rem;
+          color: #09090b;
+          margin-bottom: 0.75rem;
           line-height: 1.35;
         }
         .feature-desc {
-          color: #64748b;
+          color: #71717a;
           line-height: 1.65;
-          font-size: 0.95rem;
+          font-size: 0.92rem;
         }
         .feature-hover-indicator {
           position: absolute;
           bottom: 0;
           left: 0;
           right: 0;
-          height: 3px;
+          height: 2px;
           opacity: 0;
-          transition: opacity 0.3s;
+          transition: opacity 0.2s;
         }
         .feature-card:hover .feature-hover-indicator {
           opacity: 1;
@@ -1109,38 +1083,37 @@ export default function Home() {
         .steps-grid {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-          gap: 2rem;
+          gap: 1.75rem;
         }
         .step-card {
           background: #ffffff;
-          border: 1px solid #e2e8f0;
-          border-radius: 24px;
-          padding: 2.5rem;
-          transition: all 0.3s ease;
+          border: 1px solid #e4e4e7;
+          border-radius: 16px;
+          padding: 2.25rem;
+          transition: all 0.25s ease;
           position: relative;
-          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
         }
         .step-card:hover {
-          transform: translateY(-6px);
+          transform: translateY(-4px);
           border-color: #a7f3d0;
-          box-shadow: 0 15px 35px rgba(16, 185, 129, 0.1);
+          box-shadow: 0 10px 25px rgba(5, 150, 105, 0.08);
         }
         .step-top-row {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          margin-bottom: 1.75rem;
+          margin-bottom: 1.5rem;
         }
         .step-number-badge {
-          font-size: 1.85rem;
+          font-size: 1.75rem;
           font-weight: 900;
           color: #059669;
           letter-spacing: -1px;
         }
         .step-icon-bubble {
-          width: 44px;
-          height: 44px;
-          border-radius: 12px;
+          width: 40px;
+          height: 40px;
+          border-radius: 10px;
           background: #ecfdf5;
           border: 1px solid #a7f3d0;
           display: flex;
@@ -1148,56 +1121,55 @@ export default function Home() {
           justify-content: center;
         }
         .step-title {
-          font-size: 1.3rem;
+          font-size: 1.25rem;
           font-weight: 800;
-          color: #0f172a;
-          margin-bottom: 0.85rem;
+          color: #09090b;
+          margin-bottom: 0.75rem;
         }
         .step-desc {
-          color: #64748b;
+          color: #71717a;
           line-height: 1.65;
-          font-size: 0.95rem;
+          font-size: 0.92rem;
         }
 
         /* ORGANIZATIONS GRID */
         .orgs-grid {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-          gap: 2rem;
+          gap: 1.75rem;
         }
         .org-card {
           background: #ffffff;
-          border: 1px solid #e2e8f0;
-          border-radius: 22px;
-          padding: 2.25rem 2rem;
-          transition: all 0.3s;
-          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+          border: 1px solid #e4e4e7;
+          border-radius: 16px;
+          padding: 2rem;
+          transition: all 0.25s;
         }
         .org-card:hover {
-          transform: translateY(-6px);
+          transform: translateY(-4px);
           border-color: #a7f3d0;
-          box-shadow: 0 15px 35px rgba(16, 185, 129, 0.08);
+          box-shadow: 0 10px 25px rgba(5, 150, 105, 0.08);
         }
         .org-icon-wrapper {
-          width: 54px;
-          height: 54px;
-          border-radius: 14px;
+          width: 50px;
+          height: 50px;
+          border-radius: 12px;
           background: #ecfdf5;
           border: 1px solid #a7f3d0;
           display: flex;
           align-items: center;
           justify-content: center;
-          margin-bottom: 1.5rem;
+          margin-bottom: 1.25rem;
         }
         .org-title {
-          font-size: 1.2rem;
+          font-size: 1.15rem;
           font-weight: 800;
-          color: #0f172a;
-          margin-bottom: 0.75rem;
+          color: #09090b;
+          margin-bottom: 0.65rem;
         }
         .org-desc {
-          color: #64748b;
-          font-size: 0.92rem;
+          color: #71717a;
+          font-size: 0.9rem;
           line-height: 1.6;
         }
 
@@ -1205,58 +1177,51 @@ export default function Home() {
         .pricing-grid {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-          gap: 2rem;
+          gap: 1.75rem;
           align-items: stretch;
         }
         .pricing-card {
           background: #ffffff;
-          border: 1px solid #e2e8f0;
-          border-radius: 28px;
-          padding: 3rem 2.25rem;
+          border: 1px solid #e4e4e7;
+          border-radius: 20px;
+          padding: 2.75rem 2rem;
           display: flex;
           flex-direction: column;
           position: relative;
-          transition: all 0.35s ease;
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+          transition: all 0.25s ease;
         }
         .pricing-card:hover {
-          transform: translateY(-8px);
-          border-color: #cbd5e1;
-          box-shadow: 0 25px 50px rgba(0, 0, 0, 0.08);
+          transform: translateY(-5px);
+          border-color: #d4d4d8;
+          box-shadow: 0 15px 35px rgba(0, 0, 0, 0.06);
         }
         .pricing-card-featured {
           background: #ffffff;
-          border: 2px solid #10b981;
-          box-shadow: 0 20px 45px rgba(16, 185, 129, 0.12);
-          transform: scale(1.02);
-        }
-        .pricing-card-featured:hover {
-          transform: scale(1.02) translateY(-8px);
-          box-shadow: 0 30px 60px rgba(16, 185, 129, 0.18);
+          border: 2px solid #059669;
+          box-shadow: 0 15px 40px rgba(5, 150, 105, 0.12);
         }
         .featured-badge {
           position: absolute;
-          top: -14px;
-          right: 2rem;
-          background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+          top: -13px;
+          right: 1.75rem;
+          background: #059669;
           color: white;
-          font-size: 0.75rem;
+          font-size: 0.72rem;
           font-weight: 800;
           letter-spacing: 0.8px;
-          padding: 0.35rem 1.15rem;
+          padding: 0.3rem 0.95rem;
           border-radius: 9999px;
-          box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
         }
         .pricing-name {
-          font-size: 1.35rem;
+          font-size: 1.3rem;
           font-weight: 800;
-          color: #0f172a;
-          margin-bottom: 0.4rem;
+          color: #09090b;
+          margin-bottom: 0.35rem;
         }
         .pricing-subtitle {
-          color: #64748b;
-          font-size: 0.9rem;
-          margin-bottom: 1.75rem;
+          color: #71717a;
+          font-size: 0.88rem;
+          margin-bottom: 1.5rem;
         }
         .pricing-cost {
           display: flex;
@@ -1264,29 +1229,29 @@ export default function Home() {
           margin-bottom: 0.35rem;
         }
         .price-currency {
-          font-size: 1.75rem;
+          font-size: 1.6rem;
           font-weight: 800;
-          color: #0f172a;
+          color: #09090b;
           margin-right: 4px;
         }
         .price-big {
-          font-size: 3.5rem;
+          font-size: 3.25rem;
           font-weight: 900;
-          color: #0f172a;
+          color: #09090b;
           letter-spacing: -1.5px;
           line-height: 1;
         }
         .price-period {
-          color: #94a3b8;
-          font-size: 1.05rem;
+          color: #71717a;
+          font-size: 1rem;
           font-weight: 600;
           margin-left: 6px;
         }
         .price-term {
-          font-size: 0.85rem;
+          font-size: 0.82rem;
           font-weight: 700;
-          color: #94a3b8;
-          margin-bottom: 2.25rem;
+          color: #71717a;
+          margin-bottom: 2rem;
         }
         .pricing-features {
           list-style: none;
@@ -1294,35 +1259,34 @@ export default function Home() {
           margin: 0;
           display: flex;
           flex-direction: column;
-          gap: 1.1rem;
+          gap: 1rem;
         }
         .pricing-features li {
           display: flex;
           align-items: center;
           gap: 0.75rem;
-          color: #334155;
-          font-size: 0.95rem;
+          color: #27272a;
+          font-size: 0.92rem;
           line-height: 1.4;
         }
         .pricing-action {
           margin-top: auto;
-          padding-top: 2.5rem;
+          padding-top: 2.25rem;
         }
         .btn-plan-outline {
           display: block;
           text-align: center;
-          padding: 0.95rem 1.5rem;
-          border-radius: 12px;
-          border: 1px solid #cbd5e1;
-          color: #0f172a;
+          padding: 0.85rem 1.5rem;
+          border-radius: 10px;
+          border: 1px solid #e4e4e7;
+          color: #09090b;
           font-weight: 700;
           text-decoration: none;
-          transition: all 0.25s ease;
+          transition: all 0.2s ease;
         }
         .btn-plan-outline:hover {
-          background: #f8fafc;
-          border-color: #94a3b8;
-          transform: translateY(-2px);
+          background: #f4f4f5;
+          border-color: #d4d4d8;
         }
 
         /* FAQ ACCORDION */
@@ -1331,58 +1295,54 @@ export default function Home() {
           margin: 0 auto;
           display: flex;
           flex-direction: column;
-          gap: 1rem;
+          gap: 0.85rem;
         }
         .faq-item {
           background: #ffffff;
-          border: 1px solid #e2e8f0;
-          border-radius: 18px;
-          padding: 1.4rem 1.75rem;
+          border: 1px solid #e4e4e7;
+          border-radius: 14px;
+          padding: 1.35rem 1.65rem;
           cursor: pointer;
-          transition: all 0.25s ease;
-          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+          transition: all 0.2s ease;
         }
         .faq-item:hover {
-          background: #ffffff;
-          border-color: #cbd5e1;
-          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+          border-color: #d4d4d8;
         }
         .faq-item-open {
           border-color: #a7f3d0;
-          background: #ffffff;
-          box-shadow: 0 6px 20px rgba(16, 185, 129, 0.08);
+          box-shadow: 0 4px 15px rgba(5, 150, 105, 0.05);
         }
         .faq-question {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          color: #0f172a;
+          color: #09090b;
           font-weight: 700;
-          font-size: 1.05rem;
+          font-size: 1.02rem;
         }
         .faq-answer {
-          margin-top: 1.15rem;
-          padding-top: 1.15rem;
-          border-top: 1px solid #f1f5f9;
-          color: #475569;
+          margin-top: 1rem;
+          padding-top: 1rem;
+          border-top: 1px solid #f4f4f5;
+          color: #52525b;
           line-height: 1.7;
-          font-size: 0.95rem;
+          font-size: 0.92rem;
         }
 
         /* CTA SECTION */
         .cta-section {
-          padding: 4rem 5% 7rem;
+          padding: 4rem 5% 6.5rem;
         }
         .cta-container {
           max-width: 1140px;
           margin: 0 auto;
-          background: linear-gradient(135deg, #ecfdf5 0%, #e0f2fe 100%);
-          border: 1px solid #a7f3d0;
-          border-radius: 32px;
+          background: #09090b;
+          border: 1px solid #27272a;
+          border-radius: 24px;
           padding: 5rem 2rem;
           position: relative;
           overflow: hidden;
-          box-shadow: 0 25px 60px -10px rgba(16, 185, 129, 0.15);
+          box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
         }
         .cta-inner {
           position: relative;
@@ -1393,80 +1353,77 @@ export default function Home() {
         }
         .cta-title {
           font-size: clamp(2.2rem, 4vw, 3.2rem);
-          font-weight: 900;
-          color: #0f172a;
+          font-weight: 800;
+          color: #ffffff;
           margin-bottom: 1.25rem;
-          letter-spacing: -1px;
+          letter-spacing: -1.2px;
         }
         .cta-desc {
-          color: #475569;
+          color: #a1a1aa;
           font-size: 1.15rem;
           line-height: 1.65;
-          margin-bottom: 2.75rem;
+          margin-bottom: 2.5rem;
         }
         .btn-cta-main {
           display: inline-flex;
           align-items: center;
           gap: 0.65rem;
-          padding: 1rem 2.5rem;
-          background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+          padding: 0.95rem 2.4rem;
+          background: #059669;
           color: white;
-          border-radius: 14px;
-          font-weight: 800;
-          font-size: 1.05rem;
+          border-radius: 10px;
+          font-weight: 700;
+          font-size: 1.02rem;
           text-decoration: none;
-          box-shadow: 0 10px 25px rgba(16, 185, 129, 0.35);
-          transition: all 0.25s ease;
+          transition: all 0.2s ease;
         }
         .btn-cta-main:hover {
+          background: #047857;
           transform: translateY(-2px);
-          box-shadow: 0 15px 35px rgba(16, 185, 129, 0.5);
         }
         .btn-cta-secondary {
           display: inline-flex;
           align-items: center;
-          padding: 1rem 2.2rem;
-          background: #ffffff;
-          color: #0f172a;
-          border-radius: 14px;
-          font-weight: 700;
-          font-size: 1.05rem;
+          padding: 0.95rem 2.2rem;
+          background: rgba(255, 255, 255, 0.08);
+          color: white;
+          border-radius: 10px;
+          font-weight: 600;
+          font-size: 1.02rem;
           text-decoration: none;
-          border: 1px solid #cbd5e1;
-          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-          transition: all 0.25s ease;
+          border: 1px solid rgba(255, 255, 255, 0.15);
+          transition: all 0.2s ease;
         }
         .btn-cta-secondary:hover {
-          background: #f8fafc;
-          transform: translateY(-2px);
+          background: rgba(255, 255, 255, 0.15);
         }
 
         /* FOOTER */
         .site-footer {
           background: #ffffff;
-          border-top: 1px solid #e2e8f0;
-          padding: 5rem 5% 2.5rem;
+          border-top: 1px solid #e4e4e7;
+          padding: 5rem 6% 2.5rem;
         }
         .footer-inner {
-          max-width: 1240px;
+          max-width: 1260px;
           margin: 0 auto;
           display: grid;
           grid-template-columns: 2fr 1fr 1fr 1.5fr;
           gap: 3.5rem;
           padding-bottom: 4rem;
-          border-bottom: 1px solid #f1f5f9;
+          border-bottom: 1px solid #f4f4f5;
         }
         .footer-brand-desc {
-          color: #64748b;
-          font-size: 0.95rem;
+          color: #71717a;
+          font-size: 0.92rem;
           line-height: 1.65;
           max-width: 320px;
         }
         .footer-col-title {
-          color: #0f172a;
-          font-size: 1.05rem;
+          color: #09090b;
+          font-size: 1rem;
           font-weight: 700;
-          margin-bottom: 1.5rem;
+          margin-bottom: 1.35rem;
         }
         .footer-nav-list, .footer-contact-list {
           list-style: none;
@@ -1477,10 +1434,10 @@ export default function Home() {
           gap: 0.85rem;
         }
         .footer-link {
-          color: #64748b;
+          color: #71717a;
           text-decoration: none;
-          font-size: 0.92rem;
-          transition: color 0.2s ease;
+          font-size: 0.9rem;
+          transition: color 0.15s ease;
         }
         .footer-link:hover {
           color: #059669;
@@ -1489,17 +1446,17 @@ export default function Home() {
           display: flex;
           align-items: center;
           gap: 0.75rem;
-          color: #64748b;
-          font-size: 0.92rem;
+          color: #71717a;
+          font-size: 0.9rem;
         }
         .footer-bottom {
-          max-width: 1240px;
-          margin: 2.5rem auto 0;
+          max-width: 1260px;
+          margin: 2.25rem auto 0;
           display: flex;
           justify-content: space-between;
           align-items: center;
-          color: #94a3b8;
-          font-size: 0.88rem;
+          color: #a1a1aa;
+          font-size: 0.85rem;
         }
         .codfy-link {
           color: #059669;
@@ -1515,6 +1472,9 @@ export default function Home() {
           .footer-inner {
             grid-template-columns: 1fr 1fr;
           }
+          .metrics-card {
+            grid-template-columns: 1fr 1fr;
+          }
         }
 
         @media (max-width: 768px) {
@@ -1522,10 +1482,14 @@ export default function Home() {
             display: none;
           }
           .site-header {
-            height: 68px;
+            height: 64px;
+            padding: 0 4%;
           }
           .hero-section {
-            padding-top: 7.5rem;
+            padding-top: 6.5rem;
+          }
+          .metrics-card {
+            grid-template-columns: 1fr;
           }
           .footer-inner {
             grid-template-columns: 1fr;
@@ -1535,9 +1499,6 @@ export default function Home() {
             flex-direction: column;
             gap: 0.75rem;
             text-align: center;
-          }
-          .pricing-card-featured {
-            transform: scale(1);
           }
         }
       `}} />
