@@ -273,20 +273,24 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       {/* Sidebar */}
       <aside style={{
         width: '300px',
-        background: 'linear-gradient(180deg, #0b0f19 0%, #111827 50%, #0f172a 100%)',
+        background: 'linear-gradient(180deg, #07090e 0%, #0b0f17 40%, #0d121d 100%)',
         color: '#f8fafc',
         display: 'flex',
         flexDirection: 'column',
-        transition: 'all 0.3s ease',
+        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
         flexShrink: 0,
-        borderRight: '1px solid rgba(255, 255, 255, 0.06)',
-        boxShadow: '4px 0 24px -2px rgba(0, 0, 0, 0.25)'
+        borderRight: '1px solid rgba(255, 255, 255, 0.05)',
+        boxShadow: '6px 0 28px -4px rgba(0, 0, 0, 0.45)',
+        position: 'relative'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1.4rem 1.5rem', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+        {/* Subtle top glow */}
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '140px', background: 'radial-gradient(ellipse at 50% 0%, rgba(16, 185, 129, 0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1.35rem 1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', position: 'relative', zIndex: 1 }}>
           <img src="/logo.png" alt="ASRALI" style={{ height: "32px", width: "auto", borderRadius: "8px" }} />
         </div>
 
-        <nav style={{ flex: 1, overflowY: 'auto', padding: '1rem 0.65rem' }}>
+        <nav style={{ flex: 1, overflowY: 'auto', padding: '1rem 0.65rem', position: 'relative', zIndex: 1 }}>
           {menuStructure.filter(menu => menu.roles.includes(role)).map((menu) => {
             const hasSubItems = menu.subItems && menu.subItems.length > 0;
             const isOpen = openMenus.includes(menu.name);
@@ -310,14 +314,15 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                       gap: '0.75rem',
                       padding: '0.65rem 1rem',
                       borderRadius: '10px',
-                      backgroundColor: isAnyChildActive ? 'rgba(16, 185, 129, 0.16)' : 'transparent',
+                      background: isAnyChildActive ? 'linear-gradient(90deg, rgba(16, 185, 129, 0.22) 0%, rgba(16, 185, 129, 0.08) 100%)' : 'transparent',
                       color: isAnyChildActive ? '#34d399' : '#94a3b8',
                       fontWeight: isAnyChildActive ? 600 : 500,
                       fontSize: '0.93rem',
                       fontFamily: 'inherit',
                       textDecoration: 'none',
                       transition: 'all 0.18s ease',
-                      border: isAnyChildActive ? '1px solid rgba(52, 211, 153, 0.25)' : '1px solid transparent'
+                      border: isAnyChildActive ? '1px solid rgba(52, 211, 153, 0.3)' : '1px solid transparent',
+                      boxShadow: isAnyChildActive ? '0 2px 12px rgba(16, 185, 129, 0.15)' : 'none'
                     }}
                     onMouseOver={(e) => {
                       if (!isAnyChildActive) {
@@ -336,7 +341,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     {menu.name}
                   </LinkComponent>
                   {menu.separatorAfter && (
-                    <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.06)', margin: '0.75rem 1rem' }}></div>
+                    <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.05)', margin: '0.75rem 1rem' }}></div>
                   )}
                 </div>
               );
@@ -354,12 +359,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     gap: '0.75rem',
                     padding: '0.65rem 1rem',
                     borderRadius: '10px',
-                    backgroundColor: (isOpen || isAnyChildActive) ? 'rgba(56, 189, 248, 0.12)' : 'transparent',
+                    background: (isOpen || isAnyChildActive) ? 'linear-gradient(90deg, rgba(56, 189, 248, 0.16) 0%, rgba(56, 189, 248, 0.04) 100%)' : 'transparent',
                     color: (isOpen || isAnyChildActive) ? '#38bdf8' : '#94a3b8',
                     fontWeight: (isOpen || isAnyChildActive) ? 600 : 500,
                     fontSize: '0.93rem',
                     fontFamily: 'inherit',
-                    border: (isOpen || isAnyChildActive) ? '1px solid rgba(56, 189, 248, 0.2)' : '1px solid transparent',
+                    border: (isOpen || isAnyChildActive) ? '1px solid rgba(56, 189, 248, 0.25)' : '1px solid transparent',
                     cursor: 'pointer',
                     transition: 'all 0.18s ease',
                     textAlign: 'left'
@@ -398,13 +403,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                           style={{
                             padding: '0.5rem 0.85rem',
                             borderRadius: '8px',
-                            backgroundColor: isSubActive ? 'rgba(16, 185, 129, 0.18)' : 'transparent',
+                            background: isSubActive ? 'linear-gradient(90deg, rgba(16, 185, 129, 0.22) 0%, rgba(16, 185, 129, 0.08) 100%)' : 'transparent',
                             color: isSubActive ? '#34d399' : '#94a3b8',
                             fontWeight: isSubActive ? 600 : 400,
                             fontSize: '0.85rem',
                             textDecoration: 'none',
                             transition: 'all 0.18s ease',
-                            border: isSubActive ? '1px solid rgba(52, 211, 153, 0.25)' : '1px solid transparent'
+                            border: isSubActive ? '1px solid rgba(52, 211, 153, 0.3)' : '1px solid transparent'
                           }}
                           onMouseOver={(e) => {
                             if (!isSubActive) {
@@ -427,7 +432,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 )}
                 
                 {menu.separatorAfter && (
-                  <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.06)', margin: '0.75rem 1rem' }}></div>
+                  <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.05)', margin: '0.75rem 1rem' }}></div>
                 )}
               </div>
             );
@@ -435,30 +440,30 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </nav>
 
         {/* User Profile Card */}
-        <div style={{ padding: '1rem', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+        <div style={{ padding: '1rem', borderTop: '1px solid rgba(255,255,255,0.05)', position: 'relative', zIndex: 1 }}>
           <div style={{
             display: 'flex',
             alignItems: 'center',
             gap: '0.85rem',
-            padding: '0.75rem 0.9rem',
-            borderRadius: '14px',
-            backgroundColor: 'rgba(255, 255, 255, 0.03)',
-            border: '1px solid rgba(255, 255, 255, 0.06)',
-            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-            backdropFilter: 'blur(8px)'
+            padding: '0.8rem 0.95rem',
+            borderRadius: '16px',
+            background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%)',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
+            boxShadow: '0 8px 20px rgba(0, 0, 0, 0.25)',
+            backdropFilter: 'blur(12px)'
           }}>
             <div style={{ 
-              width: '38px', 
-              height: '38px', 
-              borderRadius: '10px', 
+              width: '40px', 
+              height: '40px', 
+              borderRadius: '12px', 
               background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', 
               color: 'white', 
               display: 'flex', 
               alignItems: 'center', 
               justifyContent: 'center', 
-              fontWeight: 700, 
-              fontSize: '0.95rem',
-              boxShadow: '0 4px 10px rgba(16, 185, 129, 0.35)',
+              fontWeight: 800, 
+              fontSize: '1rem',
+              boxShadow: '0 4px 14px rgba(16, 185, 129, 0.4)',
               flexShrink: 0
             }}>
               İ
@@ -467,18 +472,18 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <div style={{ fontSize: '0.84rem', fontWeight: 600, color: '#f8fafc', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                 {user?.email || 'yusifliqezenfer90@gmail.com'}
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginTop: '0.15rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', marginTop: '0.2rem' }}>
                 <span style={{ 
                   display: 'inline-flex',
                   alignItems: 'center',
-                  padding: '0.1rem 0.45rem',
+                  padding: '0.12rem 0.5rem',
                   borderRadius: '6px',
-                  backgroundColor: 'rgba(56, 189, 248, 0.15)',
+                  background: 'linear-gradient(90deg, rgba(56, 189, 248, 0.2) 0%, rgba(56, 189, 248, 0.1) 100%)',
                   color: '#38bdf8',
                   fontSize: '0.7rem',
                   fontWeight: 700,
                   letterSpacing: '0.02em',
-                  border: '1px solid rgba(56, 189, 248, 0.25)'
+                  border: '1px solid rgba(56, 189, 248, 0.3)'
                 }}>
                   Admin
                 </span>
@@ -487,7 +492,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   height: '6px', 
                   borderRadius: '50%', 
                   backgroundColor: '#10b981',
-                  boxShadow: '0 0 8px #10b981'
+                  boxShadow: '0 0 10px #10b981'
                 }} title="Aktiv" />
               </div>
             </div>
@@ -496,7 +501,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       </aside>
 
       {/* Main Content */}
-      <main style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0, backgroundColor: '#f1f5f9' }}>
+      <main style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0, backgroundColor: '#f8fafc' }}>
         <header style={{ 
           height: '64px', 
           borderBottom: '1px solid #e2e8f0',
@@ -504,7 +509,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           alignItems: 'center',
           justifyContent: 'space-between',
           padding: '0 2rem',
-          backgroundColor: 'white',
+          backgroundColor: 'rgba(255, 255, 255, 0.9)',
+          backdropFilter: 'blur(10px)',
+          position: 'sticky',
+          top: 0,
+          zIndex: 40
         }}>
           <div style={{ fontWeight: 700, color: '#0f172a', fontSize: '1.1rem', letterSpacing: '-0.01em' }}>
             ASRALI
