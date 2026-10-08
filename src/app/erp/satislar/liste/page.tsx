@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Search, Plus, Filter, Download, MoreHorizontal, FileText, CheckCircle2, Clock, Package, Edit, Trash2, Copy, FileOutput, History, FileImage, Layers } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import PageHeaderBanner from '@/components/PageHeaderBanner';
 
 import { getAppStorage, setAppStorage, removeAppStorage } from '@/utils/storage';
 import { createClient } from '@/utils/supabase/client';
@@ -259,77 +260,24 @@ export default function SatisListesiPage() {
 
   return (
     <div style={{ padding: '2rem', maxWidth: '1600px', margin: '0 auto' }}>
-      {/* Page Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
-        <div>
-          <h1 style={{ fontSize: '1.9rem', fontWeight: 800, color: '#0f172a', letterSpacing: '-0.025em', display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
-            <div style={{ 
-              background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', 
-              padding: '0.6rem', 
-              borderRadius: '12px', 
-              color: 'white',
-              boxShadow: '0 6px 16px -2px rgba(16, 185, 129, 0.35)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}>
-              <FileText size={22} />
-            </div>
-            Satış Siyahısı
-          </h1>
-          <p style={{ color: '#64748b', fontSize: '0.92rem', marginTop: '0.25rem' }}>Bütün satış qaimələrini, müqavilə və fakturalarını buradan real vaxtda izləyin.</p>
-        </div>
-
-        <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
-          <button 
-            onClick={handleExport} 
-            style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              gap: '0.5rem', 
-              padding: '0.65rem 1.25rem', 
-              backgroundColor: '#ffffff', 
-              border: '1px solid #e2e8f0', 
-              borderRadius: '10px', 
-              color: '#334155', 
-              fontWeight: 600, 
-              fontSize: '0.88rem',
-              cursor: 'pointer', 
-              boxShadow: '0 1px 2px rgba(0,0,0,0.04)',
-              transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)' 
-            }}
-            onMouseOver={(e) => { e.currentTarget.style.backgroundColor = '#f8fafc'; e.currentTarget.style.borderColor = '#cbd5e1'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
-            onMouseOut={(e) => { e.currentTarget.style.backgroundColor = '#ffffff'; e.currentTarget.style.borderColor = '#e2e8f0'; e.currentTarget.style.transform = 'translateY(0)'; }}
-          >
-            <Download size={17} style={{ color: '#64748b' }} />
-            Eksport
-          </button>
-          
-          <button 
-            onClick={() => router.push('/erp/satislar/yeni')}
-            style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              gap: '0.5rem', 
-              padding: '0.65rem 1.35rem', 
-              background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', 
-              border: 'none', 
-              borderRadius: '10px', 
-              color: 'white', 
-              fontWeight: 600, 
-              fontSize: '0.88rem',
-              cursor: 'pointer', 
-              boxShadow: '0 8px 20px -3px rgba(16, 185, 129, 0.38)', 
-              transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)' 
-            }}
-            onMouseOver={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 12px 24px -3px rgba(16, 185, 129, 0.45)'; }}
-            onMouseOut={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 8px 20px -3px rgba(16, 185, 129, 0.38)'; }}
-          >
-            <Plus size={18} strokeWidth={2.4} />
-            Yeni Satış
-          </button>
-        </div>
-      </div>
+      {/* Page Header Banner */}
+      <PageHeaderBanner
+        title="Satış Siyahısı"
+        description="Bütün satış qaimələrini, müqavilə və fakturalarını buradan real vaxtda izləyin."
+        icon={FileText}
+        theme="emerald"
+        badge="Faktura və Satış İdarəetməsi"
+        primaryAction={{
+          label: "Yeni Satış",
+          onClick: () => router.push('/erp/satislar/yeni'),
+          icon: Plus
+        }}
+        secondaryAction={{
+          label: "Eksport",
+          onClick: handleExport,
+          icon: Download
+        }}
+      />
 
       {/* Main Container Card */}
       <div style={{ 
