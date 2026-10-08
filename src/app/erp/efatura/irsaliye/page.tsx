@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Save, Send, Plus, Trash2, FilePlus, Building2, PackageSearch, Calculator, AlertTriangle, ExternalLink } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import PageHeaderBanner from '@/components/PageHeaderBanner';
 
 import { getAppStorage, setAppStorage, removeAppStorage } from '@/utils/storage';
 
@@ -70,15 +71,13 @@ export default function YeniFakturaYarat() {
     <div style={{ padding: '2.5rem', minHeight: '100%', backgroundColor: '#f4f7f6', fontFamily: 'system-ui, -apple-system, sans-serif', boxSizing: 'border-box', overflowX: 'hidden' }}>
       
       <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2.5rem' }}>
-          <div style={{ width: '56px', height: '56px', borderRadius: '16px', background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 10px 25px -5px rgba(59, 130, 246, 0.4)' }}>
-            <FilePlus size={28} />
-          </div>
-          <div>
-            <h1 style={{ fontSize: '1.8rem', color: '#0f172a', margin: 0, fontWeight: 800, letterSpacing: '-0.5px' }}>Yeni E-Qaimə Yarat</h1>
-            <p style={{ margin: '0.3rem 0 0 0', color: '#64748b', fontSize: '0.95rem' }}>Vergi standartlarına uyğun elektron faktura yarat və rəsmiləşdir.</p>
-          </div>
-        </div>
+        <PageHeaderBanner
+          title="Yeni E-Qaimə Yarat"
+          description="Dövlət Vergi standartlarına uyğun elektron faktura tərtib et və rəsmiləşdir."
+          icon={FilePlus}
+          theme="blue"
+          badge="Elektron Faktura"
+        />
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 350px', gap: '2rem', alignItems: 'start' }}>
           

@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { Package, Search, Tag, Plus, Filter, MoreHorizontal, Image as ImageIcon, X, Save, Trash2, Edit2, CheckCircle2 } from 'lucide-react';
+import PageHeaderBanner from '@/components/PageHeaderBanner';
 
 import { getAppStorage, setAppStorage, removeAppStorage } from '@/utils/storage';
 import { createClient } from '@/utils/supabase/client';
@@ -274,24 +275,19 @@ export default function ProductsPage() {
   return (
     <div style={{ padding: '2rem', height: '100%', backgroundColor: '#f8fafc', display: 'flex', flexDirection: 'column', gap: '1.5rem', fontFamily: 'system-ui, -apple-system, sans-serif', position: 'relative' }}>
       
-      {/* Header Area */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <div style={{ width: '56px', height: '56px', borderRadius: '16px', backgroundColor: '#e0f2fe', color: '#0ea5e9', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Package size={32} />
-          </div>
-          <div>
-            <h1 style={{ fontSize: '1.8rem', color: '#0f172a', margin: 0, fontWeight: 900, letterSpacing: '-0.5px' }}>
-              Məhsul Siyahısı
-            </h1>
-            <p style={{ margin: '0.2rem 0 0 0', color: '#64748b', fontSize: '0.95rem' }}>Anbardakı bütün məhsulların qalıq və qiymət məlumatları</p>
-          </div>
-        </div>
-
-        <button onClick={openCreateModal} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.8rem 1.5rem', backgroundColor: '#0ea5e9', color: 'white', border: 'none', borderRadius: '12px', fontWeight: 700, fontSize: '0.95rem', cursor: 'pointer', boxShadow: '0 4px 14px 0 rgba(14, 165, 233, 0.39)', transition: 'transform 0.2s' }} onMouseOver={e=>e.currentTarget.style.transform='translateY(-2px)'} onMouseOut={e=>e.currentTarget.style.transform='translateY(0)'}>
-          <Plus size={20}/> Yeni Məhsul Əlavə Et
-        </button>
-      </div>
+      {/* Page Header Banner */}
+      <PageHeaderBanner
+        title="Məhsul və Xidmət Siyahısı"
+        description="Anbardakı bütün məhsulların qalıq, maya dəyəri və satış qiyməti məlumatları."
+        icon={Package}
+        theme="cyan"
+        badge="İnventar & Stok"
+        primaryAction={{
+          label: "Yeni Məhsul Əlavə Et",
+          onClick: openCreateModal,
+          icon: Plus
+        }}
+      />
 
       {/* Toolbar */}
       <div style={{ backgroundColor: 'white', padding: '1rem 1.5rem', borderRadius: '16px', border: '1px solid #e2e8f0', display: 'flex', gap: '1rem', alignItems: 'center', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)' }}>

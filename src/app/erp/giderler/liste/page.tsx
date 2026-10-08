@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { TrendingDown, Plus, Search, Filter, Edit, Trash2, CheckCircle2, Clock, Copy, Banknote } from 'lucide-react';
+import PageHeaderBanner from '@/components/PageHeaderBanner';
 import { useRouter } from 'next/navigation';
 
 import { getAppStorage, setAppStorage, removeAppStorage } from '@/utils/storage';
@@ -103,25 +104,19 @@ export default function XercSiyahisiPage() {
   return (
     <div style={{ padding: '2rem', height: '100%', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
       
-      {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <div style={{ backgroundColor: '#ffedd5', padding: '0.5rem', borderRadius: '8px', color: '#f97316' }}>
-            <TrendingDown size={24} />
-          </div>
-          <h1 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#1e293b' }}>Xərc Siyahısı</h1>
-        </div>
-        <div style={{ display: 'flex', gap: '1rem' }}>
-          <button 
-            onClick={() => router.push('/erp/giderler/yeni')}
-            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.6rem 1.2rem', backgroundColor: '#f97316', color: 'white', border: 'none', borderRadius: '8px', fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 6px -1px rgba(249, 115, 22, 0.2)' }} 
-            onMouseOver={e => e.currentTarget.style.transform = 'translateY(-2px)'} 
-            onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'}
-          >
-            <Plus size={18} /> Yeni Xərc
-          </button>
-        </div>
-      </div>
+      {/* Page Header Banner */}
+      <PageHeaderBanner
+        title="Xərc Siyahısı"
+        description="Şirkətin bütün cari xərcləri, icarə və xidmət ödənişlərinin real vaxt jurnalı."
+        icon={TrendingDown}
+        theme="amber"
+        badge="Xərc Nəzarəti"
+        primaryAction={{
+          label: "Yeni Xərc",
+          onClick: () => router.push('/erp/giderler/yeni'),
+          icon: Plus
+        }}
+      />
 
       {/* Toolbar & Filter */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'white', padding: '1rem', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>

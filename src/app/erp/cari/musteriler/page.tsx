@@ -5,6 +5,7 @@ import {
   CreditCard, Wallet, Edit3, Trash2, X, ChevronRight, CheckCircle, FileText, ArrowRight
 } from 'lucide-react';
 import Link from 'next/link';
+import PageHeaderBanner from '@/components/PageHeaderBanner';
 
 import { getAppStorage, setAppStorage, removeAppStorage } from '@/utils/storage';
 
@@ -148,23 +149,19 @@ export default function MusterilerPage() {
   return (
     <div style={{ padding: '2rem', height: '100%', backgroundColor: '#f8fafc', display: 'flex', flexDirection: 'column', gap: '1.5rem', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
       
-      {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div>
-          <h1 style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '1.8rem', color: '#1e293b', margin: 0, fontWeight: 800, letterSpacing: '-0.5px' }}>
-            <Users size={32} color="#4f46e5" /> Cari Hesablar (Müştərilər)
-          </h1>
-          <p style={{ margin: '0.2rem 0 0 0', color: '#64748b', fontSize: '0.95rem' }}>Ümumi müştəri və təchizatçıların mərkəzi bazası</p>
-        </div>
-        <button 
-          onClick={() => openModal()} 
-          style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.8rem 1.5rem', backgroundColor: '#4f46e5', color: 'white', border: 'none', borderRadius: '12px', fontWeight: 700, fontSize: '0.95rem', cursor: 'pointer', boxShadow: '0 4px 14px 0 rgba(79, 70, 229, 0.39)', transition: 'transform 0.1s' }}
-          onMouseDown={e => e.currentTarget.style.transform = 'scale(0.96)'}
-          onMouseUp={e => e.currentTarget.style.transform = 'scale(1)'}
-        >
-          <Plus size={20}/> Yeni Cari Hesab
-        </button>
-      </div>
+      {/* Page Header Banner */}
+      <PageHeaderBanner
+        title="Cari Hesablar (Müştərilər)"
+        description="Bütün müştərilərin borc, əlaqə və qeydiyyat məlumatlarının mərkəzləşdirilmiş bazası."
+        icon={Users}
+        theme="indigo"
+        badge="Müştəri İdarəetməsi"
+        primaryAction={{
+          label: "Yeni Cari Hesab",
+          onClick: () => openModal(),
+          icon: Plus
+        }}
+      />
 
       {/* Toolbar (Search & Stats) */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'white', padding: '1rem 1.5rem', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>

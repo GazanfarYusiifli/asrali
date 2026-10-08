@@ -1,8 +1,8 @@
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
-import { FileText, MoreHorizontal, FileOutput, Printer, Mail, Layers, Search, Plus, Filter, Copy, Edit, Trash2, CheckCircle2, Clock, Package } from 'lucide-react';
+import { FileText, MoreHorizontal, FileOutput, Printer, Mail, Layers, Search, Plus, Filter, Copy, Edit, Trash2, CheckCircle2, Clock, Package, ShoppingBag, Download } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-
+import PageHeaderBanner from '@/components/PageHeaderBanner';
 import { getAppStorage, setAppStorage, removeAppStorage } from '@/utils/storage';
 
 export default function AlisSiyahisiPage() {
@@ -112,25 +112,24 @@ export default function AlisSiyahisiPage() {
 
   return (
     <div style={{ padding: '2rem', height: '100%', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-      {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <div style={{ backgroundColor: '#fee2e2', padding: '0.5rem', borderRadius: '8px', color: '#ef4444' }}>
-            <FileText size={24} />
-          </div>
-          <h1 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#1e293b' }}>Alış Siyahısı</h1>
-        </div>
-        <div style={{ display: 'flex', gap: '1rem' }}>
-          <button 
-            onClick={() => router.push('/erp/alislar/yeni')}
-            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.6rem 1.2rem', backgroundColor: '#ef4444', color: 'white', border: 'none', borderRadius: '8px', fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 6px -1px rgba(239, 68, 68, 0.2)' }} 
-            onMouseOver={e => e.currentTarget.style.transform = 'translateY(-2px)'} 
-            onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'}
-          >
-            <Plus size={18} /> Yeni Alış
-          </button>
-        </div>
-      </div>
+      {/* Page Header Banner */}
+      <PageHeaderBanner
+        title="Alış Siyahısı"
+        description="Bütün tədarükçü alış qaimələrini və daxil olan fakturaları buradan izləyin."
+        icon={ShoppingBag}
+        theme="rose"
+        badge="Alış İdarəetməsi"
+        primaryAction={{
+          label: "Yeni Alış",
+          onClick: () => router.push('/erp/alislar/yeni'),
+          icon: Plus
+        }}
+        secondaryAction={{
+          label: "Eksport",
+          onClick: () => alert("Alış məlumatları eksport edilir..."),
+          icon: Download
+        }}
+      />
 
       {/* Toolbar & Filter */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'white', padding: '1rem', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
